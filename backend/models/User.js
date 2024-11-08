@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     balance: { type: Number, default: 0 },
     profit: { type: Number, default: 0 },
+},{
+    timestamps: true
 });
 
 const userModel = mongoose.models.users || mongoose.model("users", userSchema);

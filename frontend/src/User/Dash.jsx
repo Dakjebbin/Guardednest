@@ -273,6 +273,7 @@ export default function Dash() {
                           <td>Type</td>
                           <td>Amount</td>
                           <td>Status</td>
+                          <td>Date Created</td>
                         </tr>
                       </thead>
                       <tbody>
@@ -289,6 +290,7 @@ export default function Dash() {
                                 ] || transaction.status}
                               </span>
                             </td>
+                            <td>{transaction.createdAt}</td>
                           </tr>
                         ))}
                       </tbody>

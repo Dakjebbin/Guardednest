@@ -8,5 +8,4 @@ const fundSchema = new mongoose.Schema({
 
 const fundModel = mongoose.model("funds", fundSchema);
 
-// Use ES6 export
 export default fundModel;

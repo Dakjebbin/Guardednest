@@ -5,6 +5,8 @@ const transactionSchema = new mongoose.Schema({
   type: { type: String, required: true },
   amount: { type: Number, required: true },
   status: { type: String, required: true, enum: ["pending", "success", "failed", "progress"] },
+},{
+  timestamps: true
 });
 
 const transactionModel = mongoose.model("transaction", transactionSchema);

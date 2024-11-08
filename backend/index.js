@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
@@ -9,13 +10,15 @@ import userModel from "./models/User.js";
 import fundModel from "./models/Fund.js";
 import transactionModel from "./models/Transact.js";
 import withdrawModel from "./models/Withdraw.js";
-import { connectDB } from "./config/db.js";
-import 'dotenv/config.js';
+import dotenv from "dotenv"
+
+dotenv.config()
 
 
 //Middleware
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 2006;
+const dataBase = process.env.MONGODB_URL
 app.use(express.json());
 app.use(cors({
   origin: ['http://localhost:5173', 'http://localhost:5174'],
@@ -38,9 +41,14 @@ app.use((err, req, res, next) => {
 });
 
 
-
 // db connect
-connectDB();
+mongoose.connect(dataBase).then(() => {
+  console.log("DB Connected");
+  app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+  }); 
+})
+
 
 
 const createToken = (id, username) => {
@@ -667,6 +675,4 @@ app.get('/',(req, res) => {
   res.send('API Working')
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+

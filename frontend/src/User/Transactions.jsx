@@ -227,6 +227,7 @@ export default function Transactions() {
                     <thead>
                       <tr>
                         <td>Transaction</td>
+                        
                         <td>Amount</td>
                         <td>Status</td>
                       </tr>
