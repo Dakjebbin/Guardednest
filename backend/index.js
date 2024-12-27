@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import bodyParser from "body-parser";
+//import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import bcrypt from "bcrypt";
 import validator from "validator";
@@ -21,20 +21,10 @@ const port = process.env.PORT || 2006;
 const dataBase = process.env.MONGODB_URL
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
-  credentials: true,
-}));
+   origin: ['http://localhost:5173', 'http://localhost:5174'],
+   credentials: true,
+ }));
 app.use(cookieParser());
-app.use(bodyParser.json());
-// app.use(session({
-//   secret: 'secret',
-//   resave: false,
-//   saveUninitialized: false,
-//   cookie: {
-//     secure: false,
-//     maxAge: 1000 * 60 * 60 * 24
-//   }
-// }))
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: "Something went wrong" });
@@ -51,10 +41,6 @@ mongoose.connect(dataBase).then(() => {
 
 
 
-const createToken = (id, username) => {
-  return jwt.sign({ id, username }, process.env.JWT_SECRET, { expiresIn: '1h' });
-};
- 
 
 
 // const verifyToken = (req, res, next) => {
@@ -76,26 +62,6 @@ const createToken = (id, username) => {
 
 // Registration endpoint
 
-const verifyToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ success: false, message: "Authorization header missing or malformed" });
-  }
-
-  const token = authHeader.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ success: false, message: "No token provided" });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(403).json({ success: false, message: "Failed to authenticate token" });
-    }
-    req.userId = decoded.id; 
-    req.username = decoded.username; 
-    next();
-  });
-};
 
 
 app.post("/signup", async (req, res) => {
@@ -150,9 +116,9 @@ app.post("/signup", async (req, res) => {
       password: hashedPassword,
     });
 
-    // Create a token for the new user
-    const token = createToken(newUser._id, newUser.username);
-    res.status(201).json({ success: true, token });
+    // // Create a token for the new user
+    // const token = createToken(newUser._id, newUser.username);
+    // res.status(201).json({ success: true, token });
   } catch (error) {
     console.error("Signup error:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
@@ -166,6 +132,16 @@ app.post("/login", async (req, res) => {
 
   try {
     const user = await userModel.findOne({ username });
+
+    if(!username || !password) {
+        res.status(404).json({
+          success: false,
+          message: "All Fields Required"
+        })
+        return;
+    }
+
+
     if (!user) {
       return res.json({ success:false, message: "User Not Found" });
     }
@@ -173,11 +149,41 @@ app.post("/login", async (req, res) => {
     if (!passwordMatch) {
       return res.json({ success:false, message: "invalid password" });
     }
-    const token = createToken(user._id, user.username);
-    res.json({ success: true, token});
+    // const token = createToken(user._id, user.username);
+    // res.json({ success: true, token});
 
+    const AccessToken = jwt.sign(
+      {accessToken: user._id},
+       process.env.JWT_SECRET_access, 
+      {expiresIn: process.env.accessTime}
+    );
+
+    const RefreshToken = jwt.sign(
+      {refreshToken: user._id},
+       process.env.JWT_SECRET_refresh, 
+      {expiresIn: process.env.refreshTime}
+    );
+
+  res.cookie("accesstoken", AccessToken, {
+   // httpOnly: true,
+   // secure: true,
+    sameSite: 'none',
+    maxAge: 30 * 60 * 1000
+  })
+  res.cookie("refreshtoken", RefreshToken, {
+    //httpOnly: true,
+    //secure: true,
+    sameSite: 'none',
+    maxAge: 2 * 60 * 60 * 1000
+  })
     
-
+  res.status(200).json({
+    success: true,
+    message: "login successful",
+   
+  });
+    
+    
   } catch (error) {
     console.log(error);
     res.json({ success:false, message: "Internal Server Error" });
@@ -210,7 +216,7 @@ app.get('/users/:username', async (req, res) => {
   }
 });
 
-app.post("/saveData", verifyToken, async (req, res) => {
+app.post("/saveData",  async (req, res) => {
   const { balance, profit } = req.body;
   // Save balance and profit to the database
   try {
@@ -256,7 +262,7 @@ app.post("/saveData", verifyToken, async (req, res) => {
 
 // Endpoint to add funds
 
-app.post("/userData", verifyToken, async (req, res) => {
+app.post("/userData", async (req, res) => {
   try {
     const data = await userModel.findOne({ username: req.username });
     if (data) {
@@ -311,7 +317,7 @@ app.post("/userData", verifyToken, async (req, res) => {
 
 // Endpoint to retrieve fund data
 
-app.post("/user/fund", verifyToken, async (req, res) => {
+app.post("/user/fund",  async (req, res) => {
   const { amount, plan } = req.body;
 
   try {
@@ -359,7 +365,7 @@ app.post("/user/fund", verifyToken, async (req, res) => {
 // });
 
 
-app.post("/fundData", verifyToken, async (req, res) => {
+app.post("/fundData", async (req, res) => {
   try {
     const fund = await fundModel.findOne({ username: req.username });
 
@@ -432,6 +438,7 @@ app.get("/transactions/:username", async (req, res) => {
 });
 
 
+//for the admin panel to update status
 app.patch("/transactions-update/:id", async (req, res) => {
   const { id } = req.params; // Get the transaction ID from the URL parameters
   const { status } = req.body;
@@ -545,7 +552,7 @@ app.post("/transactions-add", async (req, res) => {
 // });
 
 
-app.post("/withdraw", verifyToken, async (req, res) => {
+app.post("/withdraw",  async (req, res) => {
   const { acctnum, amount, acctname, bank, paypal, wallet, cashtag } = req.body;
   if (!req.username) {
     return res.status(400).json({ status: "error", message: "Username is missing" });

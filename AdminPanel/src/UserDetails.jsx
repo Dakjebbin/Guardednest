@@ -68,7 +68,7 @@ export default function UserDetails() {
 
         <ul>
           <li>
-            <Link to={"/admin"}>
+            <Link to={"/"}>
               <span className="icon">
                 <ion-icon name="home-outline"></ion-icon>
               </span>

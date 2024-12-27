@@ -8,11 +8,12 @@ import "../style/dash.css";
 export default function Dash() {
   const [isNavActive, setNavActive] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState([]);  
   const [balance, setBalance] = useState(0.0);
   const [profit, setProfit] = useState(0.0);
   const { username } = useParams();
   const navigate = useNavigate();
+  
 
   const navigateToFund = () => {
     navigate(`/user/${username}/fund`);
@@ -112,6 +113,7 @@ export default function Dash() {
         const data = await response.json();
         if (data.status === "ok") {
           const fetchedTransactions = data.data;
+          
           setTransactions(fetchedTransactions);
 
           let newBalance = balance || 0;
@@ -140,6 +142,19 @@ export default function Dash() {
     };
     fetchTransactions();
   }, [username]);
+
+  // Helper function to format the MongoDB timestamp to a short format date
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
+
+
+ 
 
   return (
     <>
@@ -290,7 +305,7 @@ export default function Dash() {
                                 ] || transaction.status}
                               </span>
                             </td>
-                            <td>{transaction.createdAt}</td>
+                            <td>{formatDate(transaction.createdAt)}</td>
                           </tr>
                         ))}
                       </tbody>

@@ -79,7 +79,7 @@ export default function Admin() {
 
         <ul>
           <li>
-            <Link to={"/admin"}>
+            <Link to={"/"}>
               <span className="icon">
                 <ion-icon name="home-outline"></ion-icon>
               </span>
@@ -156,6 +156,8 @@ export default function Admin() {
                 >
                   View Usercard
                 </button>
+
+                
                 </div>
                 
               </div>

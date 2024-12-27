@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     balance: { type: Number, default: 0 },
     profit: { type: Number, default: 0 },
+    isAdmin: {
+        type: String,
+        default: "USER",       
+    }
 },{
     timestamps: true
 });
