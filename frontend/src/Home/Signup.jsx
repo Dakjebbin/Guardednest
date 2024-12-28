@@ -8,6 +8,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios"
 
 const countries = [
   { value: "", label: "Select Country" },
@@ -31,6 +32,8 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  const baseUrl = import.meta.env.VITE_BASEURL;
+  axios.defaults.withCredentials = true
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -51,12 +54,7 @@ export default function Signup() {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const response = await axios.post(`${baseUrl}/auth/register`, {
           username,
           fname,
           lname,
@@ -68,26 +66,35 @@ export default function Signup() {
           password,
           balance: "--",  // Assuming you need these fields in the signup
           profit: "--",
-        }),
+        
+      },{
+        withCredentials: true,
       });
 
-      const data = await response.json();
+     if (response.status === 200) {
+      toast.success("Registration Successful");
+     }  else if(response.data.success === false) {
+      toast.error("Registration failed: " + (response.error || 'Unknown error'));
+    }  
 
-      if (!response.ok) {
-        throw new Error(data.error || 'An unknown error occurred');
-      }
-
-      if (data.success) {
-        // Store the token in local storage or state for further requests
-        localStorage.setItem("token", data.token);
-        toast.success("Registration Successful");
-        navigate("/login");
-      } else {
-        toast.error("Registration failed: " + (data.error || 'Unknown error'));
-      }
+    setUserName("");
+    setFirstName("");
+    setLastName("");
+    setAddress("");
+    setCountry("");
+    setEmail("");
+    setPassword("");
+    setDate("");
+    setPhone("");
+    
+    navigate("/login");
 
     } catch (error) {
-      toast.error("An error occurred: " + error.message);
+     if (error.status === 400) {
+       toast.error("Email address already in use" || error.message);
+     } else if (error.status === 409) {
+      toast.error("Username already in Use")
+     } 
     }
   };
 
@@ -149,6 +156,7 @@ export default function Signup() {
                     type={showPassword ? "text" : "password"}
                     id="password"
                     required
+                    placeholder="Enter your 8 digits Password"
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <div className="eye-button" onClick={() => setShowPassword(!showPassword)}

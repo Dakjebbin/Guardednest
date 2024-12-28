@@ -1,16 +1,16 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-//import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import bcrypt from "bcrypt";
-import validator from "validator";
+
+
 import jwt from "jsonwebtoken";
 import userModel from "./models/User.js";
 import fundModel from "./models/Fund.js";
 import transactionModel from "./models/Transact.js";
 import withdrawModel from "./models/Withdraw.js";
 import dotenv from "dotenv"
+import authRoutes from "./routes/user.routes.js"
 
 dotenv.config()
 
@@ -30,6 +30,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Something went wrong" });
 });
 
+app.use("/auth", authRoutes)
+
 
 // db connect
 mongoose.connect(dataBase).then(() => {
@@ -41,180 +43,21 @@ mongoose.connect(dataBase).then(() => {
 
 
 
-
-
-// const verifyToken = (req, res, next) => {
-//   const token = req.headers["authorization"]?.split(" ")[1]; // Extract token from Authorization header
-//   if (!token) {
-//     return res.status(401).json({ success: false, message: "No token provided" });
-//   }
-
-//   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-//     if (err) {
-//       return res.status(403).json({ success: false, message: "Failed to authenticate token" });
+// app.get('/users/:username', async (req, res) => {
+//   const { username } = req.params;  // Get username from route parameters
+//   try {
+//     const user = await userModel.findOne({ username });
+//     if (!user) {
+//       return res.status(404).json({ status: 'error', message: 'User not found' });
 //     }
-//     req.userId = decoded.id; // Save user ID from token
-//     req.username = decoded.username; // Save username from token
-//     next();
-//   });
-// };
 
+//     // req.session.username = user.username;
 
-// Registration endpoint
-
-
-
-app.post("/signup", async (req, res) => {
-  const {
-    username,
-    fname,
-    lname,
-    date,
-    address,
-    country,
-    phone,
-    email,
-    password,
-  } = req.body;
-
-  try {
-    // Check if email or username already exists
-    const existingEmail = await userModel.findOne({ email });
-    const existingUser = await userModel.findOne({ username });
-
-    if (existingEmail) {
-      return res.status(400).json({ success: false, message: "Email already in use" });
-    }
-    if (existingUser) {
-      return res.status(409).json({ success: false, message: "Username not available" });
-    }
-
-    // Validate email format
-    if (!validator.isEmail(email)) {
-      return res.status(400).json({ success: false, message: "Please enter a valid email" });
-    }
-
-    // Validate password length
-    if (password.length < 8) {
-      return res.status(400).json({ success: false, message: "Please enter a strong password (min. 8 characters)" });
-    }
-
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create a new user
-    const newUser = await userModel.create({
-      username,
-      fname,
-      lname,
-      date,
-      address,
-      country,
-      phone,
-      email,
-      password: hashedPassword,
-    });
-
-    // // Create a token for the new user
-    // const token = createToken(newUser._id, newUser.username);
-    // res.status(201).json({ success: true, token });
-  } catch (error) {
-    console.error("Signup error:", error);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-});
-
-
-// Login endpoint
-app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    const user = await userModel.findOne({ username });
-
-    if(!username || !password) {
-        res.status(404).json({
-          success: false,
-          message: "All Fields Required"
-        })
-        return;
-    }
-
-
-    if (!user) {
-      return res.json({ success:false, message: "User Not Found" });
-    }
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return res.json({ success:false, message: "invalid password" });
-    }
-    // const token = createToken(user._id, user.username);
-    // res.json({ success: true, token});
-
-    const AccessToken = jwt.sign(
-      {accessToken: user._id},
-       process.env.JWT_SECRET_access, 
-      {expiresIn: process.env.accessTime}
-    );
-
-    const RefreshToken = jwt.sign(
-      {refreshToken: user._id},
-       process.env.JWT_SECRET_refresh, 
-      {expiresIn: process.env.refreshTime}
-    );
-
-  res.cookie("accesstoken", AccessToken, {
-   // httpOnly: true,
-   // secure: true,
-    sameSite: 'none',
-    maxAge: 30 * 60 * 1000
-  })
-  res.cookie("refreshtoken", RefreshToken, {
-    //httpOnly: true,
-    //secure: true,
-    sameSite: 'none',
-    maxAge: 2 * 60 * 60 * 1000
-  })
-    
-  res.status(200).json({
-    success: true,
-    message: "login successful",
-   
-  });
-    
-    
-  } catch (error) {
-    console.log(error);
-    res.json({ success:false, message: "Internal Server Error" });
-  }
-});
-
-app.get('/users', async (req, res) => {
-  try {
-    const users = await userModel.find({}); // Fetch all users
-    res.json({ status: 'ok', data: users });
-  } catch (error) {
-    res.status(500).json({ status: 'error', message: 'Error fetching users: ' + error.message });
-  }
-});
-
-
-app.get('/users/:username', async (req, res) => {
-  const { username } = req.params;  // Get username from route parameters
-  try {
-    const user = await userModel.findOne({ username });
-    if (!user) {
-      return res.status(404).json({ status: 'error', message: 'User not found' });
-    }
-
-    // req.session.username = user.username;
-
-    res.json({ status: 'ok', data: user });
-  } catch (error) {
-    res.status(500).json({ status: 'error', message: 'Error fetching user: ' + error.message });
-  }
-});
+//     res.json({ status: 'ok', data: user });
+//   } catch (error) {
+//     res.status(500).json({ status: 'error', message: 'Error fetching user: ' + error.message });
+//   }
+// });
 
 app.post("/saveData",  async (req, res) => {
   const { balance, profit } = req.body;
@@ -231,7 +74,6 @@ app.post("/saveData",  async (req, res) => {
   }
 });
 
-// app.post("/userData", async (req, res) => {
 //   const { token } = req.body;
 //   console.log("Received token:", token);
 //   try {

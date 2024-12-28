@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // eslint-disable-line
 import goog from "../assets/google.svg";
 import "../style/home.css";
 import eye from "../assets/eye.svg"; 
@@ -8,48 +8,47 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 export default function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+ // const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+  const baseUrl = import.meta.env.VITE_BASEURL;
+  axios.defaults.withCredentials = true
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!username || !password) {
+      toast.error('Please all fields are required');
+      return;
+    }
+
     try {
-      const response = await fetch("http://localhost:3001/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
+      const response = await axios.post(`${baseUrl}/auth/login`, 
+        {
           username,
           password,
-        }),
+      },{
+        withCredentials: true,
       });
 
-      const data = await response.json();
 
-      if (response.ok) {
-        if (data.success) {
-          toast.success("Login successful!");
-          window.localStorage.setItem("token", data.token);
-          window.localStorage.setItem("loggedIn", true);
-          navigate(`/user/${username}`);
-        } else {
-          // Handle unsuccessful login response
-          toast.error(data.message || "Login failed. Please check your credentials.");
-        }
-      } else {
-        // Handle server errors
-        toast.error("Server error: " + (data.message || "Please try again later."));
-      }
+if (response.status === 200) {
+  toast.success("Login Successfull")
+  setUserName('');
+        setPassword('');
+}
+
     } catch (error) {
-      toast.error("An error occurred: " + error.message);
+      if (error.status === 400) {
+        toast.error("Invalid Credentials")
+      } else if(error.status === 409) {
+        toast.error("Invalid Credentials");
+      }
     }
   };
 
