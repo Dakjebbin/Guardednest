@@ -9,13 +9,13 @@ import serv5 from "../assets/services/5.png";
 import serv6 from "../assets/services/6.png";
 
 import "../style/home.css";
-import Header from "./Header";
+
 
 function Services() {
  
   return (
     <>
-     <Header/>
+  
 
       <div className="container">
         <div className="text4">
@@ -193,74 +193,6 @@ function Services() {
           </div>
         </div>
       </div>
-
-      <footer>
-        <div className="foot">
-          <div className="col0">
-            <img src={logo2} alt="logo" />
-            <h3>
-              Welcome to our investment site! We offer the best,
-              <br />
-              most affordable products and services around.
-              <br />
-              Shop now and start finding great deals!
-            </h3>
-          </div>
-
-          <div className="col1">
-            <ul>
-              <p>Quick link</p>
-              <li>
-                <Link to={"/home"}>Home</Link>
-              </li>
-              <li>
-                <Link to={"/about"}>About</Link>
-              </li>
-              <li>
-                <Link to={"/services"}>Services</Link>
-              </li>
-              <li>
-                <Link to={"/contact"}>Contact Us</Link>
-              </li>
-            </ul>
-          </div>
-          <div className="col2">
-            <ul>
-              <p>Account</p>
-              <li>
-                <Link to={"/login"}>Login</Link>
-              </li>
-              <li>
-                <Link to={"/register"}>Sign up</Link>
-              </li>
-              <li>
-                <Link to={"/human-rights"}>Human Rights Policy</Link>
-              </li>
-              <li>
-                <Link to={"/support"}>Support Center</Link>
-              </li>
-            </ul>
-          </div>
-          <div className="col3">
-            <ul>
-              <p>Support</p>
-              <li>
-                <Link to={"/policy"}>Privacy Policy</Link>
-              </li>
-              <li>
-                <Link to={"/terms"}>Terms&Conditions</Link>
-              </li>
-              <li>
-                <Link to={"/faq"}>FAQs</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="copyright">
-          <h3>© 2023 All Rights Reserved By GNF</h3>
-        </div>
-      </footer>
     </>
   );
 }

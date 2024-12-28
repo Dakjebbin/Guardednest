@@ -1,15 +1,14 @@
-import { Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../style/home.css";
-import Header from "./Header";
-import Footer from "./Footer";
+
 
 function Contact() {
  
 
   return (
     <>
-     <Header/>
+ 
       <div className="container">
         <div className="row">
           <div className="conleft">
@@ -91,7 +90,6 @@ function Contact() {
         </div>
       </div>
 
-     <Footer/>
     </>
   );
 }

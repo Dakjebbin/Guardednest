@@ -1,13 +1,11 @@
-import React from 'react'
-import Header from './Header';
-import Footer from './Footer';
+
+
 import '../style/human.css'
 
 const Human = () => {
   return (
     <div>
-      <Header/>
-      <div className="container">
+           <div className="container">
       
 <h1 className='human-header'> Human Rights Policy (GNF)</h1>
 
@@ -71,7 +69,7 @@ Violations of this policy will be promptly investigated and addressed.
 </div>
 
     </div>
-      <Footer/>
+   
 
     </div>
   )

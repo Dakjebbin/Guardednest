@@ -4,20 +4,24 @@ import { useState, useEffect } from "react";
 import xmark from "../assets/xmark.svg";
 import logo1 from "../assets/logosmall.png";
 import "../style/dash.css";
+import { useAuthContext } from "../context/auth.context";
+import { toast } from "react-toastify";
+
 
 export default function Dash() {
   const [isNavActive, setNavActive] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userDatas, setUserDatas] = useState(null);
   const [transactions, setTransactions] = useState([]);  
   const [balance, setBalance] = useState(0.0);
   const [profit, setProfit] = useState(0.0);
   const { username } = useParams();
   const navigate = useNavigate();
   
+  const { userData } = useAuthContext();
 
-  const navigateToFund = () => {
-    navigate(`/user/${username}/fund`);
-  };
+  // const navigateToFund = () => {
+  //   navigate(`/user/${username}/fund`);
+  // };
 
   function toggleNavigation() {
     setNavActive(!isNavActive);
@@ -34,114 +38,122 @@ export default function Dash() {
     pending: "Pending",
   };
 
-  const logOut = async () => {
-    const token = window.localStorage.getItem("token");
+if (!userData) {
+  toast.error("Please login to view this page");
+  return
+}  
+
+console.log(userData);
+
+
+  // const logOut = async () => {
+  //   const token = window.localStorage.getItem("token");
   
-    if (!token) {
-      alert("No token found. Please log in again.");
-      return;
-    }
-    try {
-      const response = await fetch("http://localhost:3001/saveData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": `Bearer ${token}`, // Include token in request headers
-        },
-        body: JSON.stringify({ balance, profit }),
-      });
+  //   if (!token) {
+  //     alert("No token found. Please log in again.");
+  //     return;
+  //   }
+  //   try {
+  //     const response = await fetch("http://localhost:3001/saveData", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Accept": "application/json",
+  //         "Authorization": `Bearer ${token}`, // Include token in request headers
+  //       },
+  //       body: JSON.stringify({ balance, profit }),
+  //     });
 
-      const data = await response.json();
-      if (data.status === "ok") {
-        console.log("Balance and profit saved successfully.");
-      } else {
-        console.error("Error saving balance and profit:", data.error);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+  //     const data = await response.json();
+  //     if (data.status === "ok") {
+  //       console.log("Balance and profit saved successfully.");
+  //     } else {
+  //       console.error("Error saving balance and profit:", data.error);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
 
-    window.localStorage.clear();
-    navigate("/login");
-  };
+  //   window.localStorage.clear();
+  //   navigate("/login");
+  // };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!username) return;
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     if (!username) return;
 
-      try {
-        const response = await fetch(
-          `http://localhost:3001/users/${username}`,
-          {
-            method: "GET",
-            credentials: "include", // Include cookies
-          }
-        );
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:3001/users/${username}`,
+  //         {
+  //           method: "GET",
+  //           credentials: "include", // Include cookies
+  //         }
+  //       );
 
-        const data = await response.json();
-        if (data.status === "ok") {
-          setUserData(data.data); // Set the user data with the fetched user info
-        } else {
-          console.error("Error fetching user data:", data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
+  //       const data = await response.json();
+  //       if (data.status === "ok") {
+  //         setUserData(data.data); // Set the user data with the fetched user info
+  //       } else {
+  //         console.error("Error fetching user data:", data.error);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
 
-    fetchUserData();
-  }, [username]); // Added username in dependency array to trigger useEffect when username changes.
+  //   fetchUserData();
+  // }, [username]); // Added username in dependency array to trigger useEffect when username changes.
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      if (!username) return;
-      try {
-        const response = await fetch(
-          `http://localhost:3001/transactions/${username}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch transactions");
-        }
-        const data = await response.json();
-        if (data.status === "ok") {
-          const fetchedTransactions = data.data;
+  // useEffect(() => {
+  //   const fetchTransactions = async () => {
+  //     if (!username) return;
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:3001/transactions/${username}`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Accept: "application/json",
+  //           },
+  //         }
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch transactions");
+  //       }
+  //       const data = await response.json();
+  //       if (data.status === "ok") {
+  //         const fetchedTransactions = data.data;
           
-          setTransactions(fetchedTransactions);
+  //         setTransactions(fetchedTransactions);
 
-          let newBalance = balance || 0;
-          let newProfit = profit || 0;
+  //         let newBalance = balance || 0;
+  //         let newProfit = profit || 0;
 
-          fetchedTransactions.forEach((transaction) => {
-            if (transaction.status.toLowerCase() === "success") {
-              if (transaction.type.toLowerCase() === "profit") {
-                newProfit += transaction.amount;
-              } else if (transaction.type.toLowerCase() === "withdrawal") {
-                newBalance -= transaction.amount;
-              } else {
-                newBalance += transaction.amount;
-              }
-            }
-          });
+  //         fetchedTransactions.forEach((transaction) => {
+  //           if (transaction.status.toLowerCase() === "success") {
+  //             if (transaction.type.toLowerCase() === "profit") {
+  //               newProfit += transaction.amount;
+  //             } else if (transaction.type.toLowerCase() === "withdrawal") {
+  //               newBalance -= transaction.amount;
+  //             } else {
+  //               newBalance += transaction.amount;
+  //             }
+  //           }
+  //         });
 
-          setBalance(newBalance);
-          setProfit(newProfit);
-        } else {
-          console.error("Error fetching transactions:", data.error);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-    fetchTransactions();
-  }, [username]);
+  //         setBalance(newBalance);
+  //         setProfit(newProfit);
+  //       } else {
+  //         console.error("Error fetching transactions:", data.error);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //     }
+  //   };
+  //   fetchTransactions();
+  // }, [username]);
 
   // Helper function to format the MongoDB timestamp to a short format date
   const formatDate = (timestamp) => {

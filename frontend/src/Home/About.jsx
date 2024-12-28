@@ -1,14 +1,12 @@
 import team from "../assets/team/4.jpg";
 import "../style/home.css";
-import Header from "./Header";
-import Footer from "./Footer";
+
 
 function About() {
   
 
   return (
     <>
-     <Header/>
 
       <div className="container">
         <div className="content">
@@ -121,7 +119,6 @@ function About() {
         </div>
       </div>
 
-    <Footer/>
     </>
   );
 }

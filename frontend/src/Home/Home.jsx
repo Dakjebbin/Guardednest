@@ -1,15 +1,12 @@
 import { Link } from "react-router-dom";
 import vid from "../assets/video1.mp4";
 import "../style/home.css";
-import Footer from "./Footer";
-import Header from "./Header";
-import Payment from "../User/Payment";
+// import Payment from "../User/Payment";
 
 
 function Home() {
   return (
     <>
-    <Header/>
    
       <div className="container">
         <div className="sect1">
@@ -67,7 +64,6 @@ function Home() {
         </div>
       </div>
 
-      <Footer/>
     </>
   );
 }

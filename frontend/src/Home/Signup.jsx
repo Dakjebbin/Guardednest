@@ -4,8 +4,6 @@ import goog from "../assets/google.svg";
 import eye from "../assets/eye.svg"; // Eye icon for showing password
 import eyeOff from "../assets/eye-off.svg"; // Eye icon for hiding password
 import "../style/home.css";
-import Header from "./Header";
-import Footer from "./Footer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
@@ -100,7 +98,7 @@ export default function Signup() {
 
   return (
     <>
-      <Header />
+     
       <div className="reg">
         <div className="form">
           <div className="sect">
@@ -190,7 +188,7 @@ export default function Signup() {
         </div>
       </div>
       <ToastContainer />
-      <Footer />
+    
     </>
   );
 }

@@ -29,33 +29,38 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 function App() {
 
     return(
-      <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/about' element={<About />}></Route>
-        <Route path='/services' element={<Services />}></Route>
-        <Route path='/signup' element={<Signup />}></Route>
-        <Route path='/login' element={<Login />}></Route>
-        <Route path='/contact' element={<Contact />}></Route>
-        <Route path='/policy' element={<Policy />}></Route>
-        <Route path='/terms' element={<Terms />}></Route>
-        <Route path='/faq' element={<Faq />}></Route>
-        <Route path='/humanrights' element={<Human/>}></Route>
-        <Route path='/user/:username' element={<Dash />}></Route>
-        <Route path='/user/:username/fund' element={<Fund />}></Route>
-        <Route path="/user/:username/fund/payment" element={<Payment />}></Route>
-        <Route path='/user/:username/fund/payment/confirmation' element={<Confirmation />}></Route>
-        <Route path='/user/:username/withdrawals' element={<Withdrawals />}></Route>
-        <Route path='/user/:username/withdrawals/select' element={<Select />}></Route>
-        <Route path='/user/:username/withdrawals/select/bank' element={<Bank />}></Route>
-        <Route path='/user/:username/withdrawals/select/crypto' element={<Crypto />}></Route>
-        <Route path='/user/:username/withdrawals/select/paypal' element={<Paypal />}></Route>
-        <Route path='/user/:username/withdrawals/select/cashapp' element={<Cashapp />}></Route>
-        <Route path='/user/:username/settings' element={<Settings />}></Route>
-        <Route path='/user/:username/transactions' element={<Transactions />}></Route>
+      
+      <main>
+        <Home />
+        
+      </main>
+      // <BrowserRouter>
+      // <Routes>
+      //   <Route path='/' element={<Home />}></Route>
+      //   <Route path='/about' element={<About />}></Route>
+      //   <Route path='/services' element={<Services />}></Route>
+      //   <Route path='/signup' element={<Signup />}></Route>
+      //   <Route path='/login' element={<Login />}></Route>
+      //   <Route path='/contact' element={<Contact />}></Route>
+      //   <Route path='/policy' element={<Policy />}></Route>
+      //   <Route path='/terms' element={<Terms />}></Route>
+      //   <Route path='/faq' element={<Faq />}></Route>
+      //   <Route path='/humanrights' element={<Human/>}></Route>
+      //   <Route path='/user' element={<Dash />}></Route>
+      //   <Route path='/user/:username/fund' element={<Fund />}></Route>
+      //   <Route path="/user/:username/fund/payment" element={<Payment />}></Route>
+      //   <Route path='/user/:username/fund/payment/confirmation' element={<Confirmation />}></Route>
+      //   <Route path='/user/:username/withdrawals' element={<Withdrawals />}></Route>
+      //   <Route path='/user/:username/withdrawals/select' element={<Select />}></Route>
+      //   <Route path='/user/:username/withdrawals/select/bank' element={<Bank />}></Route>
+      //   <Route path='/user/:username/withdrawals/select/crypto' element={<Crypto />}></Route>
+      //   <Route path='/user/:username/withdrawals/select/paypal' element={<Paypal />}></Route>
+      //   <Route path='/user/:username/withdrawals/select/cashapp' element={<Cashapp />}></Route>
+      //   <Route path='/user/:username/settings' element={<Settings />}></Route>
+      //   <Route path='/user/:username/transactions' element={<Transactions />}></Route>
 
-      </Routes>
-      </BrowserRouter>
+      // </Routes>
+      // </BrowserRouter>
     );
 }
 

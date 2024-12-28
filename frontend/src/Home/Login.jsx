@@ -4,8 +4,6 @@ import goog from "../assets/google.svg";
 import "../style/home.css";
 import eye from "../assets/eye.svg"; 
 import eyeOff from "../assets/eye-off.svg"
-import Header from "./Header";
-import Footer from "./Footer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
@@ -17,12 +15,15 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const baseUrl = import.meta.env.VITE_BASEURL;
-  axios.defaults.withCredentials = true
+  axios.defaults.withCredentials = true;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!username || !password) {
+    const trimmedUsername = username.trim();
+    const trimmedPassword = password.trim();
+
+    if (!trimmedUsername || !trimmedPassword) {
       toast.error('Please all fields are required');
       return;
     }
@@ -30,8 +31,8 @@ export default function Login() {
     try {
       const response = await axios.post(`${baseUrl}/auth/login`, 
         {
-          username,
-          password,
+          username: trimmedUsername,
+          password: trimmedPassword,
       },{
         withCredentials: true,
       });
@@ -41,20 +42,23 @@ if (response.status === 200) {
   toast.success("Login Successfull")
   setUserName('');
         setPassword('');
+        window.location.assign("/user")
 }
 
     } catch (error) {
-      if (error.status === 400) {
+      if (error.status === 400) { 
         toast.error("Invalid Credentials")
       } else if(error.status === 409) {
         toast.error("Invalid Credentials");
+      } else {
+        toast.error("An error occurred");
       }
     }
   };
 
   return (
     <>
-      <Header />
+    
       <div className="content">
         <div className="section">
           <div className="login">
@@ -125,7 +129,7 @@ if (response.status === 200) {
         </div>
       </div>
 
-      <Footer />
+      
       <ToastContainer />
     </>
   );
