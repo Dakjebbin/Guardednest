@@ -57,7 +57,7 @@ if (response.status === 200) {
   };
 
   return (
-    <>
+    <div>
     
       <div className="content">
         <div className="section">
@@ -90,6 +90,7 @@ if (response.status === 200) {
                 type="text"
                 id="username"
                 required
+                placeholder="Enter Your Usernam"
                 onChange={(e) => setUserName(e.target.value)}
               />
 
@@ -131,6 +132,6 @@ if (response.status === 200) {
 
       
       <ToastContainer />
-    </>
+    </div>
   );
 }

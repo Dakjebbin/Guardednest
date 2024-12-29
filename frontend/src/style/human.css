@@ -118,12 +118,12 @@ body {
   footer img{
     width: 140px;
   }
-
+/* 
   .foot{
     display: flex;
     justify-content: space-between;
     color: black;
-  }
+  } */
  
   .col0 h3{
     margin: 0;

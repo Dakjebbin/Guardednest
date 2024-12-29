@@ -14,6 +14,7 @@ import Policy from './Home/Policy.jsx'
 import Terms from './Home/Terms.jsx'
 import Faq from './Home/Faq.jsx'
 import Dash from './User/Dash.jsx'
+import Fund from './User/Fund.jsx'
 
 
 const router = createBrowserRouter([
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
         },{
           path: "/user",
           element: <Dash/>
+        },
+        {
+          path:"/user/fund",
+          element: <Fund/>
         }
 ])
 

@@ -1,41 +1,25 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { useState, useEffect } from "react";
 import logo1 from "../assets/logosmall.png";
 import xmark from "../assets/xmark.svg";
 import "../style/dash.css";
+import { toast } from "react-toastify";
+import { useAuthContext } from "../context/auth.context";
 
 function Fund() {
   const [isNavActive, setNavActive] = useState(false);
   const [plan, setPlan] = useState("");
   const [amount, setAmount] = useState("");
-  const [userData, setUserData] = useState("");
   const navigate = useNavigate();
-  const { username } = useParams();
+  const { userData } = useAuthContext();
 
-  // Fetch user data by username
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!username) return;
 
-      try {
-        const response = await fetch(`http://localhost:3001/users/${username}`, {
-          method: 'GET',
-          credentials: 'include', // Include cookies
-        });
-
-        const data = await response.json();
-        if (data.status === 'ok') {
-          setUserData(data.data); // Set the user data with the fetched user info
-        } else {
-          console.error("Error fetching user data:", data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, [username]);
+  if (!userData){
+    toast.error("Please login to view this page");
+    window.location.assign("/login");
+    return;
+ }
+ 
 
   // Toggle navigation menu
   const toggleNavigation = () => {
@@ -47,42 +31,6 @@ function Fund() {
     setNavActive(false);
   };
 
-  // Log out user and save balance and profit
-  const logOut = async () => {
-    const token = window.localStorage.getItem("token");
-    if (!token){
-      alert("No token found. Please log in again.");
-  navigate("/login"); 
-  return;
-    }
-    try {
-      const response = await fetch("http://localhost:3001/saveData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-        // Assuming balance and profit are part of the userData
-        body: JSON.stringify({ 
-          balance: userData.balance, 
-          profit: userData.profit 
-        }),
-      });
-
-      const data = await response.json();
-      if (data.status === "ok") {
-        console.log("Balance and profit saved successfully.");
-      } else {
-        console.error("Error saving balance and profit:", data.error);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-    window.localStorage.clear();
-    navigate("/login");
-  };
 
   // Handle plan selection change
   const handlePlanChange = (e) => {
@@ -111,74 +59,7 @@ function Fund() {
     setPlan(selectedPlan);
   };
 
-  // Handle form submission
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const token = window.localStorage.getItem("token");
 
-  //   try {
-  //     const response = await fetch("http://localhost:3001/user/fund", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Accept: "application/json",
-  //         "Authorization": `Bearer ${token}`, // Include token as Authorization header
-  //       },
-  //       body: JSON.stringify({ plan, amount }),
-  //     });
-
-  //     const data = await response.json();
-
-  //     if (data.status === "ok") {
-  //       alert("Funded Successfully");
-  //       navigate(`/user/${username}/fund/payment`); // Navigate to payment page after successful funding
-  //     } else {
-  //       console.error("Error funding account:", data.error);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding funds:", error);
-  //   }
-  // };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Retrieve the token from localStorage
-    const token = window.localStorage.getItem("token");
-  
-    if (!token) {
-      alert("No token found. Please log in again.");
-      navigate("/login"); // Redirect to login if no token found
-      return;
-    }
-  
-    try {
-      // Send POST request to fund the account, with token in Authorization header
-      const response = await fetch("http://localhost:3001/user/fund", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": `Bearer ${token}`, // Include token in request headers
-        },
-        body: JSON.stringify({ plan, amount }), // Send the selected plan and amount
-      });
-  
-      const data = await response.json();
-      console.log("API Response Data:", data);
-
-
-      if (data._id) {
-        alert("Funded Successfully");
-        console.log("Navigating to payment page...");
-navigate(`/user/${username}/fund/payment`); // Navigate to payment page after successful funding
-      } else {
-        console.error("Error funding account:", data.error || 'unknown error');
-      }
-    } catch (error) {
-      console.error("Error adding funds:", error);
-    }
-  };
   
 
   return (
@@ -196,7 +77,7 @@ navigate(`/user/${username}/fund/payment`); // Navigate to payment page after su
 
           <ul>
             <li>
-              <Link to={`/user/${username}`}>
+              <Link to={"/user"}>
                 <span className="icon">
                   <ion-icon name="home-outline"></ion-icon>
                 </span>
@@ -204,7 +85,7 @@ navigate(`/user/${username}/fund/payment`); // Navigate to payment page after su
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/withdrawals`}>
+              <Link to={"/user"}>
                 <span className="icon">
                   <ion-icon name="wallet-outline"></ion-icon>
                 </span>
@@ -212,7 +93,7 @@ navigate(`/user/${username}/fund/payment`); // Navigate to payment page after su
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/transactions`}>
+              <Link to={"/user/"}>
                 <span className="icon">
                   <ion-icon name="stats-chart-outline"></ion-icon>
                 </span>
@@ -220,7 +101,7 @@ navigate(`/user/${username}/fund/payment`); // Navigate to payment page after su
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/settings`}>
+              <Link to={"/user"}>
                 <span className="icon">
                   <ion-icon name="settings-outline"></ion-icon>
                 </span>
@@ -228,7 +109,7 @@ navigate(`/user/${username}/fund/payment`); // Navigate to payment page after su
               </Link>
             </li>
             <li>
-              <Link to={"/login"} onClick={logOut}>
+              <Link to={"/login"}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -256,7 +137,7 @@ navigate(`/user/${username}/fund/payment`); // Navigate to payment page after su
               <h2>Fund Account</h2>
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <form >
               <label htmlFor="plan">Plan</label>
               <br />
               <select id="plan" value={plan} onChange={handlePlanChange}>

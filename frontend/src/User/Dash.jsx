@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState} from "react";
 import xmark from "../assets/xmark.svg";
 import logo1 from "../assets/logosmall.png";
@@ -11,11 +10,10 @@ import axios from "axios";
 
 export default function Dash() {
   const [isNavActive, setNavActive] = useState(false);
-  const [transactions, setTransactions] = useState([]);  
-  const { username } = useParams();  
+  const [transactions, setTransactions] = useState([]);   
   const { userData } = useAuthContext();
 
-  
+ // const navigate = useNavigate();
 
 
   function toggleNavigation() {
@@ -101,7 +99,7 @@ console.log(userData);
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/withdrawals`}>
+              <Link to={`/user/withdrawals`}>
                 <span className="icon">
                   <ion-icon name="wallet-outline"></ion-icon>
                 </span>
@@ -109,7 +107,7 @@ console.log(userData);
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/transactions`}>
+              <Link to={`/user/transactions`}>
                 <span className="icon">
                   <ion-icon name="stats-chart-outline"></ion-icon>
                 </span>
@@ -117,7 +115,7 @@ console.log(userData);
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/settings`}>
+              <Link to={`/user/settings`}>
                 <span className="icon">
                   <ion-icon name="settings-outline"></ion-icon>
                 </span>
@@ -162,7 +160,9 @@ console.log(userData);
                       })}
                     </div>
                     <div className="bar-1">
-                      <button className="fund" >
+                      
+                      <Link to= "/user/fund">
+                      <button className="fund">
                         <svg
                           className="plus"
                           xmlns="http://www.w3.org/2000/svg"
@@ -179,6 +179,7 @@ console.log(userData);
                         </svg>{" "}
                         Fund Account
                       </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
