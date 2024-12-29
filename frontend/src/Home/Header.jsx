@@ -19,9 +19,9 @@ const Header = () => {
           <Link to="/" className="mainlogo">
             <img src={logo} alt="logo" />
           </Link>
-          <div className="bar" onClick={toggleNavigation}>
+          {/* <div className="bar" onClick={toggleNavigation}>
             <img src={isNavActive ? xmark : bar} alt="menu" />
-          </div>
+          </div> */}
         </div>
         <ul className={`menu ${isNavActive ? 'active' : ''}`}>
           <li>
