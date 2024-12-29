@@ -19,9 +19,7 @@ const Header = () => {
           <Link to="/" className="mainlogo">
             <img src={logo} alt="logo" />
           </Link>
-          {/* <div className="bar" onClick={toggleNavigation}>
-            <img src={isNavActive ? xmark : bar} alt="menu" />
-          </div> */}
+          
         </div>
         <ul className={`menu ${isNavActive ? 'active' : ''}`}>
           <li>
@@ -42,7 +40,12 @@ const Header = () => {
               Sign-in
             </Link>
           </li>
+
         </ul>
+
+        <div className="bar" onClick={toggleNavigation}>
+            <img src={isNavActive ? xmark : bar} alt="menu" />
+          </div> 
       </nav>
     </div>
   );

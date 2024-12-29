@@ -69,13 +69,14 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
+
   
 }
 .mainlogo img {
-  width: 90px;
+  width: 70px;
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 nav .menu li {
@@ -88,7 +89,12 @@ nav .menu li a {
   color: #48505e;
   font-size: 25px;
 }
+
 nav .bar {
+  width: 25px;
+  margin-right: 20px;
+  height: 25px;
+  cursor: pointer;
   display: none;
 }
 
@@ -866,17 +872,6 @@ footer {
     width: 374px;
   }
 
-  nav .bar {
-    margin-top: 35px;
-    margin-left: 12pc;
-    width: 20px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-
   nav .menu li {
     display: block;
     text-align: center;
@@ -1222,15 +1217,7 @@ footer {
   }
 
   nav .bar {
-    margin-top: 20px;
-    margin-left: 15pc;
-    width: 50px;
-    height: 60px;
     display: block;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.5rem;
-    cursor: pointer;
   }
 
   nav .menu li {
@@ -1710,6 +1697,14 @@ footer {
   
   justify-content: space-between;
   color: black;
+}
+
+nav .bar{
+  display: block;
+}
+
+nav ul{
+  display: none;
 }
 
 .col0{
