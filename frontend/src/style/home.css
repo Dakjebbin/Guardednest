@@ -857,6 +857,10 @@ footer {
     display: flex;
   }
 
+  nav .bar{
+    display: block;
+  }
+
   nav .menu {
     position: fixed;
     font-size: 5pc;
