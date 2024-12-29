@@ -36,9 +36,9 @@ export const validateUser = async (req, res, next) => {
                       );
 
                       res.cookie("accesstoken", AccessToken, {
-                        // httpOnly: true,
+                        httpOnly: true,
                          secure: false,
-                         sameSite: 'none',
+                         sameSite: 'Lax',
                          maxAge: 30 * 60 * 1000
                        })
                        const { password, ...rest } = validUser._doc;

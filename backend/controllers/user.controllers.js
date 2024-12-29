@@ -113,15 +113,15 @@ const loginUser = async (req, res) => {
       );
   
     res.cookie("accesstoken", AccessToken, {
-     // httpOnly: true,
-     // secure: true,
-      sameSite: 'none',
+     httpOnly: true,
+     secure: false,
+      sameSite: 'Lax',
       maxAge: 30 * 60 * 1000
     })
     res.cookie("refreshtoken", RefreshToken, {
-      //httpOnly: true,
-      //secure: true,
-      sameSite: 'none',
+      httpOnly: true,
+      secure: false,
+      sameSite: 'Lax',
       maxAge: 2 * 60 * 60 * 1000
     })
       
@@ -166,4 +166,30 @@ const loginUser = async (req, res) => {
       }
     }
 
-  export {registerUser, loginUser, allUsers, validate}
+    const logout = async (req, res) => {
+      try{
+        res.clearCookie('accesstoken', {
+          httpOnly: true,
+          secure: false,
+          sameSite: 'Lax',
+        });
+        res.clearCookie('refreshtoken', {
+          httpOnly: true,
+          secure: false,
+          sameSite: 'Lax',
+        });
+       
+        res.status(200).json({
+           success: true,
+            message: 'Logged out' 
+          });
+      } catch {
+        res.status(500).json({
+          success: false,
+          message: "Internal server error",
+        });
+      }
+      
+    }
+
+  export {registerUser, loginUser, allUsers, validate, logout}

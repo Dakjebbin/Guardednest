@@ -1,27 +1,22 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import xmark from "../assets/xmark.svg";
 import logo1 from "../assets/logosmall.png";
 import "../style/dash.css";
 import { useAuthContext } from "../context/auth.context";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 
 export default function Dash() {
   const [isNavActive, setNavActive] = useState(false);
-  const [userDatas, setUserDatas] = useState(null);
   const [transactions, setTransactions] = useState([]);  
-  const [balance, setBalance] = useState(0.0);
-  const [profit, setProfit] = useState(0.0);
-  const { username } = useParams();
-  const navigate = useNavigate();
-  
+  const { username } = useParams();  
   const { userData } = useAuthContext();
 
-  // const navigateToFund = () => {
-  //   navigate(`/user/${username}/fund`);
-  // };
+  
+
 
   function toggleNavigation() {
     setNavActive(!isNavActive);
@@ -43,118 +38,34 @@ if (!userData) {
   return
 }  
 
+const baseUrl = import.meta.env.VITE_BASEURL;
+axios.defaults.withCredentials = true
+
+const handleLogout = async () => {
+  try {
+    const response = await axios.post(`${baseUrl}/auth/logout`, {
+      withCredentials: true,
+    })
+
+    if (response.status === 200) {
+      toast.success("Logout successful");
+      window.location.assign("/") 
+    } else{
+      toast.error("An error occurred. Please try again");
+    }
+  } catch (error) {
+    if (error instanceof axios.AxiosError) {
+      console.log(
+         error?.response?.data
+       );
+     } else {
+       console.log("reg error => ", error);
+     }
+  }
+}
+
 console.log(userData);
-
-
-  // const logOut = async () => {
-  //   const token = window.localStorage.getItem("token");
-  
-  //   if (!token) {
-  //     alert("No token found. Please log in again.");
-  //     return;
-  //   }
-  //   try {
-  //     const response = await fetch("http://localhost:3001/saveData", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "Accept": "application/json",
-  //         "Authorization": `Bearer ${token}`, // Include token in request headers
-  //       },
-  //       body: JSON.stringify({ balance, profit }),
-  //     });
-
-  //     const data = await response.json();
-  //     if (data.status === "ok") {
-  //       console.log("Balance and profit saved successfully.");
-  //     } else {
-  //       console.error("Error saving balance and profit:", data.error);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-
-  //   window.localStorage.clear();
-  //   navigate("/login");
-  // };
-
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     if (!username) return;
-
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:3001/users/${username}`,
-  //         {
-  //           method: "GET",
-  //           credentials: "include", // Include cookies
-  //         }
-  //       );
-
-  //       const data = await response.json();
-  //       if (data.status === "ok") {
-  //         setUserData(data.data); // Set the user data with the fetched user info
-  //       } else {
-  //         console.error("Error fetching user data:", data.error);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching user data:", error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, [username]); // Added username in dependency array to trigger useEffect when username changes.
-
-  // useEffect(() => {
-  //   const fetchTransactions = async () => {
-  //     if (!username) return;
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:3001/transactions/${username}`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Accept: "application/json",
-  //           },
-  //         }
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch transactions");
-  //       }
-  //       const data = await response.json();
-  //       if (data.status === "ok") {
-  //         const fetchedTransactions = data.data;
-          
-  //         setTransactions(fetchedTransactions);
-
-  //         let newBalance = balance || 0;
-  //         let newProfit = profit || 0;
-
-  //         fetchedTransactions.forEach((transaction) => {
-  //           if (transaction.status.toLowerCase() === "success") {
-  //             if (transaction.type.toLowerCase() === "profit") {
-  //               newProfit += transaction.amount;
-  //             } else if (transaction.type.toLowerCase() === "withdrawal") {
-  //               newBalance -= transaction.amount;
-  //             } else {
-  //               newBalance += transaction.amount;
-  //             }
-  //           }
-  //         });
-
-  //         setBalance(newBalance);
-  //         setProfit(newProfit);
-  //       } else {
-  //         console.error("Error fetching transactions:", data.error);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error:", error);
-  //     }
-  //   };
-  //   fetchTransactions();
-  // }, [username]);
-
+ 
   // Helper function to format the MongoDB timestamp to a short format date
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -164,8 +75,6 @@ console.log(userData);
       day: 'numeric',
     });
   };
-
-
  
 
   return (
@@ -184,7 +93,7 @@ console.log(userData);
 
           <ul>
             <li>
-              <Link to={`/user/${username}`}>
+              <Link to={"/user"}>
                 <span className="icon">
                   <ion-icon name="home-outline"></ion-icon>
                 </span>
@@ -216,7 +125,7 @@ console.log(userData);
               </Link>
             </li>
             <li>
-              <Link to={"/login"} onClick={logOut}>
+              <Link onClick={handleLogout} >
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -236,7 +145,7 @@ console.log(userData);
 
             <div className="user1">
               {/* Check if userData is available before displaying */}
-              <p>Welcome {userData ? userData.fname : "User"}</p>
+              <p>Welcome {userData.fname}</p>
             </div>
           </div>
           <div className="user-content">
@@ -247,13 +156,13 @@ console.log(userData);
                     <div className="cardName">Balance:</div>
                     <div className="numbers">
                       $
-                      {balance.toLocaleString(undefined, {
+                      {userData.balance.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}
                     </div>
                     <div className="bar-1">
-                      <button className="fund" onClick={navigateToFund}>
+                      <button className="fund" >
                         <svg
                           className="plus"
                           xmlns="http://www.w3.org/2000/svg"
@@ -277,7 +186,7 @@ console.log(userData);
                 <div className="card">
                   <div className="tab-2">
                     <div className="cardName">Profit:</div>
-                    <div className="numbers">${profit.toFixed(2)}</div>
+                    <div className="numbers">${userData.profit.toFixed(2)}</div>
                     <div className="bar-2">
                       <Link className="link" to={"./transfer"}>
                         <button className="fund">Transfer</button>
