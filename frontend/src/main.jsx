@@ -15,6 +15,8 @@ import Terms from './Home/Terms.jsx'
 import Faq from './Home/Faq.jsx'
 import Dash from './User/Dash.jsx'
 import Fund from './User/Fund.jsx'
+import Payment from './User/Payment.jsx'
+import Confirmation from './User/Confirmation.jsx'
 
 
 const router = createBrowserRouter([
@@ -61,6 +63,13 @@ const router = createBrowserRouter([
         {
           path:"/user/fund",
           element: <Fund/>
+        },
+        {
+          path:"/user/fund/payment",
+          element: <Payment/>
+        },{
+          path: "/user/fund/payment/confirmation",
+          element: <Confirmation/>
         }
 ])
 

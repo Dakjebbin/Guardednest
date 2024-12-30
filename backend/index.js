@@ -2,16 +2,13 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
-
 import jwt from "jsonwebtoken";
-import userModel from "./models/User.js";
-import fundModel from "./models/Fund.js";
 import transactionModel from "./models/Transact.js";
 import withdrawModel from "./models/Withdraw.js";
 import dotenv from "dotenv"
 import authRoutes from "./routes/user.routes.js"
-
+import fundRoutes from "./routes/fund.routes.js"
+import transactRoutes from "./routes/transaction.routes.js"
 dotenv.config()
 
 
@@ -30,7 +27,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Something went wrong" });
 });
 
-app.use("/auth", authRoutes)
+app.use("/auth", authRoutes);
+app.use("/user", fundRoutes);
+app.use("/transaction", transactRoutes)
 
 
 // db connect
@@ -74,33 +73,6 @@ app.post("/saveData",  async (req, res) => {
   }
 });
 
-//   const { token } = req.body;
-//   console.log("Received token:", token);
-//   try {
-//     if (!token) {
-//       return res.status(400).json({ error: "Token not provided" });
-//     }
-
-//     // Verify the token
-//     const user = jwt.verify(token, JWT_SECRET);
-//     console.log("Decoded user from token:", user);
-
-//     const username = user.username;
-//     const data = await userModel.findOne({ username: username });
-
-//     if (data) {
-//       return res.status(200).json({ status: "ok", data: data });
-//     } else {
-//       return res
-//         .status(404)
-//         .json({ status: "error", error: "User data not found" });
-//     }
-//   } catch (error) {
-//     console.error("Error:", error);
-//     return res.status(400).json({ error: "Invalid token" });
-//   }
-// });
-
 
 // Endpoint to add funds
 
@@ -118,72 +90,11 @@ app.post("/userData", async (req, res) => {
   }
 });
 
-// app.post("/user/fund", async (req, res) => {
-//   const { token, amount, plan } = req.body;
-
-//   try {
-//     if (!amount || !plan) {
-//       return res.status(400).json({ error: "Amount and plan are required" });
-//     }
-
-//     if (amount <= 0) {
-//       return res.status(400).json({ error: "Invalid amount" });
-//     }
-
-//     // Decode the token to get the user ID
-//     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-//     const userId = decodedToken.id; // Assuming the token contains user ID
-
-//     // Fetch the user by ID to get the username
-//     const user = await userModel.findById(userId);
-//     if (!user) {
-//       return res.status(404).json({ error: "User not found" });
-//     }
-//     const username = user.username;
-
-//     // Use findOneAndUpdate to either update an existing document or create a new one
-//     const updatedFund = await fundModel.findOneAndUpdate(
-//       { username },                   
-//       { amount, plan },               
-//       { new: true, upsert: true }      
-//     );
-
-//     res.status(201).json(updatedFund);
-//   } catch (error) {
-//     console.error("Error updating or creating fund:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
 
 
 
 // Endpoint to retrieve fund data
 
-app.post("/user/fund",  async (req, res) => {
-  const { amount, plan } = req.body;
-
-  try {
-    if (!amount || !plan) {
-      return res.status(400).json({ error: "Amount and plan are required" });
-    }
-
-    if (amount <= 0) {
-      return res.status(400).json({ error: "Invalid amount" });
-    }
-
-    // Use findOneAndUpdate to either update an existing document or create a new one
-    const updatedFund = await fundModel.findOneAndUpdate(
-      { username: req.username },                   
-      { amount, plan },               
-      { new: true, upsert: true }      
-    );
-
-    res.status(201).json(updatedFund);
-  } catch (error) {
-    console.error("Error updating or creating fund:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
 
 
 // app.post("/fundData", async (req, res) => {
@@ -222,22 +133,7 @@ app.post("/fundData", async (req, res) => {
   }
 });
 
- app.post("/transactions", async (req, res) => {
-  const { username, type, status, amount } = req.body;
-   try {
-    const newTransaction = new transactionModel({
-      username,
-       type,
-      amount,
-       status,
-    });
-    await newTransaction.save();
-    res.json({ status: "ok", data: newTransaction });
-  } catch (error) {
-    console.error("Error creating transaction:", error);
-    res.status(500).json({ status: "error", error: "Failed to create transaction" });
-   }
- });
+ 
 
 
 

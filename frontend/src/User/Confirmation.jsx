@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 
 
 
-
 const addresses = {
   bitcoin: "bc1qk47jxm8rrec2um50ext8s4mqdjr7sp3lnrlzhh",
   ethereum: "0x32Be343B94f860124dC4fEe278FDCBD38C102D88",
@@ -23,7 +22,7 @@ const cryptoShortForms = {
 function Confirmation() {
   const [isNavActive, setNavActive] = useState(false);
   const location = useLocation();
-  const { amount, crypto, invoice } = location.state || {};
+  const { amount, selectedCrypto, invoice } = location.state || {};
   const [timeLeft, setTimeLeft] = useState(3600); // 1 hour in seconds
   const navigate = useNavigate();
 const [userData, setUserData] = useState("");
@@ -32,29 +31,32 @@ const { username } = useParams();
 
 
 
-useEffect(() => {
-  const fetchUserData = async () => {
-    if (!username) return;
 
-    try {
-      const response = await fetch(`http://localhost:3001/users/${username}`, {
-        method: 'GET',
-        credentials: 'include', // Include cookies
-      });
 
-      const data = await response.json();
-      if (data.status === 'ok') {
-        setUserData(data.data); // Set the user data with the fetched user info
-      } else {
-        console.error("Error fetching user data:", data.error);
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
 
-  fetchUserData();
-}, [username]);
+// useEffect(() => {
+// //   const fetchUserData = async () => {
+  
+
+// //     try {
+// //       const response = await fetch(`http://localhost:3001/users/${username}`, {
+// //         method: 'GET',
+// //         credentials: 'include', // Include cookies
+// //       });
+
+// //       const data = await response.json();
+// //       if (data.status === 'ok') {
+// //         setUserData(data.data); // Set the user data with the fetched user info
+// //       } else {
+// //         console.error("Error fetching user data:", data.error);
+// //       }
+// //     } catch (error) {
+// //       console.error("Error fetching user data:", error);
+// //     }
+// //   };
+
+// //   fetchUserData();
+// // }, [username]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -90,34 +92,6 @@ useEffect(() => {
     document.execCommand("copy");
   }
 
-  const logOut = async () => {
-    const token = window.localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const response = await fetch("http://localhost:3001/saveData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ balance, profit }),
-      });
-
-      const data = await response.json();
-      if (data.status === "ok") {
-        console.log("Balance and profit saved successfully.");
-      } else {
-        console.error("Error saving balance and profit:", data.error);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-    window.localStorage.clear();
-    navigate("/login");
-  }
 
 
   return (
@@ -136,7 +110,7 @@ useEffect(() => {
 
           <ul>
             <li>
-              <Link to={`/user/${username}`}>
+              <Link to={`/user`}>
                 <span className="icon">
                   <ion-icon name="home-outline"></ion-icon>
                 </span>
@@ -144,7 +118,7 @@ useEffect(() => {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/withdrawals`}>
+              <Link to={`/user/withdrawals`}>
                 <span className="icon">
                   <ion-icon name="wallet-outline"></ion-icon>
                 </span>
@@ -152,7 +126,7 @@ useEffect(() => {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/transactions`}>
+              <Link to={`/user/transactions`}>
                 <span className="icon">
                   <ion-icon name="stats-chart-outline"></ion-icon>
                 </span>
@@ -160,7 +134,7 @@ useEffect(() => {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/settings`}>
+              <Link to={`/user/settings`}>
                 <span className="icon">
                   <ion-icon name="settings-outline"></ion-icon>
                 </span>
@@ -168,7 +142,7 @@ useEffect(() => {
               </Link>
             </li>
             <li>
-              <Link to={"/login"} onClick={logOut}>
+              <Link to={"/login"}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -212,7 +186,7 @@ useEffect(() => {
                 <input
                   type="text"
                   id="address"
-                  value={addresses[crypto] || ''}
+                  value={addresses[selectedCrypto] || ''}
                   readOnly
                 />
               </div>

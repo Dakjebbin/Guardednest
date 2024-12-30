@@ -1,24 +1,27 @@
 import { Link, useNavigate} from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import logo1 from "../assets/logosmall.png";
 import xmark from "../assets/xmark.svg";
 import "../style/dash.css";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useAuthContext } from "../context/auth.context";
+import axios from "axios";
 
 function Fund() {
   const [isNavActive, setNavActive] = useState(false);
   const [plan, setPlan] = useState("");
   const [amount, setAmount] = useState("");
   const navigate = useNavigate();
+  
+  
   const { userData } = useAuthContext();
 
-
-  if (!userData){
-    toast.error("Please login to view this page");
-    window.location.assign("/login");
-    return;
- }
+  useEffect(() => {
+    if (!userData) {
+      toast.error("Please Login");
+      navigate("/");  // Redirect to login page if user is not authenticated
+    }
+  }, [userData, navigate]);
  
 
   // Toggle navigation menu
@@ -58,9 +61,47 @@ function Fund() {
     setAmount(selectedAmount);
     setPlan(selectedPlan);
   };
-
-
   
+const baseUrl = import.meta.env.VITE_BASEURL;
+axios.defaults.withCredentials = true
+
+  const handleFunding = async (e) => {
+    e.preventDefault();
+
+    if (!plan || !amount) {
+      toast.error("Please select a plan and amount");
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${baseUrl}/user/fund`, {
+        plan, amount
+      }, {
+        withCredentials: true,
+      })
+
+      console.log(response);
+      
+  
+      if (response.status === 201)  {
+        toast.success("Funding Process Initialized")
+       
+        console.log('Navigating to payment...');
+        navigate("/user/fund/payment", {state: {amount, plan}})
+      } else{
+        toast.error("An error occurred. Please try again");
+       
+      }
+    } catch (error) {
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
+    }   
+  }
 
   return (
     <div className="container">
@@ -137,7 +178,7 @@ function Fund() {
               <h2>Fund Account</h2>
             </div>
 
-            <form >
+            <form onSubmit={handleFunding}>
               <label htmlFor="plan">Plan</label>
               <br />
               <select id="plan" value={plan} onChange={handlePlanChange}>
@@ -152,14 +193,18 @@ function Fund() {
                 type="number"
                 id="amount"
                 value={amount}
+                readOnly
                 onChange={(e) => setAmount(e.target.value)}
                 required
               />
-              <button className="go">Submit</button>
+            
+
+              <button type="submit" className="go">Submit</button>
             </form>
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 }

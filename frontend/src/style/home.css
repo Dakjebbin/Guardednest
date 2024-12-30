@@ -1705,9 +1705,45 @@ footer {
   color: black;
 }
 
+
+.sect1 {
+  display: flex;
+  justify-content: center;
+  gap: 0pc;
+  flex-wrap: wrap-reverse;
+  text-align: center;
+  padding: 20px 3%;
+}
+.sect1 {
+  display: flex;
+  justify-content: center;
+  gap: 0pc;
+  flex-wrap: wrap-reverse;
+  text-align: center;
+  padding: 20px 3%;
+}
+
+nav .menu {
+  position: fixed;
+  font-size: 3pc;
+  top: 7pc;
+  left: 0;
+  width: 0;
+  height: 100vh;
+  background: white;
+  overflow: hidden;
+  transition: 0.5s ease;
+  z-index: 1;
+}
+
+nav .menu.active {
+  width: 430px;
+} 
+
 nav .bar{
   display: block;
 }
+
 
 nav ul{
   display: none;
@@ -1716,5 +1752,18 @@ nav ul{
 .col0{
   font-size: 20px;
   text-align: center;
+}
+
+nav .bar {
+  display: block;
+}
+
+nav .menu li {
+  display: block;
+  text-align: center;
+  margin-bottom: 5pc;
+}
+nav .menu li a {
+  font-size: 40px;
 }
 }

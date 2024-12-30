@@ -1,185 +1,63 @@
-import { Link, useNavigate, useParams  } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo1 from "../assets/logosmall.png";
 import xmark from "../assets/xmark.svg";
 import "../style/dash.css";
 import { useState, useEffect } from "react";
+import { useAuthContext } from "../context/auth.context";
+import { toast } from "react-toastify";
 
 export default function Payment() {
   const [isNavActive, setNavActive] = useState(false);
-  const [userData, setUserData] = useState(null);
-  const [fundData, setFundData] = useState(null);
   const [selectedCrypto, setSelectedCrypto] = useState("");
   const [cryptoRates, setCryptoRates] = useState({});
+  const [invoice, setInvoice] = useState(""); 
   const navigate = useNavigate();
-  const { username } = useParams();
+  const location = useLocation();
+  const amount = location.state?.amount
+
+  const { userData } = useAuthContext();
 
   function toggleNavigation() {
     setNavActive(!isNavActive);
   }
 
-// Fetch user data by username
-useEffect(() => {
-  const fetchUserData = async () => {
-    if (!username) return;
-
-    try {
-      const response = await fetch(`http://localhost:3001/users/${username}`, {
-        method: 'GET',
-        credentials: 'include', // Include cookies
-      });
-
-      const data = await response.json();
-      if (data.status === 'ok') {
-        setUserData(data.data); // Set the user data with the fetched user info
-      } else {
-        console.error("Error fetching user data:", data.error);
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
+  useEffect(() => {
+    if (!userData) {
+      toast.error("Please Login");
+      navigate("/"); 
     }
-  };
-
-  fetchUserData();
-}, [username]);
-
-
-  const logOut = async () => {
-    const token = window.localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const response = await fetch("http://localhost:3001/saveData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({ balance, profit }),
-      });
-
-      const data = await response.json();
-      if (data.status === "ok") {
-        console.log("Balance and profit saved successfully.");
-      } else {
-        console.error("Error saving balance and profit:", data.error);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-    window.localStorage.clear();
-    navigate("/login");
-  }
-
-  const divisionResult =
-    fundData && fundData.amount && selectedCrypto && cryptoRates[selectedCrypto]?.usd
-      ? parseFloat(fundData.amount) / parseFloat(cryptoRates[selectedCrypto].usd)
-      : null;
-
-  const cryptoShortForms = {
-    bitcoin: "BTC",
-    ethereum: "ETH",
-    tether: "USDT",
-  };
-
-  const invoice = divisionResult !== null ? `${divisionResult.toFixed(4)} ${cryptoShortForms[selectedCrypto]}` : null;
+  }, [userData, navigate]);
 
   useEffect(() => {
-    // Retrieve token from local storage
-    const token = window.localStorage.getItem("token");
+    // Fetch cryptocurrency rates when the component mounts
+   const response = fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether&vs_currencies=usd")
+      .then((res) => res.json())
+      .then((data) => {
+        setCryptoRates(data); // Set the cryptocurrency rates in state
+      });
+      console.log(response);
   
-    if (!token) {
-      navigate("/login"); // Redirect to login page if token is not available
-      return;
+  }, []);
+ 
+
+  useEffect(() => {
+    // Perform conversion when the selected cryptocurrency or amount changes
+    if (selectedCrypto && cryptoRates[selectedCrypto]) {
+      const rate = cryptoRates[selectedCrypto]?.usd;
+      const conversionResult = amount / rate; 
+      setInvoice(conversionResult.toFixed(4)); 
     }
-
-    // Fetch fund data
-    fetch("http://localhost:3001/fundData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ token }), // Send token in the request body
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        
-        if (data.status === 'ok') {
-          
-          setFundData(data.data);
-        } else {
-          console.error("Error fetching fund data:", data.error);
-        }
-      });
-
-    // Fetch crypto rates
-    fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether&vs_currencies=usd"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setCryptoRates(data);
-      });
-  }, [navigate]);
-
-  const handleProceed = async () => {
-
-    if (!selectedCrypto) {
-      alert("Please select a cryptocurrency.");
-      return;
-    }
-
-    const token = window.localStorage.getItem("token");
-
-    if (!token) return;
-
-    try {
-      const response = await fetch("http://localhost:3001/transactions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          username,
-          type: "Deposit",
-          amount: fundData.amount,
-          status: "pending",
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to submit transaction");
-      }
-
-      const data = await response.json();
-
-      if (data.status === "ok") {
-        alert("Transaction Successful");
-        // Optionally redirect the user or perform other actions
-      } else {
-        console.log("Error submitting transaction:", data.error);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-    navigate(`/user/${username}/fund/payment/confirmation`, {
-      state: { amount: fundData.amount, crypto: selectedCrypto, invoice },
-    });
-  };
-
+  }, [selectedCrypto, cryptoRates, amount]);
+  
   function closeNavigation() {
     setNavActive(false);
   }
 
+  
+
   return (
     <>
+      
       <div className="container">
       <div className={`navigation ${isNavActive ? "active" : ""}`}>
           <div className="navbar">
@@ -194,7 +72,7 @@ useEffect(() => {
 
           <ul>
             <li>
-              <Link to={`/user/${username}`}>
+              <Link to={`/user/`}>
                 <span className="icon">
                   <ion-icon name="home-outline"></ion-icon>
                 </span>
@@ -202,7 +80,7 @@ useEffect(() => {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/withdrawals`}>
+              <Link to={`/user/withdrawals`}>
                 <span className="icon">
                   <ion-icon name="wallet-outline"></ion-icon>
                 </span>
@@ -210,7 +88,7 @@ useEffect(() => {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/transactions`}>
+              <Link to={`/user/transactions`}>
                 <span className="icon">
                   <ion-icon name="stats-chart-outline"></ion-icon>
                 </span>
@@ -218,7 +96,7 @@ useEffect(() => {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/settings`}>
+              <Link to={`/user/settings`}>
                 <span className="icon">
                   <ion-icon name="settings-outline"></ion-icon>
                 </span>
@@ -226,7 +104,7 @@ useEffect(() => {
               </Link>
             </li>
             <li>
-              <Link to={"/login"} onClick={logOut}>
+              <Link to={"/login"}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -244,15 +122,15 @@ useEffect(() => {
               </svg>
             </div>
             <div className="user1">
-              <p>Welcome  {userData ? userData.fname : "User"}</p>
+               <p>Welcome  {userData ? userData.fname : "User"}</p> 
             </div>
           </div>
           <div className="tab">
             <div className="bank">
               <div className="text5">
-                <h2>Pay ${fundData?.amount}</h2>
+                <h2>Pay ${amount}</h2>
                 <p>Make Payment</p>
-                <p>{invoice}</p>
+                <p>{invoice && ` ${invoice} ${selectedCrypto.toUpperCase()}`}</p> 
               </div>
 
               <form>
@@ -272,7 +150,7 @@ useEffect(() => {
                 <button
                   type="button"
                   className="go"
-                  onClick={handleProceed}
+                onClick={() => {navigate("/user/fund/payment/confirmation", {state: {invoice, selectedCrypto}})}}
                 >
                   Proceed
                 </button>
@@ -281,6 +159,8 @@ useEffect(() => {
           </div>
         </div>
       </div>
+      
+    
     </>
   );
 }
