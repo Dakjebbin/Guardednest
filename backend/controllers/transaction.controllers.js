@@ -68,7 +68,26 @@ const transact = async (req, res) => {
 }
 
 
+const getTransaction = async (req, res) => {
+    const validUser = req.user;
+        const { username } = req.params;
+        try {
+          // Find transactions by username
+          const transactions = await transactionModel.find({ username });
+      
+          if (transactions.length > 0) {
+            res.json({ status: "ok", data: transactions });
+          } else {
+            res.status(404).json({ status: "error", error: "No transactions found" });
+          }
+        } catch (error) {
+          console.error("Error fetching transactions:", error);
+          res.status(500).json({ status: "error", error: "Failed to fetch transactions" });
+        }
+      };
 
-export {transact}
+
+
+export {transact, getTransaction}
 
     

@@ -42,6 +42,30 @@ useEffect(() => {
 const baseUrl = import.meta.env.VITE_BASEURL;
 axios.defaults.withCredentials = true
 
+
+const handleLogout = async () => {
+  try {
+    const response = await axios.post(`${baseUrl}/auth/logout`, {
+      withCredentials: true,
+    })
+
+    if (response.status === 200) {
+      toast.success("Logout successful");
+      window.location.assign("/") 
+    } else{
+      toast.error("An error occurred. Please try again");
+    }
+  } catch (error) {
+    if (error instanceof axios.AxiosError) {
+      console.log(
+         error?.response?.data
+       );
+     } else {
+       console.log("reg error => ", error);
+     }
+  }
+}
+
 const handleImageChange = (e) => {
   const file = e.target.files[0];
 
@@ -140,6 +164,7 @@ const handleTransaction = async (e) => {
 
   return (
     <>
+    {userData && (
       <div className="container">
       <div className={`navigation ${isNavActive ? "active" : ""}`}>
           <div className="navbar">
@@ -186,7 +211,7 @@ const handleTransaction = async (e) => {
               </Link>
             </li>
             <li>
-              <Link to={"/login"}>
+              <Link onClick={handleLogout}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -249,6 +274,7 @@ const handleTransaction = async (e) => {
         </div>
         <ToastContainer/>
       </div>
+      )}
     </>
   );
 }

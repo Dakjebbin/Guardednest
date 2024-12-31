@@ -10,64 +10,34 @@ function Select() {
   function toggleNavigation() {
     setNavActive(!isNavActive);
   }
-  const logOut = async () => {
-    const token = window.localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const response = await fetch("http://localhost:3001/saveData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ balance, profit }),
-      });
-
-      const data = await response.json();
-      if (data.status === "ok") {
-        console.log("Balance and profit saved successfully.");
-      } else {
-        console.error("Error saving balance and profit:", data.error);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-    window.localStorage.clear();
-    navigate("/login");
-  }
-
-  const [userData, setUserData] = useState("");
   
 
-  useEffect(() => {
-    fetch("http://localhost:3001/userData", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        token: window.localStorage.getItem("token"),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data, "userData");
+  // useEffect(() => {
+  //   fetch("http://localhost:3001/userData", {
+  //     method: "POST",
+  //     crossDomain: true,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     body: JSON.stringify({
+  //       token: window.localStorage.getItem("token"),
+  //     }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data, "userData");
    
-        setUserData(data.data);
+  //       setUserData(data.data);
 
-        if (data.data == "token expired") {
-          alert("Token expired login again");
-          window.localStorage.clear();
-          window.location.href = "./sign-in";
-        }
-      });
-    }, []);
+  //       if (data.data == "token expired") {
+  //         alert("Token expired login again");
+  //         window.localStorage.clear();
+  //         window.location.href = "./sign-in";
+  //       }
+  //     });
+  //   }, []);
 
     function closeNavigation() {
       setNavActive(false);

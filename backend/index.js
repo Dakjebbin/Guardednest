@@ -92,32 +92,6 @@ app.post("/userData", async (req, res) => {
 
 
 
-
-// Endpoint to retrieve fund data
-
-
-
-// app.post("/fundData", async (req, res) => {
-//   const { token } = req.body;
-//   try {
-//     const decodedToken = jwt.verify(token, JWT_SECRET);
-//     const username = decodedToken.username;
-//     const fund = await fundModel.findOne({ username });
-
-//     if (fund) {
-//       return res.status(200).json({ status: "ok", data: fund });
-//     } else {
-//       return res
-//         .status(404)
-//         .json({ status: "error", error: "Fund data not found for the user" });
-//     }
-//   } catch (error) {
-//     console.error("Error:", error);
-//     return res.status(400).json({ error: "Invalid token" });
-//   }
-// });
-
-
 app.post("/fundData", async (req, res) => {
   try {
     const fund = await fundModel.findOne({ username: req.username });
@@ -158,22 +132,6 @@ app.post("/transactions", async (req, res) => {
 });
 */
 
-app.get("/transactions/:username", async (req, res) => {
-  const { username } = req.params;
-  try {
-    // Find transactions by username
-    const transactions = await transactionModel.find({ username });
-
-    if (transactions.length > 0) {
-      res.json({ status: "ok", data: transactions });
-    } else {
-      res.status(404).json({ status: "error", error: "No transactions found" });
-    }
-  } catch (error) {
-    console.error("Error fetching transactions:", error);
-    res.status(500).json({ status: "error", error: "Failed to fetch transactions" });
-  }
-});
 
 
 //for the admin panel to update status

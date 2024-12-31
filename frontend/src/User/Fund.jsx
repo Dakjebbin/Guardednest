@@ -103,8 +103,35 @@ axios.defaults.withCredentials = true
     }   
   }
 
+  
+const handleLogout = async () => {
+  try {
+    const response = await axios.post(`${baseUrl}/auth/logout`, {
+      withCredentials: true,
+    })
+
+    if (response.status === 200) {
+      toast.success("Logout successful");
+      window.location.assign("/") 
+    } else{
+      toast.error("An error occurred. Please try again");
+    }
+  } catch (error) {
+    if (error instanceof axios.AxiosError) {
+      console.log(
+         error?.response?.data
+       );
+     } else {
+       console.log("reg error => ", error);
+     }
+  }
+}
+
   return (
+    <>
+    {userData && (
     <div className="container">
+    
         <div className={`navigation ${isNavActive ? "active" : ""}`}>
           <div className="navbar">
             <img className="logo1" src={logo1} alt="logo" />
@@ -150,7 +177,7 @@ axios.defaults.withCredentials = true
               </Link>
             </li>
             <li>
-              <Link to={"/login"}>
+              <Link onClick={handleLogout}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -204,8 +231,12 @@ axios.defaults.withCredentials = true
           </div>
         </div>
       </div>
+     
       <ToastContainer/>
+      
     </div>
+  )}
+  </>
   );
 }
 

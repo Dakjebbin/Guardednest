@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState} from "react";
+import { useEffect, useState} from "react";
 import xmark from "../assets/xmark.svg";
 import logo1 from "../assets/logosmall.png";
 import "../style/dash.css";
@@ -14,6 +14,44 @@ export default function Dash() {
   const { userData } = useAuthContext();
 
  // const navigate = useNavigate();
+
+
+ useEffect(() => {
+
+  if (!userData || !userData._id) {
+    toast.error("Please login to view this page");
+    return
+  } 
+   
+  const fetchTransactions = async () => {
+    try {
+  
+      if (!transactions || transactions.length <= 0) {
+        toast.error("No transactions found");
+    }
+  
+     const response = await axios.get(`${baseUrl}/transaction/getTransact/${userData?._id}`,{
+        withCredentials: true,
+      })
+  
+      setTransactions(response.data.data)
+      
+    } catch (error) {
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
+    }
+  }
+  
+  if (userData?._id) {
+    fetchTransactions()
+  }
+  
+  }, [userData])
 
 
   function toggleNavigation() {
@@ -31,11 +69,7 @@ export default function Dash() {
     pending: "Pending",
   };
 
-if (!userData) {
-  toast.error("Please login to view this page");
-  return
-}  
-
+  
 const baseUrl = import.meta.env.VITE_BASEURL;
 axios.defaults.withCredentials = true
 
@@ -62,6 +96,8 @@ const handleLogout = async () => {
   }
 }
 
+  
+
 console.log(userData);
  
   // Helper function to format the MongoDB timestamp to a short format date
@@ -74,9 +110,10 @@ console.log(userData);
     });
   };
  
-
+  if (!userData) return null;
   return (
     <>
+    {userData && (
       <div className="container">
         <div className={`navigation ${isNavActive ? "active" : ""}`}>
           <div className="navbar">
@@ -239,6 +276,7 @@ console.log(userData);
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }

@@ -5,6 +5,7 @@ import "../style/dash.css";
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../context/auth.context";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function Payment() {
   const [isNavActive, setNavActive] = useState(false);
@@ -39,6 +40,32 @@ export default function Payment() {
       console.log(response);
   
   }, []);
+
+  const baseUrl = import.meta.env.VITE_BASEURL;
+axios.defaults.withCredentials = true
+  
+const handleLogout = async () => {
+  try {
+    const response = await axios.post(`${baseUrl}/auth/logout`, {
+      withCredentials: true,
+    })
+
+    if (response.status === 200) {
+      toast.success("Logout successful");
+      window.location.assign("/") 
+    } else{
+      toast.error("An error occurred. Please try again");
+    }
+  } catch (error) {
+    if (error instanceof axios.AxiosError) {
+      console.log(
+         error?.response?.data
+       );
+     } else {
+       console.log("reg error => ", error);
+     }
+  }
+}
  
 
   useEffect(() => {
@@ -58,7 +85,7 @@ export default function Payment() {
 
   return (
     <>
-      
+      {userData && (
       <div className="container">
       <div className={`navigation ${isNavActive ? "active" : ""}`}>
           <div className="navbar">
@@ -105,7 +132,7 @@ export default function Payment() {
               </Link>
             </li>
             <li>
-              <Link to={"/login"}>
+              <Link onClick={handleLogout}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -160,7 +187,7 @@ export default function Payment() {
           </div>
         </div>
       </div>
-      
+      )}
     
     </>
   );

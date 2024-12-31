@@ -17,6 +17,7 @@ import Dash from './User/Dash.jsx'
 import Fund from './User/Fund.jsx'
 import Payment from './User/Payment.jsx'
 import Confirmation from './User/Confirmation.jsx'
+import Withdraw from './User/Withdrawals.jsx'
 
 
 const router = createBrowserRouter([
@@ -70,6 +71,9 @@ const router = createBrowserRouter([
         },{
           path: "/user/fund/payment/confirmation",
           element: <Confirmation/>
+        },{
+          path:"/user/withdrawals",
+          element: <Withdraw/>
         }
 ])
 

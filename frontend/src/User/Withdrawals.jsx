@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import logo1 from "../assets/logosmall.png";
 import xmark from "../assets/xmark.svg";
 import "../style/dash.css";
@@ -7,9 +6,8 @@ import { useState, useEffect } from "react";
 
 function Withdraw() {
   const [isNavActive, setNavActive] = useState(false);
-  const [userData, setUserData] = useState("");
   const [transactions, setTransactions] = useState([]);
-  const { username } = useParams();
+
   const navigate = useNavigate();
 
   function toggleNavigation() {
@@ -23,101 +21,73 @@ function Withdraw() {
     pending: "Pending",
   };
 
-  const logOut = async () => {
-    const token = window.localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const response = await fetch("http://localhost:3001/saveData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ balance, profit }),
-      });
-
-      const data = await response.json();
-      if (data.status === "ok") {
-        console.log("Balance and profit saved successfully.");
-      } else {
-        console.error("Error saving balance and profit:", data.error);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-    window.localStorage.clear();
-    navigate("/login");
-  }
 
 
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!username) return;
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     if (!username) return;
 
-      try {
-        const response = await fetch(
-          `http://localhost:3001/users/${username}`,
-          {
-            method: "GET",
-            credentials: "include", // Include cookies
-          }
-        );
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:3001/users/${username}`,
+  //         {
+  //           method: "GET",
+  //           credentials: "include", // Include cookies
+  //         }
+  //       );
 
-        const data = await response.json();
-        if (data.status === "ok") {
-          setUserData(data.data); // Set the user data with the fetched user info
-        } else {
-          console.error("Error fetching user data:", data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
+  //       const data = await response.json();
+  //       if (data.status === "ok") {
+  //         setUserData(data.data); // Set the user data with the fetched user info
+  //       } else {
+  //         console.error("Error fetching user data:", data.error);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
 
-    fetchUserData();
-  }, [username]);
+  //   fetchUserData();
+  // }, [username]);
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      const token = window.localStorage.getItem("token");
-      if (!username) return;
-      try {
-        const response = await fetch(
-          `http://localhost:3001/transactions/${username}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-          }
-        );
+  // useEffect(() => {
+  //   const fetchTransactions = async () => {
+  //     const token = window.localStorage.getItem("token");
+  //     if (!username) return;
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:3001/transactions/${username}`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Accept: "application/json",
+  //           },
+  //         }
+  //       );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch transactions");
-        }
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch transactions");
+  //       }
 
-        const data = await response.json();
-        if (data.status === "ok") {
-          // Filter only withdrawal transactions
-          const withdrawalTransactions = data.data.filter(transaction =>
-            transaction.type.toLowerCase().includes("withdrawal")
-          );
-          setTransactions(withdrawalTransactions);
-        } else {
-          console.error("Error fetching transactions:", data.error);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
+  //       const data = await response.json();
+  //       if (data.status === "ok") {
+  //         // Filter only withdrawal transactions
+  //         const withdrawalTransactions = data.data.filter(transaction =>
+  //           transaction.type.toLowerCase().includes("withdrawal")
+  //         );
+  //         setTransactions(withdrawalTransactions);
+  //       } else {
+  //         console.error("Error fetching transactions:", data.error);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //     }
+  //   };
 
-    fetchTransactions();
-  }, [username]);
+  //   fetchTransactions();
+  // }, [username]);
 
 
   function closeNavigation() {
@@ -139,7 +109,7 @@ function Withdraw() {
 
           <ul>
             <li>
-              <Link to={`/user/${username}`}>
+              <Link to={`/user`}>
                 <span className="icon">
                   <ion-icon name="home-outline"></ion-icon>
                 </span>
@@ -147,7 +117,7 @@ function Withdraw() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/withdrawals`}>
+              <Link to={`/user/withdrawals`}>
                 <span className="icon">
                   <ion-icon name="wallet-outline"></ion-icon>
                 </span>
@@ -155,7 +125,7 @@ function Withdraw() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/transactions`}>
+              <Link to={`/user/transactions`}>
                 <span className="icon">
                   <ion-icon name="stats-chart-outline"></ion-icon>
                 </span>
@@ -163,7 +133,7 @@ function Withdraw() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/settings`}>
+              <Link to={`/user/settings`}>
                 <span className="icon">
                   <ion-icon name="settings-outline"></ion-icon>
                 </span>
@@ -171,7 +141,7 @@ function Withdraw() {
               </Link>
             </li>
             <li>
-              <Link to={"/login"} onClick={logOut}>
+              <Link>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -191,7 +161,7 @@ function Withdraw() {
 
             <div className="user1">
               {/* Check if userData is available before displaying */}
-              <p>Welcome {userData ? userData.fname : "User"}</p>
+              {/* <p>Welcome {userData ? userData.fname : "User"}</p> */}
             </div>
           </div>
           <div className="withdraw">
