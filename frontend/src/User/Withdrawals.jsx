@@ -3,16 +3,60 @@ import logo1 from "../assets/logosmall.png";
 import xmark from "../assets/xmark.svg";
 import "../style/dash.css";
 import { useState, useEffect } from "react";
+import { useAuthContext } from "../context/auth.context";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 function Withdraw() {
   const [isNavActive, setNavActive] = useState(false);
   const [transactions, setTransactions] = useState([]);
-
-  const navigate = useNavigate();
+  const { userData } = useAuthContext();
+  // const navigate = useNavigate();
 
   function toggleNavigation() {
     setNavActive(!isNavActive);
   }
+
+  const baseUrl = import.meta.env.VITE_BASEURL;
+axios.defaults.withCredentials = true
+  
+ useEffect(() => {
+
+  if (!userData || !userData._id) {
+    toast.error("Please login to view this page");
+    return
+  } 
+   
+  const fetchTransactions = async () => {
+    try {
+  
+      if (!transactions || transactions.length <= 0) {
+        toast.error("No transactions found");
+    }
+  
+     const response = await axios.get(`${baseUrl}/transaction/getTransact/${userData?._id}`,{
+        withCredentials: true,
+      })
+  
+      setTransactions(response.data.data)
+      
+    } catch (error) {
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
+    }
+  }
+  
+  if (userData?._id) {
+    fetchTransactions()
+  }
+  
+  }, [userData])
+
 
   const statusLabels = {
     success: "Success",
@@ -95,6 +139,7 @@ function Withdraw() {
   }
   return (
     <>
+    {userData && (
       <div className="container">
       <div className={`navigation ${isNavActive ? "active" : ""}`}>
           <div className="navbar">
@@ -161,7 +206,7 @@ function Withdraw() {
 
             <div className="user1">
               {/* Check if userData is available before displaying */}
-              {/* <p>Welcome {userData ? userData.fname : "User"}</p> */}
+            <p>Welcome {userData ? userData.fname : "User"}</p> 
             </div>
           </div>
           <div className="withdraw">
@@ -207,6 +252,7 @@ function Withdraw() {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }

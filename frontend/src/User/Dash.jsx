@@ -96,10 +96,6 @@ const handleLogout = async () => {
   }
 }
 
-  
-
-console.log(userData);
- 
   // Helper function to format the MongoDB timestamp to a short format date
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);

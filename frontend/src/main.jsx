@@ -18,6 +18,8 @@ import Fund from './User/Fund.jsx'
 import Payment from './User/Payment.jsx'
 import Confirmation from './User/Confirmation.jsx'
 import Withdraw from './User/Withdrawals.jsx'
+import Select from './User/Select.jsx'
+import Transactions from './User/Transactions.jsx'
 
 
 const router = createBrowserRouter([
@@ -74,6 +76,12 @@ const router = createBrowserRouter([
         },{
           path:"/user/withdrawals",
           element: <Withdraw/>
+        },{
+          path:"/user/withdrawals/select",
+          element: <Select/>
+        },{
+          path: "/user/transactions",
+          element: <Transactions/>
         }
 ])
 

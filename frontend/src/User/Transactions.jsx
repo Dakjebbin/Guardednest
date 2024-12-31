@@ -3,13 +3,16 @@ import logo1 from "../assets/logosmall.png";
 import xmark from "../assets/xmark.svg";
 import "../style/dash.css";
 import { useState, useEffect } from "react";
+import { useAuthContext } from "../context/auth.context";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function Transactions() {
   const [isNavActive, setNavActive] = useState(false);
-  const [userData, setUserData] = useState("");
   const [imageData, setImageData] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
+  const { userData } = useAuthContext();
   function toggleNavigation() {
     setNavActive(!isNavActive);
   }
@@ -25,58 +28,71 @@ export default function Transactions() {
     pending: "Pending",
   };
 
-  const logOut = async () => {
-    const token = window.localStorage.getItem("token");
-    if (!token) return;
+  
+  const baseUrl = import.meta.env.VITE_BASEURL;
+axios.defaults.withCredentials = true
+  
+ useEffect(() => {
 
+  if (!userData || !userData._id) {
+    toast.error("Please login to view this page");
+    return
+  } 
+   
+  const fetchTransactions = async () => {
     try {
-      const response = await fetch("http://localhost:3001/saveData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ balance, profit }),
-      });
-
-      const data = await response.json();
-      if (data.status === "ok") {
-        console.log("Balance and profit saved successfully.");
-      } else {
-        console.error("Error saving balance and profit:", data.error);
-      }
-    } catch (error) {
-      console.error("Error:", error);
+  
+      if (!transactions || transactions.length <= 0) {
+        toast.error("No transactions found");
     }
-
-    window.localStorage.clear();
-    navigate("/login");
+  
+     const response = await axios.get(`${baseUrl}/transaction/getTransact/${userData?._id}`,{
+        withCredentials: true,
+      })
+  
+      setTransactions(response.data.data)
+      
+    } catch (error) {
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
+    }
   }
+  
+  if (userData?._id) {
+    fetchTransactions()
+  }
+  
+  }, [userData])
 
-  useEffect(() => {
-    fetch("http://localhost:3001/userData", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        token: window.localStorage.getItem("token"),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUserData(data.data);
-        if (data.data === "token expired") {
-          alert("Token expired login again");
-          window.localStorage.clear();
-          window.location.href = "/login";
-        }
-      });
-  }, []);
+
+  // useEffect(() => {
+  //   fetch("http://localhost:3001/userData", {
+  //     method: "POST",
+  //     crossDomain: true,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     body: JSON.stringify({
+  //       token: window.localStorage.getItem("token"),
+  //     }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setUserData(data.data);
+  //       if (data.data === "token expired") {
+  //         alert("Token expired login again");
+  //         window.localStorage.clear();
+  //         window.location.href = "/login";
+  //       }
+  //     });
+  // }, []);
 
   useEffect(() => {
     const fetchImageData = async () => {
@@ -112,39 +128,7 @@ export default function Transactions() {
     fetchImageData();
   }, []);
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      const token = window.localStorage.getItem("token");
-      if (!token) return;
 
-      try {
-        const response = await fetch("http://localhost:3001/transactions", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch transactions");
-        }
-
-        const data = await response.json();
-        if (data.status === "ok") {
-          setTransactions(data.data);
-        } else {
-          console.error("Error fetching transactions:", data.error);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
-    fetchTransactions();
-  }, []);
 
   return (
     <>
@@ -162,7 +146,7 @@ export default function Transactions() {
 
           <ul>
             <li>
-              <Link to={`/user/${username}`}>
+              <Link to={`/user/`}>
                 <span className="icon">
                   <ion-icon name="home-outline"></ion-icon>
                 </span>
@@ -170,7 +154,7 @@ export default function Transactions() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/withdrawals`}>
+              <Link to={`/user/withdrawals`}>
                 <span className="icon">
                   <ion-icon name="wallet-outline"></ion-icon>
                 </span>
@@ -178,7 +162,7 @@ export default function Transactions() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/transactions`}>
+              <Link to={`/user/transactions`}>
                 <span className="icon">
                   <ion-icon name="stats-chart-outline"></ion-icon>
                 </span>
@@ -186,7 +170,7 @@ export default function Transactions() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/settings`}>
+              <Link to={`/user/settings`}>
                 <span className="icon">
                   <ion-icon name="settings-outline"></ion-icon>
                 </span>
@@ -194,7 +178,7 @@ export default function Transactions() {
               </Link>
             </li>
             <li>
-              <Link to={"/login"} onClick={logOut}>
+              <Link>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -213,7 +197,7 @@ export default function Transactions() {
             </div>
 
             <div className="user1">
-              <p>Welcome {userData.fname}</p>
+              {/* <p>Welcome {userData.fname}</p> */}
             </div>
           </div>
 

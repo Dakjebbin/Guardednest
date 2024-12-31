@@ -153,7 +153,7 @@ const handleLogout = async () => {
               </Link>
             </li>
             <li>
-              <Link to={"/user"}>
+              <Link to={"/user/withdrawals"}>
                 <span className="icon">
                   <ion-icon name="wallet-outline"></ion-icon>
                 </span>

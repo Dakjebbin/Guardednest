@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import logo1 from "../assets/logosmall.png";
 import xmark from "../assets/xmark.svg";
 import "../style/dash.css";
-import { useState, useEffect } from "react";
+import { useState} from "react";
+import { useAuthContext } from "../context/auth.context";
 
 function Select() {
   const [isNavActive, setNavActive] = useState(false);
@@ -10,6 +11,8 @@ function Select() {
   function toggleNavigation() {
     setNavActive(!isNavActive);
   }
+
+  const { userData } = useAuthContext();
   
 
   // useEffect(() => {
@@ -44,6 +47,7 @@ function Select() {
     }
     return (
       <>
+      {userData && (
         <div className="container">
         <div className={`navigation ${isNavActive ? "active" : ""}`}>
           <div className="navbar">
@@ -58,7 +62,7 @@ function Select() {
 
           <ul>
             <li>
-              <Link to={`/user/${username}`}>
+              <Link to={`/user`}>
                 <span className="icon">
                   <ion-icon name="home-outline"></ion-icon>
                 </span>
@@ -66,7 +70,7 @@ function Select() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/withdrawals`}>
+              <Link to={`/user/withdrawals`}>
                 <span className="icon">
                   <ion-icon name="wallet-outline"></ion-icon>
                 </span>
@@ -74,7 +78,7 @@ function Select() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/transactions`}>
+              <Link to={`/user/transactions`}>
                 <span className="icon">
                   <ion-icon name="stats-chart-outline"></ion-icon>
                 </span>
@@ -82,7 +86,7 @@ function Select() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/settings`}>
+              <Link to={`/user/settings`}>
                 <span className="icon">
                   <ion-icon name="settings-outline"></ion-icon>
                 </span>
@@ -90,7 +94,7 @@ function Select() {
               </Link>
             </li>
             <li>
-              <Link to={"/login"} onClick={logOut}>
+              <Link>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -108,7 +112,7 @@ function Select() {
               </svg>
             </div>
             <div className="user1">
-              <p>Welcome </p>
+              <p>Welcome {userData.fname}</p>
             </div>
           </div>
           <div className="withdraw">
@@ -140,6 +144,7 @@ function Select() {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }
