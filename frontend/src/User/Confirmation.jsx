@@ -1,9 +1,12 @@
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate} from "react-router-dom";
 import logo1 from "../assets/logosmall.png";
 import cus1 from "../assets/customer01.jpg";
 import xmark from "../assets/xmark.svg";
 import "../style/dash.css";
 import { useState, useEffect } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
+import { useAuthContext } from "../context/auth.context";
 
 
 
@@ -22,41 +25,82 @@ const cryptoShortForms = {
 function Confirmation() {
   const [isNavActive, setNavActive] = useState(false);
   const location = useLocation();
-  const { amount, selectedCrypto, invoice } = location.state || {};
+  const { amount, plan, selectedCrypto, invoice } = location.state || {};
   const [timeLeft, setTimeLeft] = useState(3600); // 1 hour in seconds
+  const [image, setImage] = useState(null)
+  const [imageError, setImageError] = useState("");
   const navigate = useNavigate();
-const [userData, setUserData] = useState("");
-const { username } = useParams();
+  const { userData } = useAuthContext();
+
+useEffect(() => {
+  if (!userData) {
+    toast.error("Please Login");
+    navigate("/"); 
+  }
+}, [userData, navigate]);
+
+const baseUrl = import.meta.env.VITE_BASEURL;
+axios.defaults.withCredentials = true
+
+const handleImageChange = (e) => {
+  const file = e.target.files[0];
+
+  if (file) {
+    
+    if (file.size > 5242880) {
+      setImageError("Image should not exceed 5MB.");
+      setImage(null);  // Clear image if it exceeds size limit
+      return;
+    } else {
+      setImageError("");  // Reset error if image size is valid
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+    reader.readAsDataURL(file);
+  } 
+};
+
+const handleTransaction = async (e) => {
+  e.preventDefault();
+  if (!amount || !plan || !image) {
+    toast.error("Please select a plan, enter an amount, please select an image");
+    return;
+  }
+
+  try {
+    const response = await axios.post(`${baseUrl}/transaction/userTransact`,{
+      plan: plan,
+      amount: amount,
+      image :image
+    }, {
+      headers:{
+            'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    })
+
+    if (response.status === 200) {
+      toast.success("Funded Request Received")
+      navigate("/user")
+    } else {
+      toast.error("Request Failed")
+    }
+  } catch (error) {
+    if (error instanceof axios.AxiosError) {
+      console.log(
+         error?.response?.data
+       );
+     } else {
+       console.log("reg error => ", error);
+     }
+  }
+}
 
 
 
-
-
-
-
-// useEffect(() => {
-// //   const fetchUserData = async () => {
-  
-
-// //     try {
-// //       const response = await fetch(`http://localhost:3001/users/${username}`, {
-// //         method: 'GET',
-// //         credentials: 'include', // Include cookies
-// //       });
-
-// //       const data = await response.json();
-// //       if (data.status === 'ok') {
-// //         setUserData(data.data); // Set the user data with the fetched user info
-// //       } else {
-// //         console.error("Error fetching user data:", data.error);
-// //       }
-// //     } catch (error) {
-// //       console.error("Error fetching user data:", error);
-// //     }
-// //   };
-
-// //   fetchUserData();
-// // }, [username]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -190,16 +234,20 @@ const { username } = useParams();
                   readOnly
                 />
               </div>
+              <form onSubmit={handleTransaction}>
               <div className="buttons">
-                <button className="btn3">UPLOAD PAYMENT PROOF</button> <br />
-                <button className="btn4">WAIT FOR CONFIRMATION</button>
+                <input type="file" onChange={handleImageChange} name="" className="btn3" id="" />
+                 <br />
+                <button type="submit" className="btn4">Submit</button>
               </div>
+              </form>
               <div className="timer">
                 <h3>{formatTime(timeLeft)}</h3>
               </div>
             </div>
           </div>
         </div>
+        <ToastContainer/>
       </div>
     </>
   );

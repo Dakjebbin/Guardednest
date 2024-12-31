@@ -8,6 +8,8 @@ const transactionSchema = new mongoose.Schema({
   status: { type: String, required: true, enum: ["Pending", "Success", "Failed", "Progress"],
      default: "Pending" },
      image: { type: String},
+     optimizedImageUrl: { type: String },
+     croppedImageUrl: { type: String },
 },{
   timestamps: true
 });

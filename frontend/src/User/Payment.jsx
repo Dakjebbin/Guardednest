@@ -14,6 +14,7 @@ export default function Payment() {
   const navigate = useNavigate();
   const location = useLocation();
   const amount = location.state?.amount
+  const plan = location.state?.plan
 
   const { userData } = useAuthContext();
 
@@ -150,7 +151,7 @@ export default function Payment() {
                 <button
                   type="button"
                   className="go"
-                onClick={() => {navigate("/user/fund/payment/confirmation", {state: {invoice, selectedCrypto}})}}
+                onClick={() => {navigate("/user/fund/payment/confirmation", {state: {invoice,plan, amount, selectedCrypto}})}}
                 >
                   Proceed
                 </button>

@@ -30,7 +30,7 @@ export const validateUser = async (req, res, next) => {
                     }
 
                     const AccessToken = jwt.sign(
-                        {accessToken: user._id},
+                        {accessToken: validUser._id},
                          process.env.JWT_SECRET_access, 
                         {expiresIn: process.env.accessTime}
                       );
