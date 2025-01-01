@@ -1,6 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo1 from "../assets/logosmall.png";
 import xmark from "../assets/xmark.svg";
+import cus1 from "../assets/customer01.jpg";
 import "../style/dash.css";
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../context/auth.context";
@@ -58,80 +59,35 @@ axios.defaults.withCredentials = true
   }, [userData])
 
 
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(`${baseUrl}/auth/logout`, {
+        withCredentials: true,
+      })
+  
+      if (response.status === 200) {
+        toast.success("Logout successful");
+        window.location.assign("/") 
+      } else{
+        toast.error("An error occurred. Please try again");
+      }
+    } catch (error) {
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
+    }
+  }
+
   const statusLabels = {
     success: "Success",
     failed: "Failed",
     progress: "Ongoing",
     pending: "Pending",
   };
-
-
-
-
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     if (!username) return;
-
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:3001/users/${username}`,
-  //         {
-  //           method: "GET",
-  //           credentials: "include", // Include cookies
-  //         }
-  //       );
-
-  //       const data = await response.json();
-  //       if (data.status === "ok") {
-  //         setUserData(data.data); // Set the user data with the fetched user info
-  //       } else {
-  //         console.error("Error fetching user data:", data.error);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching user data:", error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, [username]);
-
-  // useEffect(() => {
-  //   const fetchTransactions = async () => {
-  //     const token = window.localStorage.getItem("token");
-  //     if (!username) return;
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:3001/transactions/${username}`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Accept: "application/json",
-  //           },
-  //         }
-  //       );
-
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch transactions");
-  //       }
-
-  //       const data = await response.json();
-  //       if (data.status === "ok") {
-  //         // Filter only withdrawal transactions
-  //         const withdrawalTransactions = data.data.filter(transaction =>
-  //           transaction.type.toLowerCase().includes("withdrawal")
-  //         );
-  //         setTransactions(withdrawalTransactions);
-  //       } else {
-  //         console.error("Error fetching transactions:", data.error);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error:", error);
-  //     }
-  //   };
-
-  //   fetchTransactions();
-  // }, [username]);
 
 
   function closeNavigation() {
@@ -186,7 +142,7 @@ axios.defaults.withCredentials = true
               </Link>
             </li>
             <li>
-              <Link>
+              <Link onClick={handleLogout}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -205,9 +161,11 @@ axios.defaults.withCredentials = true
             </div>
 
             <div className="user1">
-              {/* Check if userData is available before displaying */}
-            <p>Welcome {userData ? userData.fname : "User"}</p> 
-            </div>
+              <p>Welcome  {userData ? userData.fname : "User"}</p>
+              <div className="user">
+                <img src={cus1} alt="profile-photo" />
+              </div>
+              </div>
           </div>
           <div className="withdraw">
             <Link to={"./select"} className="new">

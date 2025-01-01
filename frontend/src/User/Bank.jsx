@@ -1,13 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import cus1 from "../assets/customer01.jpg";
 import logo1 from "../assets/logosmall.png";
 import xmark from "../assets/xmark.svg";
 import "../style/dash.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useAuthContext } from "../context/auth.context";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Bank() {
   const [isNavActive, setNavActive] = useState(false);
-  const [userData, setUserData] = useState({});
-  const navigate = useNavigate();
+  const { userData } = useAuthContext();
 
   // Form state
   const [amount, setAmount] = useState("");
@@ -23,136 +26,36 @@ export default function Bank() {
     setNavActive(false);
   }
 
-  const logOut = async () => {
-    const token = window.localStorage.getItem("token");
-    if (!token) return;
+  const baseUrl = import.meta.env.VITE_BASEURL;
+  axios.defaults.withCredentials = true
+    
 
+  const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:3001/saveData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ balance, profit }),
-      });
-
-      const data = await response.json();
-      if (data.status === "ok") {
-        console.log("Balance and profit saved successfully.");
-      } else {
-        console.error("Error saving balance and profit:", data.error);
+      const response = await axios.post(`${baseUrl}/auth/logout`, {
+        withCredentials: true,
+      })
+  
+      if (response.status === 200) {
+        toast.success("Logout successful");
+        window.location.assign("/") 
+      } else{
+        toast.error("An error occurred. Please try again");
       }
     } catch (error) {
-      console.error("Error:", error);
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
     }
-
-    window.localStorage.clear();
-    navigate("/login");
   }
-
-  const handleProceed = async () => {
-    const token = window.localStorage.getItem("token");
-
-    if (!token) {
-      alert("No token found. Please log in again.");
-      return;
-    }
-
-    try {
-      const response = await fetch("http://localhost:3001/withdraw", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-         acctname,
-         acctnum, 
-         bank, 
-         amount,
-         cashtag: "--",
-         wallet: "--",
-         paypal: "--",  
-         token 
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.status === "ok") {
-        console.log(data, "withdrawalMade");
-        alert("Withdrawal Made Successfully");
-
-        try {
-          const transactionResponse = await fetch("http://localhost:3001/transactions", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({
-              type: "Withdrawal",
-              amount: amount,
-              status: "progress",
-            }),
-          });
-
-          const transactionData = await transactionResponse.json();
-
-          if (transactionData.status === "ok") {
-            alert("Transaction Successful");
-            navigate("/user");
-          } else {
-            console.log("Error submitting transaction:", transactionData.error);
-            alert("Error submitting transaction. Please try again.");
-          }
-        } catch (error) {
-          console.error("Error submitting transaction:", error);
-        }
-
-      } else {
-        console.log("Error making withdrawal:", data.error);
-        alert("Error making withdrawal. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error making withdrawal:", error);
-    }
-  };
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!username) return;
-
-      try {
-        const response = await fetch(
-          `http://localhost:3001/users/${username}`,
-          {
-            method: "GET",
-            credentials: "include", // Include cookies
-          }
-        );
-
-        const data = await response.json();
-        if (data.status === "ok") {
-          setUserData(data.data); // Set the user data with the fetched user info
-        } else {
-          console.error("Error fetching user data:", data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, [username])
 
   return (
     <>
+    {userData && (
       <div className="container">
       <div className={`navigation ${isNavActive ? "active" : ""}`}>
           <div className="navbar">
@@ -167,7 +70,7 @@ export default function Bank() {
 
           <ul>
             <li>
-              <Link to={`/user/${username}`}>
+              <Link to={`/user`}>
                 <span className="icon">
                   <ion-icon name="home-outline"></ion-icon>
                 </span>
@@ -175,7 +78,7 @@ export default function Bank() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/withdrawals`}>
+              <Link to={`/user/withdrawals`}>
                 <span className="icon">
                   <ion-icon name="wallet-outline"></ion-icon>
                 </span>
@@ -183,7 +86,7 @@ export default function Bank() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/transactions`}>
+              <Link to={`/user/transactions`}>
                 <span className="icon">
                   <ion-icon name="stats-chart-outline"></ion-icon>
                 </span>
@@ -191,7 +94,7 @@ export default function Bank() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/settings`}>
+              <Link to={`/user/settings`}>
                 <span className="icon">
                   <ion-icon name="settings-outline"></ion-icon>
                 </span>
@@ -199,7 +102,7 @@ export default function Bank() {
               </Link>
             </li>
             <li>
-              <Link to={"/login"} onClick={logOut}>
+              <Link onClick={handleLogout}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -216,9 +119,15 @@ export default function Bank() {
                 <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
               </svg>
             </div>
-            <div className="user1">
-              <p>Welcome {userData.fname}</p>
-            </div>
+            
+            
+              
+          <div className="user1">
+              <p>Welcome  {userData ? userData.fname : "User"}</p>
+              <div className="user">
+                <img src={cus1} alt="profile-photo" />
+              </div>
+              </div>
           </div>
           <div className="tab">
             <div className="bank">
@@ -256,14 +165,16 @@ export default function Bank() {
                   value={acctname}
                   onChange={(e) => setAcctName(e.target.value)}
                 />
-                <button type="button" className="go" onClick={handleProceed}>
+                <button type="button" className="go" >
                   Submit
                 </button>
               </form>
             </div>
           </div>
         </div>
+      
       </div>
+      )}
     </>
   );
 }

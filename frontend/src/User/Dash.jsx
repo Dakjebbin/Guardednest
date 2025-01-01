@@ -1,4 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
+import cus1 from "../assets/customer01.jpg";
 import { useEffect, useState} from "react";
 import xmark from "../assets/xmark.svg";
 import logo1 from "../assets/logosmall.png";
@@ -175,8 +176,10 @@ const handleLogout = async () => {
             </div>
 
             <div className="user1">
-              {/* Check if userData is available before displaying */}
-              <p>Welcome {userData.fname}</p>
+              <p>Welcome  {userData ? userData.fname : "User"}</p>
+              <div className="user">
+                <img src={cus1} alt="profile-photo" />
+              </div>
             </div>
           </div>
           <div className="user-content">

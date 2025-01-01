@@ -1,78 +1,55 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo1 from "../assets/logosmall.png";
 import xmark from "../assets/xmark.svg";
+import cus1 from "../assets/customer01.jpg";
 import "../style/dash.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useAuthContext } from "../context/auth.context";
+import axios from "axios";
+import { toast } from "react-toastify";
 export default function Settings() {
   const [isNavActive, setNavActive] = useState(false);
-  const navigate = useNavigate();
+  const { userData } = useAuthContext();
 
   function toggleNavigation() {
     setNavActive(!isNavActive);
   }
-  const logOut = async () => {
-    const token = window.localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const response = await fetch("http://localhost:3001/saveData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ balance, profit }),
-      });
-
-      const data = await response.json();
-      if (data.status === "ok") {
-        console.log("Balance and profit saved successfully.");
-      } else {
-        console.error("Error saving balance and profit:", data.error);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-    window.localStorage.clear();
-    navigate("/login");
-  }
-
-  const [userData, setUserData] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:3001/userData", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        token: window.localStorage.getItem("token"),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data, "userData");
-
-        setUserData(data.data);
-
-        if (data.data == "token expired") {
-          alert("Token expired login again");
-          window.localStorage.clear();
-          window.location.href = "./sign-in";
-        }
-      });
-  }, []);
+  
   
   function closeNavigation() {
     setNavActive(false);
   }
+
+    
+  const baseUrl = import.meta.env.VITE_BASEURL;
+axios.defaults.withCredentials = true
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(`${baseUrl}/auth/logout`, {
+        withCredentials: true,
+      })
+  
+      if (response.status === 200) {
+        toast.success("Logout successful");
+        window.location.assign("/") 
+      } else{
+        toast.error("An error occurred. Please try again");
+      }
+    } catch (error) {
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
+    }
+  }
+
   return (
     <>
+    {userData && (
       <div className="container">
       <div className={`navigation ${isNavActive ? "active" : ""}`}>
           <div className="navbar">
@@ -87,7 +64,7 @@ export default function Settings() {
 
           <ul>
             <li>
-              <Link to={`/user/${username}`}>
+              <Link to={`/user`}>
                 <span className="icon">
                   <ion-icon name="home-outline"></ion-icon>
                 </span>
@@ -95,7 +72,7 @@ export default function Settings() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/withdrawals`}>
+              <Link to={`/user/withdrawals`}>
                 <span className="icon">
                   <ion-icon name="wallet-outline"></ion-icon>
                 </span>
@@ -103,7 +80,7 @@ export default function Settings() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/transactions`}>
+              <Link to={`/user/transactions`}>
                 <span className="icon">
                   <ion-icon name="stats-chart-outline"></ion-icon>
                 </span>
@@ -111,7 +88,7 @@ export default function Settings() {
               </Link>
             </li>
             <li>
-              <Link to={`/user/${username}/settings`}>
+              <Link to={`/user/settings`}>
                 <span className="icon">
                   <ion-icon name="settings-outline"></ion-icon>
                 </span>
@@ -119,7 +96,7 @@ export default function Settings() {
               </Link>
             </li>
             <li>
-              <Link to={"/login"} onClick={logOut}>
+              <Link onClick={handleLogout}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -136,9 +113,13 @@ export default function Settings() {
                 <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
               </svg>
             </div>
-            <div className="user1">
-              <p>Welcome </p>
-            </div>
+              
+          <div className="user1">
+              <p>Welcome  {userData ? userData.fname : "User"}</p>
+              <div className="user">
+                <img src={cus1} alt="profile-photo" />
+              </div>
+              </div>
           </div>
           <div className="sector">
             <div className="verify">
@@ -182,6 +163,7 @@ export default function Settings() {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }

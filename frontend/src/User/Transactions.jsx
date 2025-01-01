@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import logo1 from "../assets/logosmall.png";
 import xmark from "../assets/xmark.svg";
+import cus1 from "../assets/customer01.jpg";
 import "../style/dash.css";
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../context/auth.context";
@@ -9,7 +10,6 @@ import { toast } from "react-toastify";
 
 export default function Transactions() {
   const [isNavActive, setNavActive] = useState(false);
-  const [imageData, setImageData] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
   const { userData } = useAuthContext();
@@ -69,65 +69,28 @@ axios.defaults.withCredentials = true
   
   }, [userData])
 
-
-  // useEffect(() => {
-  //   fetch("http://localhost:3001/userData", {
-  //     method: "POST",
-  //     crossDomain: true,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //       "Access-Control-Allow-Origin": "*",
-  //     },
-  //     body: JSON.stringify({
-  //       token: window.localStorage.getItem("token"),
-  //     }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setUserData(data.data);
-  //       if (data.data === "token expired") {
-  //         alert("Token expired login again");
-  //         window.localStorage.clear();
-  //         window.location.href = "/login";
-  //       }
-  //     });
-  // }, []);
-
-  useEffect(() => {
-    const fetchImageData = async () => {
-      const token = window.localStorage.getItem("token");
-      if (!token) return;
-
-      try {
-        const response = await fetch("http://localhost:3001/imageData", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch images");
-        }
-
-        const data = await response.json();
-        if (data.status === "ok") {
-          setImageData(data.data);
-        } else {
-          console.error("Error fetching images:", data.error);
-        }
-      } catch (error) {
-        console.error("Error:", error);
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(`${baseUrl}/auth/logout`, {
+        withCredentials: true,
+      })
+  
+      if (response.status === 200) {
+        toast.success("Logout successful");
+        window.location.assign("/") 
+      } else{
+        toast.error("An error occurred. Please try again");
       }
-    };
-
-    fetchImageData();
-  }, []);
-
+    } catch (error) {
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
+    }
+  }
 
 
   return (
@@ -178,7 +141,7 @@ axios.defaults.withCredentials = true
               </Link>
             </li>
             <li>
-              <Link>
+              <Link onClick={handleLogout}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -197,8 +160,11 @@ axios.defaults.withCredentials = true
             </div>
 
             <div className="user1">
-              {/* <p>Welcome {userData.fname}</p> */}
-            </div>
+              <p>Welcome  {userData ? userData.fname : "User"}</p>
+              <div className="user">
+                <img src={cus1} alt="profile-photo" />
+              </div>
+              </div>
           </div>
 
           <div className="details">

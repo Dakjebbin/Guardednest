@@ -20,6 +20,11 @@ import Confirmation from './User/Confirmation.jsx'
 import Withdraw from './User/Withdrawals.jsx'
 import Select from './User/Select.jsx'
 import Transactions from './User/Transactions.jsx'
+import Bank from './User/Bank.jsx'
+import Paypal from './User/Paypal.jsx'
+import Crypto from './User/Crypto.jsx'
+import Cashapp from './User/Cashapp.jsx'
+import Settings from './User/Settings.jsx'
 
 
 const router = createBrowserRouter([
@@ -82,6 +87,21 @@ const router = createBrowserRouter([
         },{
           path: "/user/transactions",
           element: <Transactions/>
+        },{
+          path: "/user/withdrawals/select/bank",
+          element: <Bank/>
+        },{
+          path: "/user/withdrawals/select/paypal",
+          element: <Paypal/>
+        },{
+          path: "/user/withdrawals/select/crypto",
+          element: <Crypto/>
+        },{
+          path: "/user/withdrawals/select/cashapp",
+          element: <Cashapp/>
+        },{
+          path: "/user/settings",
+          element: <Settings/>
         }
 ])
 

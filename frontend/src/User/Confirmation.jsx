@@ -4,7 +4,7 @@ import cus1 from "../assets/customer01.jpg";
 import xmark from "../assets/xmark.svg";
 import "../style/dash.css";
 import { useState, useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { useAuthContext } from "../context/auth.context";
 
@@ -272,7 +272,7 @@ const handleTransaction = async (e) => {
             </div>
           </div>
         </div>
-        <ToastContainer/>
+   
       </div>
       )}
     </>
