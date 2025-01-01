@@ -307,13 +307,12 @@ text-align: center;
 
 .details {
   position: relative;
-  width: 80%;
+  width: 90%;
   padding: 20px;
   display: grid;
   grid-template-rows: 1;
   grid-gap: 50px;
-  margin-top: 10px;
-  margin-left: 10pc;
+  margin: auto;
   overflow: hidden;
 }
 
@@ -500,6 +499,13 @@ text-align: center;
   margin-bottom: 40px;
 }
 
+.tableWrapper {
+  max-height: 300px; /* Adjust the height as needed */
+  overflow-y: auto;  /* Enables vertical scrolling */
+  width: 100%; /* Ensures table takes full width */
+}
+
+
 .bank form .go{
   margin-top: 15px;
   font-size: 22px;
@@ -677,6 +683,17 @@ text-align: center;
   }
 }
 
+@media (max-width: 850px) {
+
+  .head {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 80px;
+    padding: 20px 20px;
+    margin-bottom: 25px;
+  }
+}
+
 @media (max-width: 768px) {
   .details {
     grid-template-columns: 1fr;
@@ -693,7 +710,6 @@ text-align: center;
   .head {
     grid-template-columns: repeat(1, 1fr);
     gap: 20px;
-    padding: 0px 1%;
     margin-bottom: 25px;
   }
 
@@ -870,7 +886,7 @@ text-align: center;
     font-size: 27px;
   }
   .details .recentTransact table tr {
-    font-size: 26px;
+    font-size: 20px;
     color: var(--black1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
@@ -1049,6 +1065,10 @@ button{
     margin-top: 7px;
   }
 
+  .tableWrapper {
+    max-height: 250px;  /* Adjust this height for smaller screens */
+  }
+
   .details {
     position: relative;
     width: 100%;
@@ -1058,6 +1078,8 @@ button{
     grid-gap: 50px;
     margin-left: 0;
     margin-top: 10px;
+    overflow-x: auto;
+
   }
 
   .details .recentTransact {
@@ -1068,6 +1090,7 @@ button{
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     border-radius: 20px;
     margin-top: 0px;
+  
   }
   
   .details .cardHeader {
@@ -1090,6 +1113,7 @@ button{
     border-collapse: collapse;
     margin-top: 0px;
   }
+  
   .details table thead td {
     font-weight: 600;
     font-size: 20px;

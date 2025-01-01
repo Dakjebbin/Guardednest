@@ -33,8 +33,6 @@ export default function Dash() {
       })
   
       const transactionData = response?.data?.data
-      console.log("my transaction data",transactionData);
-      
       
       if (!transactionData || transactionData.length <= 0) {
         toast.error("No transactions found");
@@ -246,44 +244,46 @@ const handleLogout = async () => {
               </div>
             </div>
             <div className="details">
-              <div className="cardHeader">
-                <h2>Transactions</h2>
-                <div className="recentTransact">
-                  {transactions.length === 0 ? (
-                    <p className="noTransact">No Transactions</p>
-                  ) : (
-                    <table>
-                      <thead>
-                        <tr>
-                          <td>Type</td>
-                          <td>Amount</td>
-                          <td>Status</td>
-                          <td>Date Created</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {transactions.map((transaction, index) => (
-                          <tr key={index}>
-                            <td> {transaction.type} </td>
-                            <td> ${transaction.amount} </td>
-                            <td>
-                              <span
-                                className={`status ${transaction.status.toLowerCase()}`}
-                              >
-                                {statusLabels[
-                                  transaction.status.toLowerCase()
-                                ] || transaction.status}
-                              </span>
-                            </td>
-                            <td>{formatDate(transaction.createdAt)}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
-                </div>
-              </div>
-            </div>
+  <div className="cardHeader">
+    <h2>Transactions</h2>
+    <div className="recentTransact">
+      {transactions.length === 0 ? (
+        <p className="noTransact">No Transactions</p>
+      ) : (
+        <div className="tableWrapper">
+          <table>
+            <thead>
+              <tr>
+                <td>Type</td>
+                <td>Amount</td>
+                <td>Status</td>
+                <td>Date Created</td>
+              </tr>
+            </thead>
+            <tbody>
+              {transactions.map((transaction, index) => (
+                <tr key={index}>
+                  <td> {transaction.type} </td>
+                  <td> ${transaction.amount} </td>
+                  <td>
+                    <span
+                      className={`status ${transaction.status.toLowerCase()}`}
+                    >
+                      {statusLabels[transaction.status.toLowerCase()] ||
+                        transaction.status}
+                    </span>
+                  </td>
+                  <td>{formatDate(transaction.createdAt)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
           </div>
         </div>
       </div>
