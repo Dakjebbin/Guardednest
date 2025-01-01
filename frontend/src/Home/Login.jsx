@@ -90,7 +90,7 @@ if (response.status === 200) {
                 type="text"
                 id="username"
                 required
-                placeholder="Enter Your Usernam"
+                placeholder="Enter Your Username"
                 onChange={(e) => setUserName(e.target.value)}
               />
 
@@ -103,6 +103,7 @@ if (response.status === 200) {
                     type={showPassword ? "text" : "password"}
                     id="password"
                     required
+                    placeholder="Enter Your Password"
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <div className="eye-button" onClick={() => setShowPassword(!showPassword)}
