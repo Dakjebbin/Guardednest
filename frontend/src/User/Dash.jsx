@@ -11,12 +11,13 @@ import axios from "axios";
 
 export default function Dash() {
   const [isNavActive, setNavActive] = useState(false);
-  const [transactions, setTransactions] = useState([]);   
+  const [transactions, setTransactions] = useState([]); 
+  const [balance, setBalance] = useState(0);
   const { userData } = useAuthContext();
 
  // const navigate = useNavigate();
 
-
+ const baseUrl = import.meta.env.VITE_BASEURL;
  useEffect(() => {
 
   if (!userData || !userData._id) {
@@ -27,15 +28,28 @@ export default function Dash() {
   const fetchTransactions = async () => {
     try {
   
-      if (!transactions || transactions.length <= 0) {
-        toast.error("No transactions found");
-    }
-  
      const response = await axios.get(`${baseUrl}/transaction/getTransact/${userData?._id}`,{
         withCredentials: true,
       })
   
-      setTransactions(response.data.data)
+      const transactionData = response?.data?.data
+      console.log("my transaction data",transactionData);
+      
+      
+      if (!transactionData || transactionData.length <= 0) {
+        toast.error("No transactions found");
+    }
+      
+      const filterTransaction = transactionData?.filter(transaction => 
+       transaction.type?.trim() === "Deposit" && transaction.status?.trim() === "Successfull"
+      );
+
+      const totalDeposit = filterTransaction.reduce((accumulator, deposit) => {
+          return accumulator + deposit.amount
+      }, 0)
+
+      setBalance(totalDeposit);
+      setTransactions(transactionData)
       
     } catch (error) {
       if (error instanceof axios.AxiosError) {
@@ -52,8 +66,7 @@ export default function Dash() {
     fetchTransactions()
   }
   
-  }, [userData])
-
+  }, [userData, baseUrl])
 
   function toggleNavigation() {
     setNavActive(!isNavActive);
@@ -70,8 +83,7 @@ export default function Dash() {
     pending: "Pending",
   };
 
-  
-const baseUrl = import.meta.env.VITE_BASEURL;
+
 axios.defaults.withCredentials = true
 
 const handleLogout = async () => {
@@ -190,7 +202,7 @@ const handleLogout = async () => {
                     <div className="cardName">Balance:</div>
                     <div className="numbers">
                       $
-                      {userData.balance.toLocaleString(undefined, {
+                      {balance.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}

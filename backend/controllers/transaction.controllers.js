@@ -1,4 +1,5 @@
 import transactionModel from "../models/Transact.js";
+import userModel from "../models/User.js";
 import cloudinary from "../utils/cloudinary.js";
 
 const transact = async (req, res) => {
@@ -12,7 +13,6 @@ const transact = async (req, res) => {
         })
         return;
     }
-
 
     try {
 
@@ -67,6 +67,38 @@ const transact = async (req, res) => {
     }
 }
 
+const updateTransactionStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!status) {
+    return res.status(400).json({ status: "error", error: "Status is required" });
+  }
+
+  try {
+    const transaction = await transactionModel.findById(id).exec()
+
+    if (!transaction) {
+      return res.status(404).json({ status: "error", error: "Transaction not found" });
+    }
+  
+
+  transaction.status = status;
+    await transaction.save();
+
+    res.status(200).json({ 
+      success:true,
+      message: "Status updated successfully"
+    })
+  } catch (error) {
+    
+    res.status(500).json({ 
+      success:false,
+      message: "Internal Server Error" + error.message 
+  });
+  }
+}
+
 
 const getTransaction = async (req, res) => {
     const validUser = req.user;
@@ -88,6 +120,6 @@ const getTransaction = async (req, res) => {
 
 
 
-export {transact, getTransaction}
+export {transact, getTransaction, updateTransactionStatus};
 
     

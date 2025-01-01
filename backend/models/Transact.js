@@ -5,7 +5,7 @@ const transactionSchema = new mongoose.Schema({
   plan: { type: String},
   type: { type: String, required: true, enum: ["Deposit", "Profit", "Withdrawal"]  },
   amount: { type: Number, required: true },
-  status: { type: String, required: true, enum: ["Pending", "Success", "Failed", "Progress"],
+  status: { type: String, required: true, enum: ["Pending", "Successfull", "Failed", "Progress"],
      default: "Pending" },
      image: { type: String},
      optimizedImageUrl: { type: String },
