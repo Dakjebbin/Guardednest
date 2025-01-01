@@ -1,55 +1,46 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import goog from "../../frontend/src/assets/google.svg";
 import "../../frontend/src/style/home.css";
 import eye from "../../frontend/src/assets/eye.svg"; 
 import eyeOff from "../../frontend/src/assets/eye-off.svg"
-
-import Footer from "../../frontend/src/Home/Footer.jsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 export default function SignIn() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+  const baseUrl = import.meta.env.VITE_BASEURL;
+  axios.defaults.withCredentials = true;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3001/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
+      const response = await axios.post(`${baseUrl}/auth/login`,{
+        username,password
+      }, {
+        withCredentials: true,
       });
+      
 
-      const data = await response.json();
-
-      if (response.ok) {
-        if (data.success) {
-          toast.success("Login successful!");
-          window.localStorage.setItem("token", data.token);
-          window.localStorage.setItem("loggedIn", true);
-          navigate(`/admin`);
-        } else {
-          // Handle unsuccessful login response
-          toast.error(data.message || "Login failed. Please check your credentials.");
-        }
+      if (response.status === 200) {
+        toast.success("Login Successfull")
+        setUserName('');
+        setPassword('');
+        window.location.assign("/admin")
       } else {
-        // Handle server errors
-        toast.error("Server error: " + (data.message || "Please try again later."));
+        toast.error("An error occurred");
       }
     } catch (error) {
-      toast.error("An error occurred: " + error.message);
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
     }
   };
 
