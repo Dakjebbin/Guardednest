@@ -13,6 +13,7 @@ export default function SignIn() {
 
   const baseUrl = import.meta.env.VITE_BASEURL;
   axios.defaults.withCredentials = true;
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,19 +35,16 @@ export default function SignIn() {
         toast.error("An error occurred");
       }
     } catch (error) {
-      if (error instanceof axios.AxiosError) {
-        console.log(
-           error?.response?.data
-         );
-       } else {
-         console.log("reg error => ", error);
-       }
+      if (error.response) {
+        toast.error(error.response.data.message || "Invalid credentials");
+      } else {
+        toast.error("Something went wrong");
+      }
     }
   };
 
   return (
     <>
-      
       <div className="content">
         <div className="section">
           <div className="login">
@@ -55,20 +53,6 @@ export default function SignIn() {
              <h3>Admin Sign In</h3>
             </div>
 
-           {/*  <div className="google-sect">
-              <Link href="#">
-                <span>
-                  <img src={goog} alt="google icon" />
-                </span>
-                Continue with Google
-              </Link>
-              <br />
-            </div>
-            
-            <div className="divider">
-              <span className="or">or</span>
-            </div>
-*/}
             <form onSubmit={handleSubmit} className="sign">
               <label htmlFor="username">Username</label>
               <input
@@ -77,8 +61,6 @@ export default function SignIn() {
                 required
                 onChange={(e) => setUserName(e.target.value)}
               />
-
-
 
 <div className="password-container">
                 <label htmlFor="password">Password</label>
@@ -104,7 +86,6 @@ export default function SignIn() {
                 Sign in
               </button>
             </form>
-
             
           </div>
         </div>

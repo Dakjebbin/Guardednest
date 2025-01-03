@@ -1,15 +1,17 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo1 from "./assets/logosmall.png";
 import xmark from "./assets/xmark.svg";
 import "./admin.css";
 import { useState, useEffect } from "react";
+import { useAuthContext } from "../context/Auth.Context";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function Admin() {
   const [isNavActive, setNavActive] = useState(false);
   const [users, setUsers] = useState([]);
-  const { username } = useParams(); 
-  const navigate = useNavigate();
+ const {userData} = useAuthContext();
+
 
   function toggleNavigation() {
     setNavActive(!isNavActive);
@@ -18,27 +20,29 @@ export default function Admin() {
   function closeNavigation() {
     setNavActive(false);
   }
-
-  const logOut = () => {
-    window.localStorage.clear();
-  };
+const baseUrl = import.meta.env.VITE_BASEURL
 
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
+   useEffect(() => { 
+
+     const fetchUsers = async () => {
+
+      if (userData.isAdmin === "USER") {
+       toast.error("Unauthorized Access");
+       window.location.assign("/")
+       return;
+       }
+       
       setLoading(true);
-      try {
-        const response = await fetch("http://localhost:3001/users");
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        if (data.status === "ok") {
-          setUsers(data.data);
-        } else {
-          throw new Error(data.message);
-        }
+       try {
+         const response = await axios.get(`${baseUrl}/auth/allUsers`,{
+           withCredentials: true,
+         });
+ 
+         setUsers(response.data.data)
+         
+
       } catch (err) {
         console.error("Failed to fetch users:", err);
       } finally {
@@ -47,24 +51,39 @@ export default function Admin() {
     };
   
     fetchUsers();
-  }, []);
+  }, [userData]);
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(`${baseUrl}/auth/logout`, {
+        withCredentials: true,
+      })
+  
+      if (response.status === 200) {
+        toast.success("Logout successful");
+        window.location.assign("/") 
+      } else{
+        toast.error("An error occurred. Please try again");
+      }
+    } catch (error) {
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
+    }
+  }
   
   if (loading) {
     return <p>Loading...</p>; // Or a spinner
   }
   
 
-  const handleViewTransactions = (user) => {
-    localStorage.setItem("selectedUser", JSON.stringify(user)); // Save the full user object
-    navigate(`/admin/transactions/${user.username}`); // Navigate using username
-  };
-  
-  const handleUsercard = (user) => {
-    localStorage.setItem("selectedUser", JSON.stringify(user)); // Save the full user object
-    navigate(`/admin/userdetails/${user.username}`); // Navigate using username
-  };
-
   return (
+    <>
+    {userData && (
     <div className="container">
       <div className={`navigation ${isNavActive ? "active" : ""}`}>
         <div className="navbar">
@@ -79,15 +98,15 @@ export default function Admin() {
 
         <ul>
           <li>
-            <Link to={"/"}>
+            <Link to={"/admin"}>
               <span className="icon">
                 <ion-icon name="home-outline"></ion-icon>
               </span>
               <span className="title">Dashboard</span>
             </Link>
           </li>
-          <li>
-            <Link to={"/admin/users"}>
+          {/* <li>
+            <Link to={"/admin"}>
               <span className="icon">
                 <ion-icon name="wallet-outline"></ion-icon>
               </span>
@@ -95,7 +114,7 @@ export default function Admin() {
             </Link>
           </li>
           <li>
-            <Link to={"/admin/transactions"}>
+            <Link to={"/admin"}>
               <span className="icon">
                 <ion-icon name="stats-chart-outline"></ion-icon>
               </span>
@@ -103,15 +122,15 @@ export default function Admin() {
             </Link>
           </li>
           <li>
-            <Link to={"/user/settings"}>
+            <Link to={"/admin"}>
               <span className="icon">
                 <ion-icon name="settings-outline"></ion-icon>
               </span>
               <span className="title">Settings</span>
             </Link>
-          </li>
+          </li> */}
           <li>
-            <Link to={"/login"} onClick={logOut}>
+            <Link onClick={handleLogout}>
               <span className="icon">
                 <ion-icon name="log-out-outline"></ion-icon>
               </span>
@@ -130,7 +149,7 @@ export default function Admin() {
           </div>
 
           <div className="user1">
-            <p>Welcome</p>
+            <p>Welcome {userData.fname}</p>
           </div>
         </div>
 
@@ -146,13 +165,13 @@ export default function Admin() {
                 <div className="btn-sect">
                   <button
                   className="button"
-                  onClick={() => handleViewTransactions(user)}
+                 
                 >
                   View Transactions
                 </button>
                 <button
                   className="button"
-                  onClick={() => handleUsercard(user)}
+                 
                 >
                   View Usercard
                 </button>
@@ -166,5 +185,7 @@ export default function Admin() {
         </div>
       </div>
     </div>
+    )}
+    </>
   );
 }
