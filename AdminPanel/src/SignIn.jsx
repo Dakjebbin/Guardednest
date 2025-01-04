@@ -38,7 +38,7 @@ export default function SignIn() {
       if (error.response) {
         toast.error(error.response.data.message || "Invalid credentials");
       } else {
-        toast.error("Something went wrong");
+        toast.error( error.message);
       }
     }
   };

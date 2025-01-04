@@ -12,7 +12,7 @@ import axios from "axios";
 export default function Dash() {
   const [isNavActive, setNavActive] = useState(false);
   const [transactions, setTransactions] = useState([]); 
-  const [balance, setBalance] = useState(0);
+  // const [balance, setBalance] = useState(0);
   const { userData } = useAuthContext();
 
  // const navigate = useNavigate();
@@ -38,15 +38,15 @@ export default function Dash() {
         toast.error("No transactions found");
     }
       
-      const filterTransaction = transactionData?.filter(transaction => 
-       transaction.type?.trim() === "Deposit" && transaction.status?.trim() === "Successfull"
-      );
+      // const filterTransaction = transactionData?.filter(transaction => 
+      //  transaction.type?.trim() === "Deposit" && transaction.status?.trim() === "Successfull"
+      // );
 
-      const totalDeposit = filterTransaction.reduce((accumulator, deposit) => {
-          return accumulator + deposit.amount
-      }, 0)
+      // const totalDeposit = filterTransaction.reduce((accumulator, deposit) => {
+      //     return accumulator + deposit.amount
+      // }, 0)
 
-      setBalance(totalDeposit);
+      // setBalance(totalDeposit);
       setTransactions(transactionData)
       
     } catch (error) {
@@ -200,7 +200,7 @@ const handleLogout = async () => {
                     <div className="cardName">Balance:</div>
                     <div className="numbers">
                       $
-                      {balance.toLocaleString(undefined, {
+                      {userData.balance.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}

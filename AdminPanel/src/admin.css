@@ -271,13 +271,13 @@ button {
 
 .details {
   position: relative;
-  width: 80%;
+  width: 90%;
   padding: 20px;
   display: grid;
   grid-template-rows: 1;
   grid-gap: 50px;
   margin-top: 10px;
-  margin-left: 10pc;
+  margin-left: 2pc;
   overflow: hidden;
 }
 

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo1 from "./assets/logosmall.png";
 import xmark from "./assets/xmark.svg";
 import "./admin.css";
@@ -11,6 +11,7 @@ export default function Admin() {
   const [isNavActive, setNavActive] = useState(false);
   const [users, setUsers] = useState([]);
  const {userData} = useAuthContext();
+ const navigate = useNavigate()
 
 
   function toggleNavigation() {
@@ -21,6 +22,7 @@ export default function Admin() {
     setNavActive(false);
   }
 const baseUrl = import.meta.env.VITE_BASEURL
+axios.defaults.withCredentials = true
 
   const [loading, setLoading] = useState(true);
 
@@ -28,7 +30,7 @@ const baseUrl = import.meta.env.VITE_BASEURL
 
      const fetchUsers = async () => {
 
-      if (userData.isAdmin === "USER") {
+      if (userData?.isAdmin === "USER") {
        toast.error("Unauthorized Access");
        window.location.assign("/")
        return;
@@ -165,13 +167,13 @@ const baseUrl = import.meta.env.VITE_BASEURL
                 <div className="btn-sect">
                   <button
                   className="button"
-                 
+                 onClick={() => navigate(`/transactions/${user._id}`)}
                 >
                   View Transactions
                 </button>
                 <button
                   className="button"
-                 
+                  onClick={() => navigate(`/userCard/${user._id}`)}
                 >
                   View Usercard
                 </button>

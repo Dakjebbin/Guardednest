@@ -142,6 +142,7 @@ export default function Bank() {
                   type="number"
                   id="amount"
                   value={amount}
+                  required
                   onChange={(e) => setAmount(e.target.value)}
                 />
                 <label htmlFor="bank">Bank</label>
@@ -149,6 +150,7 @@ export default function Bank() {
                   type="text"
                   id="bank"
                   value={bank}
+                  required
                   onChange={(e) => setBank(e.target.value)}
                 />
                 <label htmlFor="acctnum">Account Number</label>
@@ -156,6 +158,7 @@ export default function Bank() {
                   type="number"
                   id="acctnum"
                   value={acctnum}
+                  required
                   onChange={(e) => setAcctNum(e.target.value)}
                 />
                 <label htmlFor="acctname">Account Name</label>
@@ -163,6 +166,7 @@ export default function Bank() {
                   type="text"
                   id="acctname"
                   value={acctname}
+                  required
                   onChange={(e) => setAcctName(e.target.value)}
                 />
                 <button type="button" className="go" >

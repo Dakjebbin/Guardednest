@@ -107,6 +107,7 @@ export default function Paypal() {
                   type="number"
                   id="amount"
                   value={amount}
+                  required
                   onChange={(e) => setAmount(e.target.value)}
                 />
                 <label htmlFor="paypal">Paypal Email</label>
@@ -114,6 +115,7 @@ export default function Paypal() {
                   type="text"
                   id="paypal"
                   value={paypal}
+                  required
                   onChange={(e) => setPaypalEmail(e.target.value)}
                 />
                 <button type="button" className="go" >

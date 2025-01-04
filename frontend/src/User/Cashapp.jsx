@@ -108,12 +108,14 @@ export default function Cashapp() {
                   type="number"
                   id="amount"
                   value={amount}
+                  required
                   onChange={(e) => setAmount(e.target.value)}
                 />
                 <label htmlFor="cashtag">Cash Tag</label>
                 <input
                   type="text"
                   id="cashtag"
+                  required
                   value={cashtag}
                   onChange={(e) => setCashTag(e.target.value)}
                 />

@@ -116,6 +116,7 @@ export default function Crypto() {
                   type="number"
                   id="amount"
                   value={amount}
+                  required
                   onChange={(e) => setAmount(e.target.value)}
                 />
                 <label htmlFor="wallet">Wallet Address</label>
@@ -123,6 +124,7 @@ export default function Crypto() {
                   type="text"
                   id="wallet"
                   value={wallet}
+                  required
                   onChange={(e) => setWalletAddress(e.target.value)}
                 />
                 <button type="button" className="go">
