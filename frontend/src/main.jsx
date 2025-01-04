@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import "./index.css"
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './layouts/Layout.jsx'
 import About from './Home/About.jsx'
@@ -25,6 +26,8 @@ import Paypal from './User/Paypal.jsx'
 import Crypto from './User/Crypto.jsx'
 import Cashapp from './User/Cashapp.jsx'
 import Settings from './User/Settings.jsx'
+import { ErrorBoundary } from "react-error-boundary";
+import NotFound from './User/Notfound.jsx'
 
 
 const router = createBrowserRouter([
@@ -102,14 +105,20 @@ const router = createBrowserRouter([
         },{
           path: "/user/settings",
           element: <Settings/>
-        }
+        },
+        {
+          path: '*',
+          element: <NotFound />,
+        },
 ])
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
      <AuthContextProvider> 
+      <ErrorBoundary fallback={<div>Something went wrong</div>}>
     <RouterProvider router={router} />
+    </ErrorBoundary>
      </AuthContextProvider> 
   </React.StrictMode>
 )
