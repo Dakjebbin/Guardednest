@@ -103,29 +103,21 @@ body {
 }
 
 /* --------- curve outside ---------- */
-.navigation ul li:active a::before {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: -50px;
-  width: 50px;
-  height: 50px;
-  background-color: transparent;
-  border-radius: 50%;
-  box-shadow: 35px 35px 0 10px var(--white);
-  pointer-events: none;
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 10px 0;
+  width: 100%;
+  /* flex-wrap: wrap; */
+
+  
 }
-.navigation ul li:active a::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: -50px;
-  width: 50px;
-  height: 50px;
-  background-color: transparent;
-  border-radius: 50%;
-  box-shadow: 35px -35px 0 10px var(--white);
-  pointer-events: none;
+.mainlogo img {
+  width: 70px;
+  margin-top: 10px;
+  margin-left: 20px;
 }
 
 /* ===================== Main ===================== */
@@ -414,4 +406,117 @@ button {
 .userDetails p{
   font-size: 25px;
 
+}
+
+.section {
+  padding: 0 25%;
+}
+.login {
+  background: #f5f7fc;
+  padding: 10px 10%;
+  margin-bottom: 50px;
+}
+.text2 {
+  text-align: center;
+  padding: 20px;
+  font-size: 25px;
+  margin-bottom: 30px;
+}
+.google-sect {
+  position: relative;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin-left: auto;
+  margin-right:auto ;
+  width: 100%; 
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.google-sect a {  
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  font-size: 23px;
+}
+.google-sect a span {
+  position: absolute;
+  top: 15px;
+  left: 5px;
+}
+.divider {
+  position: relative;
+  margin: 60px 0;
+  height: 1px;
+  border-left: 250px solid #ccc;
+  border-right: 250px solid #ccc;
+}
+.divider span {
+  position: absolute;
+  top: -16px;
+  left: 10px;
+  font-size: 20px;
+}
+.sign {
+  padding: 0px 10%;
+  position: relative;
+}
+.sign input {
+  position: relative;
+  font-size: 23px;
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.sign label {
+  font-size: 23px;
+  margin-top: 0px;
+}
+.sign #eyeicon {
+  width: 30px;
+  position: absolute;
+  right: 5pc;
+  top: 9.5pc;
+  cursor: pointer;
+}
+.form-check {
+  position: absolute;
+  left: -15pc;
+  top: 14pc;
+}
+.check {
+  margin-left: 20px;
+}
+.forgot {
+  float: right;
+  font-size: 23px;
+  padding-bottom: 10px;
+  color: #cb8d39;
+}
+.sign button {
+  font-size: 23px;
+  background: #cb8d39;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+}
+.signup {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 23px;
+}
+.signup a{
+  color: #cb8d39;
 }

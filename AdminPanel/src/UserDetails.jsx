@@ -135,6 +135,7 @@ export default function UserDetails() {
             <p>Country: {selectedUser.country}</p>
             <p>Balance: ${selectedUser.balance}</p>
             <p>Profit: ${selectedUser.profit}</p>
+            <p>IsAdmin: ${selectedUser.isAdmin}</p>
           </div>
         </div>
       </div>

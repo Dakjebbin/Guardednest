@@ -98,7 +98,7 @@ export default function Transfer() {
             body: JSON.stringify({
               type: "Withdrawal",
               amount: amount,
-              status: "progress",
+              status: "Pending",
             }),
           });
 

@@ -30,9 +30,9 @@ axios.defaults.withCredentials = true
 
      const fetchUsers = async () => {
 
-      if (userData?.isAdmin === "USER") {
+      if (userData?.isAdmin === "No") {
        toast.error("Unauthorized Access");
-       window.location.assign("/")
+       window.location.assign("/login")
        return;
        }
        
@@ -63,7 +63,7 @@ axios.defaults.withCredentials = true
   
       if (response.status === 200) {
         toast.success("Logout successful");
-        window.location.assign("/") 
+        window.location.assign("/login") 
       } else{
         toast.error("An error occurred. Please try again");
       }

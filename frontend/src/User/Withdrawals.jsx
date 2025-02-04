@@ -20,27 +20,49 @@ function Withdraw() {
 
   const baseUrl = import.meta.env.VITE_BASEURL;
 axios.defaults.withCredentials = true
-  
- useEffect(() => {
 
+
+  
+useEffect(() => {
   if (!userData || !userData._id) {
     toast.error("Please login to view this page");
-    return
-  } 
-   
-  const fetchTransactions = async () => {
+    return;
+  }
+
+  // const fetchTransactions = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${baseUrl}/transaction/getTransact/${userData?._id}`,
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
+
+  //     const filteredTransactions = response.data.data.filter(
+  //       (transaction) => transaction.type.toLowerCase() === "withdrawal"
+  //     );
+
+  //     if (filteredTransactions.length === 0) {
+  //       toast.error("No withdrawal transactions found");
+  //     }
+
+  //     setTransactions(filteredTransactions);
+  //   } catch (error) {
+  //     if (error instanceof axios.AxiosError) {
+  //       console.log(error?.response?.data);
+  //     } else {
+  //       console.log("reg error => ", error);
+  //     }
+  //   }
+  // };
+
+  const withdrawalTransactions = async () => {
     try {
-  
-      if (!transactions || transactions.length <= 0) {
-        toast.error("No transactions found");
-    }
-  
-     const response = await axios.get(`${baseUrl}/transaction/getTransact/${userData?._id}`,{
-        withCredentials: true,
+      const response = await axios.get(`${baseUrl}/withdrawal/fetchwithdrawals`,{
+        withCredentials: true
       })
   
       setTransactions(response.data.data)
-      
     } catch (error) {
       if (error instanceof axios.AxiosError) {
         console.log(
@@ -49,14 +71,12 @@ axios.defaults.withCredentials = true
        } else {
          console.log("reg error => ", error);
        }
+      
     }
   }
-  
-  if (userData?._id) {
-    fetchTransactions()
-  }
-  
-  }, [userData])
+  withdrawalTransactions();
+}, [userData]);
+
 
 
   const handleLogout = async () => {
@@ -181,22 +201,28 @@ axios.defaults.withCredentials = true
                     <table>
                       <thead>
                         <tr>
-                          <td>Transaction</td>
+                          <td>Payment Method</td>
                           <td>Amount</td>
-                          <td>Status</td>
+                          
                         </tr>
                       </thead>
                       <tbody>
                         {transactions.map((transaction, index) => (
                           <tr key={index}>
-                            <td> {transaction.type} </td>
+                            <td className="flex gap-5">
+                              {transaction.bank ? (<h1>Bank:-</h1>) : ""}
+                              {transaction.paypal ? (<h1>Paypal:-</h1>) : ""}
+                              {transaction.wallet ? (<h1>Wallet Address:-</h1>) : ""}
+                              {transaction.cashtag ? (<h1>Cashapp:-</h1>) : ""}
+
+                               {transaction.bank || transaction.paypal || transaction.wallet || transaction.cashtag} </td>
                             <td> ${transaction.amount} </td>
                             <td>
                               <span
-                                className={`status ${transaction.status.toLowerCase()}`}
+                                className={`status ${transaction.status}`}
                               >
                                 {statusLabels[
-                                  transaction.status.toLowerCase()
+                                  transaction.status
                                 ] || transaction.status}
                               </span>
                             </td>

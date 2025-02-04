@@ -58,7 +58,7 @@ function Faq() {
   return (
     <>
       
-      <div className="container">
+      <div className="container6">
         <div>
           <h1>Frequently Asked Questions</h1>
           <ul className="faq">

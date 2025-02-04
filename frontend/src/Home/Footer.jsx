@@ -9,13 +9,13 @@ const Footer = () => {
         <div className="foot">
           <div className="col0">
             <img src={logo2} alt="logo" />
-            <h3>
+            <h2>
               Welcome to our investment site! We offer the best,
               <br />
               most affordable products and services around.
               <br />
               Shop now and start finding great deals!
-            </h3>
+            </h2>
           </div>
 
           <div className="col1">
@@ -70,7 +70,7 @@ const Footer = () => {
         </div>
 
         <div className="copyright">
-          <h3>© 2023 All Rights Reserved By GNF</h3>
+          <h3>© 2024 All Rights Reserved By GNF</h3>
         </div>
       </footer>
 

@@ -69,6 +69,9 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: white;
+  padding: 10px 0;
+  width: 100%;
   /* flex-wrap: wrap; */
 
   
@@ -87,11 +90,11 @@ nav .menu li {
 nav .menu li a {
   text-decoration: none;
   color: #48505e;
-  font-size: 25px;
+  font-size: 28px;
 }
 
 nav .bar {
-  width: 25px;
+  width: 30px;
   margin-right: 20px;
   height: 25px;
   cursor: pointer;
@@ -99,7 +102,7 @@ nav .bar {
 }
 
 .book {
-  font-size: 25px;
+  font-size: 28px;
   text-decoration: none;
   color: #cb8d39;
   padding: 10px 30px;
@@ -109,8 +112,11 @@ nav .bar {
   margin-left: 70px;
 }
 
+
+
 .sect1 {
   display: flex;
+  justify-content: space-between;
   gap: 5pc;
   flex-wrap: wrap-reverse;
   padding: 20px 3%;
@@ -152,9 +158,14 @@ video.responsive-video {
   width: 50%;
 }
 
+.socials{
+  display: flex;
+}
+
 .socials svg:hover {
   color: #cb8d39;
 }
+
 .socials svg {
   margin-right: 20px;
   cursor: pointer;
@@ -163,7 +174,7 @@ video.responsive-video {
 /* About Section */
 
 .content {
-  margin-top: 50px;
+  margin-top: 30px;
   padding: 0 2%;
 }
 .text1 {
@@ -176,10 +187,12 @@ video.responsive-video {
 }
 .text1 h1 {
   text-align: center;
-  font-size: 50px;
+  font-size: 40px;
 }
 .text1 p {
   line-height: 38px;
+  font-size: 25px;
+  margin-top: 30px;
 }
 .text1 a {
   font-size: 20px;
@@ -193,10 +206,7 @@ video.responsive-video {
   margin-left: 20px;
   margin-top: 2px;
 }
-.text1 p {
-  margin-top: 30px;
-  font-size: 20px;
-}
+
 .text1 p span {
   color: #cb8d39;
 }
@@ -210,7 +220,7 @@ video.responsive-video {
   color: #cb8d39;
 }
 .team-text p {
-  font-size: 20px;
+  font-size: 30px;
   margin-top: 10px;
 }
 .team-2 {
@@ -221,8 +231,6 @@ video.responsive-video {
 }
 .teaminfo {
   position: relative;
-  max-width: 312px;
- 
 }
 .teaminfo img {
   width: 100%;
@@ -230,16 +238,14 @@ video.responsive-video {
 }
 .team-details {
   position: absolute;
-
   bottom: 8px;
-  padding: 0 50px;
   left: 25px; 
+  padding: 0 7pc;
   background: #f1ededc7;
-  
   border-radius: 24px;
 }
 .team-details h6 {
-  font-size: 19px;
+  font-size: 25px;
   margin: 10px;
 }
 .team-details h6 a {
@@ -248,12 +254,14 @@ video.responsive-video {
 }
 .team-details p {
   margin-bottom: 12px;
+  font-size: 22px;
 }
 .sub1 {
   text-align: center;
   background: #f1ededc7;
-  padding: 20px 0;
-  margin: 70px 300px;
+  padding: 30px 0;
+  margin-bottom: 30px;
+  width: 100%;
   border-radius: 24px;
 }
 .sub1 h1 {
@@ -263,23 +271,23 @@ video.responsive-video {
   color: #cb8d39;
 }
 .sub1 p {
-  font-size: 19px;
+  font-size: 25px;
   line-height: 1.5;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .sub1 form input {
-  width: 80%;
+  width: 50%;
   padding: 15px 30px;
   border-radius: 8px;
   border: none;
-  font-size: 20px;
+  font-size: 25px;
   margin-bottom: 18px;
 }
 .sub1 form button {
   text-align: center;
-  width: 80%;
+  width: 50%;
   padding: 15px 34px;
-  font-size: 20px;
+  font-size: 25px;
   border-radius: 8px;
   background: #cb8d39;
   color: white;
@@ -297,6 +305,7 @@ video.responsive-video {
 }
 
 .conleft {
+  text-align: center;
   margin-top: 30px;
   flex-basis: 38%;
   padding-top: 5px;
@@ -312,20 +321,27 @@ video.responsive-video {
   color: #cb8d39;
 }
 .conleft p {
+  position: relative;
+  text-align: center;
   margin-top: 30px;
-  font-size: 25px;
+  font-size: 29px;
 }
 .conleft p svg {
+  position: absolute;
+  top: 5px;
+  left: 3pc;
   color: #cb8d39;
   margin-right: 10px;
-  width: 25px;
+  width: 28px;
 }
+
+.social{
+  display: flex;
+  justify-content: space-around;
+  margin: 50px 0;
+}
+
 .social svg {
-  width: 35px;
-  border: 1px solid #eceff2;
-  background: transparent;
-  padding: 10px;
-  border-radius: 50%;
   transition: 0.5s;
 }
 .social svg:hover {
@@ -373,36 +389,31 @@ form textarea {
 .text2 {
   text-align: center;
   padding: 20px;
-  font-size: 18px;
+  font-size: 25px;
   margin-bottom: 30px;
-}
-.text2 h1 {
-  font-size: 50px;
 }
 .google-sect {
   position: relative;
   display: flex;
-  justify-content: center;
-  
+  justify-content: center; 
   align-items: center;
   margin-left: auto;
   margin-right:auto ;
-  width: 250px; 
+  width: 100%; 
   background: white;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.google-sect a {
-  
+.google-sect a {  
   padding: 10px;
   text-align: center;
-  
   text-decoration: none;
   color: black;
-  font-size: 20px;
+  font-size: 23px;
 }
 .google-sect a span {
   position: absolute;
+  top: 15px;
   left: 5px;
 }
 .divider {
@@ -414,7 +425,7 @@ form textarea {
 }
 .divider span {
   position: absolute;
-  top: -12px;
+  top: -16px;
   left: 10px;
   font-size: 20px;
 }
@@ -424,7 +435,7 @@ form textarea {
 }
 .sign input {
   position: relative;
-  font-size: 17px;
+  font-size: 23px;
   width: 100%;
   padding: 15px;
   border: 1px solid #ccc;
@@ -434,7 +445,7 @@ form textarea {
 }
 
 .sign label {
-  font-size: 20px;
+  font-size: 23px;
   margin-top: 0px;
 }
 .sign #eyeicon {
@@ -454,8 +465,9 @@ form textarea {
 }
 .forgot {
   float: right;
-  font-size: 20px;
+  font-size: 23px;
   padding-bottom: 10px;
+  color: #cb8d39;
 }
 .sign button {
   font-size: 23px;
@@ -473,7 +485,10 @@ form textarea {
   margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
-  font-size: 20px;
+  font-size: 23px;
+}
+.signup a{
+  color: #cb8d39;
 }
 
 /* Services Section */
@@ -485,7 +500,8 @@ form textarea {
   margin-bottom: 50px;
 }
 .text4 h1 {
-  margin-bottom: 30px;
+  font-size: 40px;
+  margin-bottom: 28px;
 }
 .text4 h1 span {
   color: #cb8d39;
@@ -505,7 +521,7 @@ form textarea {
 .text4 p {
   margin-top: 0px;
   margin-left: 10px;
-  font-size: 20px;
+  font-size: 25px;
 }
 .service {
   display: grid;
@@ -518,12 +534,18 @@ form textarea {
   text-align: center;
   background: #f1f0f0;
   padding: 52px 32px;
+  font-size: 20px;
   border-radius: 10px;
   transition: all 0.5s ease;
 }
 .service-info:hover {
   border: 2px solid #cb8d39;
   transform: translateY(-10px);
+}
+.service-thumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .service-thumb img {
   padding: 20px;
@@ -550,6 +572,7 @@ form textarea {
   transform: translateY(-20px);
 }
 .price-info p {
+  font-size: 20px;
   line-height: 50px;
   margin-bottom: 20px;
 }
@@ -558,17 +581,19 @@ form textarea {
   padding: 20px;
 }
 .amount h5{
-  font-size: 18px;
+  font-size: 25px;
   margin-bottom: 10px;
 }
 .amount h1{
   font-size: 30px;
 }
 .plan {
- 
+ text-align: center;
   text-decoration: none;
+  background-color: #cb8d39;
+  font-size: 18px;
   color: black;
-
+  padding: 10px 25px;
   border-radius: 12px;
 }
 
@@ -581,7 +606,7 @@ form textarea {
   text-align: center;
   margin-top: 20px;
   margin-bottom: 30px;
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .policy-body {
@@ -591,15 +616,14 @@ form textarea {
 }
 
 .policy-right {
-  margin-bottom: 50px;
-  font-size: 1.1rem;
+  margin-bottom: 30px;
+  font-size: 23px;
   line-height: 1.5;
   color: rgb(44, 44, 44);
 }
 
 .instagram {
-  height: 20px;
-  width: 20px;
+  width: 50px;
 }
 
 .mail a {
@@ -614,9 +638,9 @@ form textarea {
 .header-policy {
   color: black;
   font-weight: bold;
-  font-size: 35px;
-  margin-top: 60px;
-  margin-bottom: 30px;
+  font-size: 30px;
+  margin-top: 40px;
+  margin-bottom: 20px;
 }
 
 /*Terms Section*/
@@ -624,25 +648,25 @@ form textarea {
   padding: 10px 3%;
 }
 .terms-header{
-  font-size: 35px;
+  font-size: 30px;
   color: #333;
   margin-top:30px;
 }
 
 .tc-header{
   text-align: center;
-  font-size: 30px;
+  font-size: 28px;
   color: #333;
   font-weight: bold;
 }
 
 .tc-body{
-  font-size: 20px;
+  font-size: 23px;
   color: #505050;
 } 
 
 .intro{
-  font-size: 20px;
+  font-size: 23px;
   color: #505050;
   line-height: 22px;
 }
@@ -661,7 +685,7 @@ form textarea {
 }
 
 li{
-  font-size: 8px;
+  font-size: 23px;
   border-radius: 15px;
   outline: none;
 }
@@ -671,8 +695,9 @@ li{
   border-bottom: 1px #ccc solid;
 }
 
-h1{
-  margin-bottom: 30px;
+.container6 h1{
+  font-size: 25px;
+  margin: 20px 0;
   text-align: center;
 }
 
@@ -681,7 +706,7 @@ h1{
 }
 
 .q {
-  padding: 1em 0;
+  padding: 1em 10px;
   border-left: 10px #f2f2f2 solid;
   cursor: pointer;
   border-radius: 15px;
@@ -706,7 +731,7 @@ h1{
 }
 
 .faq p{
-  font-size: 18px;
+  font-size: 23px;
   color: #888;
   line-height: 25px;
 }
@@ -718,12 +743,43 @@ h1{
 }
 
 .a-opened{
-  padding: 1em 1em 2em 3.3em;
+  padding: 20px 30px;
   height: initial;
 }
 
 .arrow-rotated{
   transform: rotate(90deg);
+}
+
+/* Human Rights */
+
+.human-header{
+  font-family: "Montserrat-Regular", "PingFangSC-Regular", "Microsoft Yahei";
+  font-size: 30px;
+  color: #333;
+  line-height: 58px;
+  margin-top:30px;
+  text-align: center;
+}
+
+.human-container{
+  margin: 30px;
+  font-family: "Montserrat-Regular", "PingFangSC-Regular", "Microsoft Yahei";
+}
+
+.human-body{
+  font-size: 23px;
+  color: #5d5a5a;
+  line-height: 22px;
+  font-weight: bold;
+}
+
+.human-head{
+  font-size: 25px;
+  color: #333;
+  line-height: 58px;
+  margin-top:30px;
+  
 }
 
 /*Sign-up Section*/
@@ -740,17 +796,19 @@ h1{
 .text3 {
   text-align: center;
   padding: 20px;
-  font-size: 18px;
 }
 .text3 h1 {
-  font-size: 50px;
+  font-size: 30px;
+}
+.text3 p{
+  font-size: 23px;
 }
 .sect form {
   padding: 0px 10%;
 }
 .sect form input {
   position: relative;
-  font-size: 18px;
+  font-size: 23px;
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -767,11 +825,11 @@ h1{
 }
 .sect form label {
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 23px;
   margin-bottom: 20px;
 }
 .sect form select {
-  font-size: 18px;
+  font-size: 23px;
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -806,7 +864,7 @@ footer {
   padding: 20px;
 }
 .col0 img {
-  width: 17pc;
+  width: 19pc;
   margin-left: 10px;
 }
 
@@ -815,100 +873,162 @@ footer {
   justify-content: space-between;
   color: black;
 }
-@media (max-width: 500px) {
-  .foot {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-  
-}
+
 .col0{
-  margin-bottom: 30px;
+  padding: 20px 0;
 }
-.col0 h3 {
-  margin: 0;
-}
-.foot p {
+
+.col0 h2{
   font-size: 25px;
-  border-top: 1px solid #48505e;
-  border-bottom: 1px solid #48505e;
-  padding: 8px 0px;
-  margin-top: 80px;
 }
+
+.col1{
+  padding: 30px 0;
+}
+
+.col2{
+  padding: 30px 0;
+}
+
+.col3{
+  padding: 30px 0;
+}
+
+.foot ul {
+  padding-left: 0;
+}
+
 .foot ul li {
   list-style: none;
   padding: 5px 0;
   line-height: 1.3;
+  margin-top: 0px;
 }
+
 .foot ul li a {
   color: black;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 25px;
 }
+
+.foot p {
+  font-size: 26px;
+  border-top: 1px solid #48505e;
+  border-bottom: 1px solid #48505e;
+  padding: 8px 0px;
+  margin-top: 10px;
+}
+
 .copyright {
   border-top: 1px solid #48505e;
 }
-.copyright h3 {
+
+.copyright h3{
   text-align: center;
-  margin-top: 40px;
+  font-size: 25px;
+  margin-top: 10px;
 }
+
+
 @media only screen and (min-width: 280px) and (max-width: 399px) {
   .top {
     display: flex;
   }
+  .mainlogo img{
+  width: 60px;
+}
+ nav {  
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: white;
+  padding-bottom: 5px;
+  width: 100%;
+  z-index: 100;
+ }
 
   nav .bar{
     display: block;
+    width: 32px;
+  }
+
+  nav .xmark{
+    width: 30px;
   }
 
   nav .menu {
     position: fixed;
-    font-size: 3pc;
-    top: 7pc;
+    top: 5.5pc;
     left: 0;
     width: 0;
-    height: 100vh;
     background: white;
     overflow: hidden;
     transition: 0.5s ease;
-    z-index: 1;
+    z-index: 99;
+    height: 100vh;
   }
 
   nav .menu.active {
-    width: 430px;
+    width: 100%;
+    max-width: 400px;
   }
 
   nav .menu li {
-    display: block;
+    line-height: 80px;
     text-align: center;
+    display: block;
+    margin-bottom: 10px;
+    margin-left: 0;
   }
   nav .menu li a {
-    font-size: 30px;
+    font-size: 35px;
+  }
+
+  .book{
+    margin: 0;
+
   }
 
   /* Home Section */
-
+  .container1{
+    margin-top: 100px;
+  }
   .sect1 {
     display: flex;
-    gap: 0pc;
-    flex-wrap: wrap-reverse;
+    gap: 0;
     text-align: center;
     padding: 20px 3%;
+    width: 100%;
   }
   video.responsive-video {
-    width: 80%;
-    margin-left: 25px;
+    width: 100%;
   }
   .text {
     margin-top: 20px;
+    width: 100%;
   }
   .text h2 {
-    font-size: 25px;
-    margin-bottom: 40px;
+    font-size: 30.2px;
+    margin-bottom: 30px;
   }
   .text p {
-    font-size: 22px;
+    font-size: 30px;
   }
+
+  .text .reg{
+    font-size: 28px;
+  }
+
+  .text .follow{
+    font-size: 33px;
+  }
+
+  .socials{
+    justify-content: space-around;
+
+  }
+
   .socials i {
     font-size: 40px;
   }
@@ -924,19 +1044,25 @@ footer {
     padding: 0;
   }
 
-  .text {
-    margin-top: 20px;
-    padding: 20px;
+  .text1 {
+    margin-top: 10px;
+    padding: 10px;
   }
-  .text h1 {
+  .text1 h1 {
     text-align: center;
     font-size: 27px;
   }
-  .text p {
-    font-size: 19px;
+  .text1 p {
+    font-size: 27px;
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .team h1{
+    font-size: 35px;
   }
   .team-text p {
-    font-size: 18px;
+    font-size: 25px;
   }
   .team-2 {
     position: relative;
@@ -950,9 +1076,9 @@ footer {
   .team-details {
     position: absolute;
     top: 19.5pc;
-    right: 0.5pc;
+    right: 0.5px;
     background: #ccc;
-    padding: 0 89px;
+    padding: 0 8px;
     border-radius: 24px;
   }
   .sub {
@@ -1183,12 +1309,17 @@ footer {
     width: 101%;
   }
 
-  /* .foot {
+ .foot {
     display: block;
     margin-bottom: 20px;
-  } */
+  }
+
   .col0 img {
     margin-left: 40px;
+  }
+  .col0 h2{
+    text-align: center;
+    font-size: 27px;
   }
   .foot ul {
     padding-left: 0;
@@ -1196,40 +1327,70 @@ footer {
   .foot ul li {
     margin-top: 0px;
   }
+
+  .foot ul li a{
+    font-size: 25px;
+  }
   .foot p {
+    margin-top: 10px;
+    font-size: 25px;
+  }
+
+  .copyright h3{
+    font-size: 22.8px;
     margin-top: 20px;
   }
 }
-@media only screen and (min-width: 401px) and (max-width: 600px) {
+@media only screen and (min-width: 400px) and (max-width: 600px) {
   .top {
     display: flex;
   }
+  .mainlogo img{
+    width: 75px;
+  }
+   nav {  
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+    padding-bottom: 8px;
+    width: 100%;
+    z-index: 100;
+   }
+  
+    nav .bar{
+      display: block;
+      width: 35px;
+    }
+  
+    nav .xmark{
+      width: 32px;
+    }
 
   nav .menu {
     position: fixed;
     font-size: 3pc;
-    top: 7pc;
+    top: 6pc;
     left: 0;
     width: 0;
     height: 100vh;
-    background: white;
     overflow: hidden;
+    background: white;
     transition: 0.5s ease;
-    z-index: 1;
+    z-index: 99;
   }
 
   nav .menu.active {
-    width: 430px;
-  }
-
-  nav .bar {
-    display: block;
+    width: 100%;
+    max-width: 600px;
   }
 
   nav .menu li {
+    line-height: 100px;
     display: block;
     text-align: center;
-    margin-bottom: 5pc;
+    margin: 0;
   }
   nav .menu li a {
     font-size: 40px;
@@ -1237,8 +1398,12 @@ footer {
 
   .book{
     text-align: center;
-    margin-left: 7.5pc;
     font-size: 40px;
+    margin: 0;
+  }
+
+  .container1{
+    margin-top: 100px;
   }
 
   .sect1 {
@@ -1250,18 +1415,28 @@ footer {
     padding: 20px 3%;
   }
   video.responsive-video {
-    width: 80%;
-    margin-left: 40px;
+    width: 100%;
   }
   .text {
     margin-top: 20px;
+    width: 100%;
   }
   .text h2 {
-    font-size: 27.9px;
+    font-size: 38px;
     margin-bottom: 40px;
   }
   .text p {
-    font-size: 29px;
+    font-size: 30px;
+  }
+  .text .reg{
+    font-size: 32px;
+  }
+
+  .text .follow{
+    font-size: 35px;
+  }
+  .socials{
+    justify-content: space-around;
   }
   .socials i {
     font-size: 40px;
@@ -1270,27 +1445,31 @@ footer {
   /* About Section */
 
   .container {
+    margin-top: 100px;
     padding: 0 12px;
   }
   .content {
     display: block;
     margin-top: 30px;
-    padding: 0;
+    padding: 0 3%;
   }
 
   .text1 {
+    text-align: center;
     margin-top: 20px;
     padding: 20px;
   }
   .text1 h1 {
-    text-align: center;
-    font-size: 35px;
+    font-size: 30px;
   }
   .text1 p {
-    font-size: 26px;
+    font-size: 30px;
+  }
+  .team-text h1{
+    font-size: 30px;
   }
   .team-text p {
-    font-size: 25px;
+    font-size: 28px;
   }
   .team-2 {
     position: relative;
@@ -1298,22 +1477,27 @@ footer {
     grid-template-columns: repeat(4, 1fr);
   }
   .teaminfo img {
-    width: 390px;
+    width: 100%;
     margin-bottom: 20px;
   }
   .team-details {
     position: absolute;
     top: 22.5pc;
-    right: 3pc;
-    font-size: 25px;
+    right: 1.5pc;
+    font-size: 28px;
     background: #f1ededc7;
+    padding: 0;
     border-radius: 24px;
   }
   .team-details h6{
-    font-size: 20.5px;
+    font-size: 25px;
+    margin: 0;
+  }
+  .team-details p{
+    font-size: 23px;
   }
   .sub1 {
-    font-size: 20px;
+    font-size: 28px;
     text-align: center;
     background: #f1ededc7;
     padding: 20px 0;
@@ -1321,15 +1505,15 @@ footer {
     border-radius: 24px;
   }
   .sub1 p{
-    font-size: 22px;
+    font-size: 25px;
   }
   .sub1 form input {
-    font-size: 25px;
+    font-size: 28px;
     width: 100%;
     margin-bottom: 15px;
   }
   .sub1 form button {
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 700;
     width: 100%;
   }
@@ -1377,9 +1561,12 @@ footer {
   }
 
   /*Login Section*/
+  .container7{
+    margin-top: 100px;
+  }
 
   .text2{
-    font-size: 27px;
+    font-size: 30px;
   }
   .text2 h2{
     margin-bottom: 20px;
@@ -1388,7 +1575,7 @@ footer {
     padding: 0 1%;
   }
   .section {
-    padding: 0 12px;
+    padding: 0;
   }
   .login {
     background: #f5f7fc;
@@ -1396,21 +1583,19 @@ footer {
     margin-bottom: 50px;
   }
   .google-sect a {
-    border: 1px solid #ccc;
-    padding: 14px 70px;
     background: white;
     border-radius: 4px;
     text-decoration: none;
     color: black;
-    font-size: 25px;
+    font-size: 28px;
   }
   .google-sect a span {
     position: absolute;
-    top: -0.7pc;
-    left: 1pc;
+    top: 10px;
+    left: 16px;
   }
   .google-sect a span img{
-    width: 50px;
+    width: 40px;
   }
   .divider {
     position: relative;
@@ -1422,15 +1607,15 @@ footer {
 
   .divider span {
     position: absolute;
-    top: -15px;
-    left: 40px;
-    font-size: 25px;
+    top: -24px;
+    left: 35px;
+    font-size: 29px;
   }
   .sign label {
     font-size: 28px;
   }
   .sign input {
-    font-size: 27px;
+    font-size: 28px;
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -1439,7 +1624,7 @@ footer {
     margin-bottom: 10px;
   }
   #eyeicon {
-    width: 23px;
+    width: 100%;
     position: absolute;
     right: 2.5pc;
     top: 8.4pc;
@@ -1457,11 +1642,11 @@ footer {
   .forgot {
     float: right;
     margin-right: 10px;
-    font-size: 27px;
+    font-size: 28px;
     margin: 10px 0;
   }
   .sign button {
-    font-size: 27px;
+    font-size: 28px;
     background: #cb8d39;
     color: white;
     padding: 10px 25px;
@@ -1472,7 +1657,7 @@ footer {
     margin-top: 30px;
   }
   .signup p{
-    font-size: 26px;
+    font-size: 28px;
   }
 
   /* Services Section */
@@ -1503,17 +1688,17 @@ footer {
     padding: 0 10px;
   }
   .price-info {
+    padding: 40px;
     margin-bottom: 20px;
   }
   .price-info h1 {
-    font-size: 30px;
+    font-size: 35px;
   }
   .price-info h5 {
-    font-size: 25px;
-    margin-bottom: 10px;
+    font-size: 40px;
   }
   .price-info p {
-    font-size: 27px;
+    font-size: 30px;
     line-height: 40px;
     margin-bottom: 20px;
   }
@@ -1522,13 +1707,37 @@ footer {
     text-decoration: none;
     color: black;
     padding: 8px 16px;
-    font-size: 27px;
+    font-size: 28px;
   }
 
   /*Policy Section*/
-
+.contain{
+  margin-top: 100px;
+}
+.policy-right{
+  font-size: 27px;
+}
+  /* Terms Section */
+.container5{
+  margin-top: 100px;
+}
+.terms-header{
+  font-size: 30px;
+}
+.intro{
+  font-size: 28px;
+}
+.tc-header{
+  font-size: 30px;
+}
+.tc-body{
+  font-size: 28px;
+}
   /*FAQ's Section*/
-
+.container6{
+  margin-top: 100px;
+  padding: 0 3%;
+}
   .faq{
     list-style: none;
     max-width: 700px;
@@ -1561,7 +1770,7 @@ footer {
   }
 
   .q {
-    padding: 1em 0;
+    padding: 5px 5px;
     border-left: 10px #f2f2f2 solid;
     cursor: pointer;
     border-radius: 15px;
@@ -1617,42 +1826,43 @@ footer {
     padding: 0px;
   }
   .text3 p{
-    font-size: 27px;
+    font-size: 30px;
   }
   .reg {
+    margin-top: 100px;
     padding: 20px 12px;
   }
   .form {
     padding: 0;
   }
   .sect form {
-    padding: 0px 8%;
+    padding: 0px 2%;
   }
   .sect .form1 input {
-    font-size: 27px;
+    font-size: 30px;
     position: relative;
     width: 100%;
   }
   .sect .form1 label {
-    font-size: 27px;
+    font-size: 30px;
   }
   .sect .form1 textarea {
     min-width: 100%;
     min-height: 23px;
   }
   .sect .form1 select{
-    font-size: 27px;
+    font-size: 30px;
     padding: 18px;
   }
   #eyeicon {
-    width: 25px;
+    width: 100%;
     position: absolute;
     right: 10px;
     top: 2.6pc;
     cursor: pointer;
   }
   .sect .form1 button {
-    font-size: 27px;
+    font-size: 30px;
     background: #cb8d39;
     color: white;
     padding: 15px 25px;
@@ -1663,16 +1873,463 @@ footer {
     display: block;
     width: 100%;
   }
+.signup p{
+  font-size: 30px;
+}
 
+/* Human Rights Section */
+ 
+  .human-container{
+    text-align: center;
+  }
+
+  .human-head{
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 33px;
+    margin-bottom: 10px;
+  }
+
+  .human-body{
+    font-size: 27px;
+    font-weight: 10;
+    line-height: 25px;
+  }  
+
+/* Footer Section */
   .col0{
     font-size: 20px;
     text-align: center;
+    justify-content: center;
+    align-items: center;
   }
   .col0 img {
-    margin-left: 20px;
+    width: 100%;
+    margin: 0;
   }
-  .col1 link{
+  .col0 h2{
+    text-align: center;
+    font-size: 30px;
+  }
+  .foot {
+    display: block;
+    justify-content: space-between;
+    color: black;
+  }
+  
+  .foot ul {
+    padding-left: 0;
+  }
+  .foot ul li {
+    margin-top: 0px;
+  }
+
+  .foot ul li a{
+    font-size: 30px;
+  }
+  .foot p {
+    margin-top: 10px;
+    font-size: 32px;
+  }
+
+ 
+  .copyright h3{ 
+    font-size: 26px;
+    margin-top: 20px;
+  }
+}
+
+
+@media only screen and (min-width: 600px) and (max-width: 960px) {
+  .top {
+    display: flex;
+  }
+  .mainlogo img{
+  width: 60px;
+}
+ nav {  
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: white;
+  padding-bottom: 5px;
+  width: 100%;
+  z-index: 100;
+ }
+
+  nav .bar{
+    display: block;
+    width: 32px;
+  }
+
+  nav .xmark{
+    width: 30px;
+  }
+
+  nav .menu {
+    position: fixed;
+    top: 5.5pc;
+    left: 0;
+    width: 0;
+    background: white;
+    overflow: hidden;
+    transition: 0.5s ease;
+    z-index: 99;
+    height: 100vh;
+  }
+
+  nav .menu.active {
+    width: 100%;
+    max-width: 960px;
+  }
+
+  nav .menu li {
+    line-height: 80px;
+    text-align: center;
+    display: block;
+    margin-bottom: 10px;
+    margin-left: 0;
+  }
+  nav .menu li a {
+    font-size: 35px;
+  }
+
+  .book{
+    margin: 0;
+
+  }
+
+  /* Home Section */
+  .container1{
+    margin-top: 100px;
+  }
+  .sect1 {
+    display: flex;
+    gap: 0;
+    text-align: center;
+    padding: 20px 3%;
+    width: 100%;
+  }
+  video.responsive-video {
+    width: 100%;
+  }
+  .text {
+    margin-top: 20px;
+    width: 100%;
+  }
+  .text h2 {
+    font-size: 30.2px;
+    margin-bottom: 30px;
+  }
+  .text p {
+    font-size: 30px;
+  }
+
+  .text .reg{
+    font-size: 28px;
+  }
+
+  .text .follow{
+    font-size: 33px;
+  }
+
+  .socials{
+    justify-content: space-around;
+
+  }
+
+  .socials i {
+    font-size: 40px;
+  }
+
+  /* About Section */
+
+  .container {
+    padding: 0 12px;
+  }
+  .content {
+    display: block;
+    margin-top: 30px;
+    padding: 0;
+  }
+
+  .text1 {
+    margin-top: 10px;
+    padding: 10px;
+  }
+  .text1 h1 {
+    text-align: center;
+    font-size: 27px;
+  }
+  .text1 p {
+    font-size: 27px;
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .team h1{
+    font-size: 35px;
+  }
+  .team-text p {
+    font-size: 25px;
+  }
+  .team-2 {
+    position: relative;
+    display: block;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .teaminfo img {
+    width: 350px;
+    margin-bottom: 20px;
+  }
+  .team-details {
+    position: absolute;
+    top: 19.5pc;
+    right: 0.5px;
+    background: #ccc;
+    padding: 0 8px;
+    border-radius: 24px;
+  }
+  .sub {
+    text-align: center;
+    background: #ccc;
+    padding: 20px 0;
+    margin: 70px 0px;
+    border-radius: 24px;
+  }
+  .sub input {
+    font-size: 22px;
+    width: 70%;
+    margin-bottom: 15px;
+  }
+  .sub button {
+    font-size: 21px;
+    font-weight: 700;
+    width: 90%;
+    margin-left: 0px;
+  }
+
+  /* Contact Section */
+
+  .conleft,
+  .conright {
+    flex-basis: 100%;
+  }
+  .conleft {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .row {
+    display: block;
+    margin-bottom: 40px;
+  }
+  form input,
+  form textarea {
+    width: 92%;
+    border: 0;
+    outline: none;
+
+    padding: 15px;
+    margin: 15px 0;
+    color: white;
+    font-size: 22px;
+  }
+  .btn2 {
+    width: 100%;
+  }
+
+  /*Login Section*/
+
+  form {
+    padding: 0 3%;
+  }
+  .section {
+    padding: 0 12px;
+  }
+  .login {
+    background: #f5f7fc;
+    padding: 10px 3%;
+    margin-bottom: 50px;
+  }
+  .google-sect a {
+    border: 1px solid #ccc;
+    padding: 14px 70px;
+    background: white;
+    border-radius: 4px;
+    text-decoration: none;
+    color: black;
+    font-size: 17px;
+  }
+  .google-sect a span {
+    position: absolute;
+    top: -0.2pc;
+    left: 5.2pc;
+  }
+  .divider {
+    position: relative;
+    margin: 60px 0;
+    height: 1px;
+    border-left: 140px solid #ccc;
+    border-right: 140px solid #ccc;
+  }
+
+  .divider span {
+    position: absolute;
+    top: -12px;
+    left: 40px;
     font-size: 20px;
+  }
+  label {
+    font-size: 20px;
+  }
+  input {
+    font-size: 17px;
+    width: 90%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  #eyeicon {
+    width: 23px;
+    position: absolute;
+    right: 2.5pc;
+    top: 8.4pc;
+    cursor: pointer;
+  }
+  .form-check {
+    position: absolute;
+    left: -8.6pc;
+    top: 10.75pc;
+  }
+  .check {
+    margin-left: 15px;
+    font-size: 18px;
+  }
+  .forgot {
+    float: right;
+    margin-right: 10px;
+    font-size: 17px;
+  }
+ button {
+    font-size: 20px;
+    background: #cb8d39;
+    color: white;
+    padding: 10px 25px;
+    width: 100%;
+  }
+   
+  .signup {
+    text-align: center;
+    font-size: 18px;
+  }
+
+  /* Services Section */
+
+  .text4 p {
+    font-size: 23px;
+    margin-left: 0;
+  }
+  .service {
+    display: block;
+    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 10px 12px;
+    margin-bottom: 70px;
+  }
+  .service-info {
+    margin-bottom: 20px;
+  }
+  .prices {
+    display: block;
+    padding: 0 10px;
+  }
+  .price-info {
+    margin-bottom: 20px;
+  }
+  .price-info h2 {
+    font-size: 25px;
+  }
+  .price-info h5 {
+    font-size: 22px;
+    margin: 0px;
+  }
+  .price-info p {
+    font-size: 22px;
+    line-height: 40px;
+  }
+  .plan {
+    background: #cb8d39;
+    text-decoration: none;
+    color: black;
+    padding: 8px;
+    font-size: 20px;
+  }
+
+  /*Policy Section*/
+
+  /*Sign-up Section*/
+
+  .sect {
+    margin-bottom: 50px;
+  }
+  .text {
+    margin-bottom: 30px;
+  }
+  .reg {
+    padding: 20px 12px;
+  }
+  .form {
+    padding: 0;
+  }
+  .sect form {
+    padding: 0px 8%;
+  }
+  .sect input {
+    font-size: 19px;
+    position: relative;
+    width: 95%;
+  }
+  .sect label {
+    font-size: 19px;
+  }
+  .sect textarea {
+    min-width: 95%;
+    min-height: 23px;
+  }
+  #eyeicon {
+    width: 25px;
+    position: absolute;
+    right: 10px;
+    top: 2.6pc;
+    cursor: pointer;
+  }
+  .sect button {
+    font-size: 20px;
+    background: #cb8d39;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+    width: 101%;
+  }
+
+ .foot {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .col0 img {
+    margin-left: 40px;
+  }
+  .col0 h2{
+    text-align: center;
+    font-size: 27px;
   }
   .foot ul {
     padding-left: 0;
@@ -1680,90 +2337,17 @@ footer {
   .foot ul li {
     margin-top: 0px;
   }
+
+  .foot ul li a{
+    font-size: 25px;
+  }
   .foot p {
-    margin-top: 20px;
+    margin-top: 10px;
+    font-size: 25px;
   }
 
-   
-.foot {
-  display: flex;
-  flex-direction: column;
-  
-  justify-content: space-between;
-  color: black;
-} 
-}
-
-
-@media only screen and (min-width: 602px) and (max-width: 960px) {
- 
-.foot {
-  display: flex;
-  flex-direction: column;
-  
-  justify-content: space-between;
-  color: black;
-}
-
-
-.sect1 {
-  display: flex;
-  justify-content: center;
-  gap: 0pc;
-  flex-wrap: wrap-reverse;
-  text-align: center;
-  padding: 20px 3%;
-}
-.sect1 {
-  display: flex;
-  justify-content: center;
-  gap: 0pc;
-  flex-wrap: wrap-reverse;
-  text-align: center;
-  padding: 20px 3%;
-}
-
-nav .menu {
-  position: fixed;
-  font-size: 3pc;
-  top: 7pc;
-  left: 0;
-  width: 0;
-  height: 100vh;
-  background: white;
-  overflow: hidden;
-  transition: 0.5s ease;
-  z-index: 1;
-}
-
-nav .menu.active {
-  width: 430px;
-} 
-
-nav .bar{
-  display: block;
-}
-
-
-nav ul{
-  display: none;
-}
-
-.col0{
-  font-size: 20px;
-  text-align: center;
-}
-
-nav .bar {
-  display: block;
-}
-
-nav .menu li {
-  display: block;
-  text-align: center;
-  margin-bottom: 5pc;
-}
-nav .menu li a {
-  font-size: 40px;
-}
+  .copyright h3{
+    font-size: 22.8px;
+    margin-top: 20px;
+  }
 }

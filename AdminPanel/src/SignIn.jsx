@@ -1,7 +1,9 @@
 import { useState } from "react";
-import "../../frontend/src/style/home.css";
-import eye from "../../frontend/src/assets/eye.svg"; 
-import eyeOff from "../../frontend/src/assets/eye-off.svg"
+import "../src/admin.css";
+import eye from "../src/assets/eye.svg"; 
+import eyeOff from "../src/assets/eye-off.svg"
+import logo from "../src/assets/logosmall.png"
+import { Link, useNavigate } from "react-router-dom"; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
@@ -10,6 +12,7 @@ export default function SignIn() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const baseUrl = import.meta.env.VITE_BASEURL;
   axios.defaults.withCredentials = true;
@@ -45,9 +48,18 @@ export default function SignIn() {
 
   return (
     <>
+    <nav>
+    <div className="top">
+          <Link to="/" className="mainlogo">
+            <img src={logo} alt="logo" />
+          </Link>
+          
+        </div>
+    </nav>
       <div className="content">
         <div className="section">
           <div className="login">
+            
             <div className="text2">
               <h2>Admin Welcome back!</h2>
              <h3>Admin Sign In</h3>

@@ -17,7 +17,7 @@ function Terms() {
     <>
     
 
-      <div className="container">
+      <div className="container5">
         <div className="contain">
           <h1 className="terms-header">Terms and Conditions</h1>
 

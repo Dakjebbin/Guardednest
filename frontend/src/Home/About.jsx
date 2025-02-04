@@ -23,7 +23,6 @@ function About() {
               platform that is tailor-made to elevate your investment journey.
               <br />
               <br />
-              <br />
               Embark on a transformative experience as you explore a wealth of
               carefully selected investment options that align with your
               financial goals. Our team of seasoned experts is committed to
@@ -43,7 +42,6 @@ function About() {
               time. Our comprehensive suite of features includes real-time
               market analysis, personalized investment recommendations, and
               innovative financial planning tools.
-              <br />
               <br />
               <br />
               As a member of <span>Guarded Nest Financials</span>, you gain
@@ -78,7 +76,7 @@ function About() {
               <div className="teaminfo">
                 <img src={team} />
                 <div className="team-details">
-                  <h6 className="mb-1">Dianne Russell</h6>
+                  <h6 className="mb-1">Philip Russell</h6>
                   <p className="mb-0">Trade Captain</p>
                 </div>
               </div>
@@ -86,16 +84,16 @@ function About() {
               <div className="teaminfo">
                 <img src={team} />
                 <div className="team-details">
-                  <h6 className="mb-1">Dianne Russell</h6>
-                  <p className="mb-0">Trade Captain</p>
+                  <h6 className="mb-1">Jayde Cross</h6>
+                  <p className="mb-0">Specail Adviser</p>
                 </div>
               </div>
 
               <div className="teaminfo">
                 <img src={team} />
                 <div className="team-details">
-                  <h6 className="mb-1">Dianne Russell</h6>
-                  <p className="mb-0">Trade Captain</p>
+                  <h6 className="mb-1">Dianne Legolas</h6>
+                  <p className="mb-0">Legal Consultant</p>
                 </div>
               </div>
             </div>

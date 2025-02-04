@@ -12,9 +12,86 @@ const countries = [
   { value: "", label: "Select Country" },
   { value: "afghanistan", label: "Afghanistan" },
   { value: "albania", label: "Albania" },
-  // Add other countries here...
+  { value: "algeria", label: "Algeria" },
+  { value: "andorra", label: "Andorra" },
+  { value: "angola", label: "Angola" },
+  { value: "antigua_and_barbuda", label: "Antigua and Barbuda" },
+  { value: "argentina", label: "Argentina" },
+  { value: "armenia", label: "Armenia" },
+  { value: "australia", label: "Australia" },
+  { value: "austria", label: "Austria" },
+  { value: "azerbaijan", label: "Azerbaijan" },
+  { value: "bahamas", label: "Bahamas" },
+  { value: "bahrain", label: "Bahrain" },
+  { value: "bangladesh", label: "Bangladesh" },
+  { value: "barbados", label: "Barbados" },
+  { value: "belarus", label: "Belarus" },
+  { value: "belgium", label: "Belgium" },
+  { value: "belize", label: "Belize" },
+  { value: "benin", label: "Benin" },
+  { value: "bhutan", label: "Bhutan" },
+  { value: "bolivia", label: "Bolivia" },
+  { value: "bosnia_and_herzegovina", label: "Bosnia and Herzegovina" },
+  { value: "botswana", label: "Botswana" },
+  { value: "brazil", label: "Brazil" },
+  { value: "brunei", label: "Brunei" },
+  { value: "bulgaria", label: "Bulgaria" },
+  { value: "burkina_faso", label: "Burkina Faso" },
+  { value: "burundi", label: "Burundi" },
+  { value: "cabo_verde", label: "Cabo Verde" },
+  { value: "cambodia", label: "Cambodia" },
+  { value: "cameroon", label: "Cameroon" },
+  { value: "canada", label: "Canada" },
+  { value: "central_african_republic", label: "Central African Republic" },
+  { value: "chad", label: "Chad" },
+  { value: "chile", label: "Chile" },
+  { value: "china", label: "China" },
+  { value: "colombia", label: "Colombia" },
+  { value: "comoros", label: "Comoros" },
+  { value: "congo", label: "Congo" },
+  { value: "costa_rica", label: "Costa Rica" },
+  { value: "croatia", label: "Croatia" },
+  { value: "cuba", label: "Cuba" },
+  { value: "cyprus", label: "Cyprus" },
+  { value: "czechia", label: "Czechia" },
+  { value: "denmark", label: "Denmark" },
+  { value: "djibouti", label: "Djibouti" },
+  { value: "dominica", label: "Dominica" },
+  { value: "dominican_republic", label: "Dominican Republic" },
+  { value: "ecuador", label: "Ecuador" },
+  { value: "egypt", label: "Egypt" },
+  { value: "el_salvador", label: "El Salvador" },
+  { value: "equatorial_guinea", label: "Equatorial Guinea" },
+  { value: "eritrea", label: "Eritrea" },
+  { value: "estonia", label: "Estonia" },
+  { value: "eswatini", label: "Eswatini" },
+  { value: "ethiopia", label: "Ethiopia" },
+  { value: "fiji", label: "Fiji" },
+  { value: "finland", label: "Finland" },
+  { value: "france", label: "France" },
+  { value: "gabon", label: "Gabon" },
+  { value: "gambia", label: "Gambia" },
+  { value: "georgia", label: "Georgia" },
+  { value: "germany", label: "Germany" },
+  { value: "ghana", label: "Ghana" },
+  { value: "greece", label: "Greece" },
+  { value: "guatemala", label: "Guatemala" },
+  { value: "guinea", label: "Guinea" },
+  { value: "haiti", label: "Haiti" },
+  { value: "honduras", label: "Honduras" },
+  { value: "hungary", label: "Hungary" },
+  { value: "iceland", label: "Iceland" },
+  { value: "india", label: "India" },
+  { value: "indonesia", label: "Indonesia" },
+  { value: "iran", label: "Iran" },
+  { value: "iraq", label: "Iraq" },
+  { value: "ireland", label: "Ireland" },
+  { value: "israel", label: "Israel" },
+  { value: "italy", label: "Italy" },
+  { value: "jamaica", label: "Jamaica" },
+  { value: "japan", label: "Japan" },
   { value: "united_states", label: "United States" },
-  { value: "zimbabwe", label: "Zimbabwe" },
+  { value: "zimbabwe", label: "Zimbabwe" }
 ];
 
 export default function Signup() {
@@ -154,7 +231,6 @@ export default function Signup() {
                     type={showPassword ? "text" : "password"}
                     id="password"
                     required
-                    placeholder="Enter your 8 digits Password"
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <div className="eye-button" onClick={() => setShowPassword(!showPassword)}
@@ -172,18 +248,7 @@ export default function Signup() {
                 Already have an account? <Link to="/login">Login</Link>
               </p>
             </div>
-            <div className="divider">
-              <span className="or">or</span>
-            </div>
-            <div className="google-sect">
-              <Link href="#">
-                <span>
-                  <img src={goog} alt="google icon" />
-                </span>
-                Continue with Google
-              </Link>
-              <br />
-            </div>
+
           </div>
         </div>
       </div>

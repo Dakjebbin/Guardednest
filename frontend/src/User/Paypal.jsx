@@ -5,6 +5,8 @@ import xmark from "../assets/xmark.svg";
 import "../style/dash.css";
 import { useState } from "react";
 import { useAuthContext } from "../context/auth.context";
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 
 export default function Paypal() {
   const [isNavActive, setNavActive] = useState(false);
@@ -19,7 +21,60 @@ export default function Paypal() {
   }
 
   const [amount, setAmount] = useState("");
-  const [paypal, setPaypalEmail] = useState("");
+  const [paypal, setPaypal] = useState("");
+
+  const baseUrl = import.meta.env.VITE_BASEURL;
+  axios.defaults.withCredentials = true;
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(`${baseUrl}/auth/logout`, {
+        withCredentials: true,
+      })
+  
+      if (response.status === 200) {
+        toast.success("Logout successful");
+        window.location.assign("/") 
+      } else{
+        toast.error("An error occurred. Please try again");
+      }
+    } catch (error) {
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
+    }
+  }
+
+  const handlePaypalWithdrawal = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(`${baseUrl}/withdrawal/paypal_withdrawal`, {
+        amount,
+        paypal,
+      }, {
+        withCredentials: true
+      })
+      
+      if (response.status === 200) {
+        toast.success("Withdrawal request successful");
+        setAmount("");
+        setPaypal("");
+      } else {
+        toast.error("An error occurred. Please try again");
+      }
+    } catch (error) {
+      if (error.status === 400) {
+        toast.error(error?.response?.data?.message || "An error occurred. Please try again");
+      } else {
+        toast.error("An error occurred. Please try again");
+      }
+    }
+  }
 
   return (
     <>
@@ -70,7 +125,7 @@ export default function Paypal() {
               </Link>
             </li>
             <li>
-              <Link>
+              <Link onClick={handleLogout}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -101,7 +156,7 @@ export default function Paypal() {
                 <h2>Withdraw to Paypal</h2>
               </div>
 
-              <form action="">
+              <form onSubmit={handlePaypalWithdrawal}>
                 <label htmlFor="amount">Amount</label>
                 <input
                   type="number"
@@ -116,15 +171,16 @@ export default function Paypal() {
                   id="paypal"
                   value={paypal}
                   required
-                  onChange={(e) => setPaypalEmail(e.target.value)}
+                  onChange={(e) => setPaypal(e.target.value)}
                 />
-                <button type="button" className="go" >
+                <button type="submit" className="go" >
                   Submit
                 </button>
               </form>
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
       )}
     </>

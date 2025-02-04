@@ -122,15 +122,11 @@ function Services() {
             <p>
               Min Deposit $100
               <br />
-              Referral Bonus
-              <br />
               Full IT Support
             </p>
-            <button >
             <Link className="plan" to="/login">
               Purchase Plan
               </Link>
-              </button>
           </div>
 
           <div className="price-info">
@@ -145,11 +141,9 @@ function Services() {
               <br />
               Full IT Support
             </p>
-            <button >
             <Link className="plan" to="/login">
               Purchase Plan
               </Link>
-              </button>
           </div>
 
           <div className="price-info">
@@ -163,13 +157,12 @@ function Services() {
               Referral Bonus
               <br />
               Full IT Support
+              <br />
+              Weekly Analysis
             </p>
-          
-            <button >
             <Link className="plan" to="/login">
               Purchase Plan
               </Link>
-              </button>
        
           </div>
 
@@ -184,12 +177,14 @@ function Services() {
               Referral Bonus
               <br />
               Full IT Support
+              <br />
+              Weekly Analysis
+              <br />
+              Personal Advisor
             </p>
-            <button >
-            <Link to="/login">
+            <Link className="plan" to="/login">
               Purchase Plan
               </Link>
-              </button>
           </div>
         </div>
       </div>

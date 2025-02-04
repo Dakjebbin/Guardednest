@@ -1,11 +1,11 @@
 
 
-import '../style/human.css'
+import '../style/home.css'
 
 const Human = () => {
   return (
     <div>
-           <div className="container">
+           <div className="container7">
       
 <h1 className='human-header'> Human Rights Policy (GNF)</h1>
 

@@ -21,6 +21,7 @@ body {
 .container {
   position: relative;
   width: 100%;
+  margin: 0;
 }
 
 /* =============== Navigation ================ */
@@ -132,19 +133,20 @@ body {
 /* ===================== Main ===================== */
 .main {
   position: absolute;
-  width: calc(100% - 80px);
-  left: 80px;
+  width: 100vw;
+  /* width: calc(100% - -77px); */
+  left: 77px;
   min-height: 100vh;
   background: var(--white);
   transition: 0.5s;
 }
 .main.active {
-  width: calc(100% - 300px);
-  left: 300px;
+  width: calc(100% - 126px);
+  left: 280px;
 }
 
 .topbar {
-  width: 100%;
+  width: 90%;
   height: 60px;
   display: flex;
   justify-content: space-between;
@@ -225,17 +227,18 @@ body {
 /* ======================= Cards ====================== */
 .cardBox {
   
-  width: 100%;
-  padding: 20px 10pc;
+  width: 90%;
+  margin: auto;
+  padding: 4px 4pc;
 }
 
 .cardBox .card {
-  justify-content: center;
+
   padding: 20px;
   background: black;
   border: 1px solid #999;
   border-radius: 20px;
-  justify-content: space-between;
+
   margin-top: 40px;
   box-shadow: 0 7px 25px rgba(0, 0, 0, 1);
 }
@@ -307,12 +310,9 @@ text-align: center;
 
 .details {
   position: relative;
-  width: 90%;
   padding: 20px;
   display: grid;
-  grid-template-rows: 1;
   grid-gap: 50px;
-  margin: auto;
   overflow: hidden;
 }
 
@@ -345,7 +345,8 @@ text-align: center;
 }
 
 .details table {
-  width: 100%;
+  width: 90%;
+  margin: auto;
   border-collapse: collapse;
   margin-top: 0px;
 }
@@ -380,28 +381,7 @@ text-align: center;
   text-align: center;
   font-size: 25px;
 }
-.status.success {
-  color: #222;
-  border-radius: 4px;
-  font-size: 25px;
-  font-weight: 500;
-}
-.status.pending {
-  padding: 4px 8px;
-  color: #222;
-  border-radius: 4px;
-  font-size: 25px;
-  font-weight: 500;
-}
-.status.failed {
-  padding: 4px 8px;
-  color: #222;
-  border-radius: 4px;
-  font-size: 25px;
-  font-weight: 500;
-}
-.status.progress {
-  padding: 4px 8px;
+.status{
   color: #222;
   border-radius: 4px;
   font-size: 25px;
@@ -706,11 +686,12 @@ text-align: center;
   }
 }
 
-@media only screen and (min-width: 401px) and (max-width: 600px){
+@media only screen and (min-width: 400px) and (max-width: 600px){
   .head {
     grid-template-columns: repeat(1, 1fr);
     gap: 20px;
     margin-bottom: 25px;
+    padding: 0 5%;
   }
 
   .logo1 {
@@ -720,15 +701,12 @@ text-align: center;
   }
 
   .cardBox {
-    padding: 0 5%;
+    padding: 0;
   }
 
   .cardBox .card{
-    width: 380px;
-  }
-
-  .cardHeader h2 {
-    font-size: 20px;
+    width: 100%;
+    padding: 15px;
   }
 
   .navigation {
@@ -840,9 +818,8 @@ text-align: center;
   .details {
     position: relative;
     width: 100%;
-    padding: 20px;
+    padding: 0;
     display: grid;
-    grid-template-rows: 1;
     grid-gap: 50px;
     margin-left: 0;
     margin-top: 10px;
@@ -851,13 +828,23 @@ text-align: center;
   .details .recentTransact {
     position: relative;
     display: grid;
-    min-height: 500px;
-    padding: 20px;
+    min-height: 0;
+    padding: 8px 5px;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-    border-radius: 20px;
+    border-radius: 0;
     margin-top: 0px;
   }
-  
+  .details .recentTransact table tr{
+    border: 1px solid black;
+  }
+  .details .recentTransact table tr td {
+    text-align: center;
+    padding: 7px;
+    font-size: 27px;
+}
+.details .recentTransact table tr td:nth-child(2){
+  text-align: center;
+}
   .details .cardHeader {
     margin-bottom: 0px;
   }
@@ -881,35 +868,39 @@ text-align: center;
     border-collapse: collapse;
     margin-top: 0px;
   }
-  .details table thead td {
+  .details table thead tr td {
     font-weight: 400;
     font-size: 27px;
   }
-  .details .recentTransact table tr {
-    font-size: 20px;
-    color: var(--black1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  .details table thead tr{
+    border: 1px solid black;
   }
-  .status.success {
-    color: #222;
-    border-radius: 4px;
-    font-size: 26px;
+  .transaction{
+    display: flex;
+    justify-content: space-between;
   }
-  .status.pending {
-    padding: 4px 8px;
-    background: #e9b10a;
-    color: var(--white);
-    border-radius: 4px;
-    font-size: 25px;
+  .transaction .p-1 h3{
+    font-size: 27px;
+    margin-bottom: 10px;
+  }
+  .transaction .p-1 p{
+    font-size: 27px;
+  }
+  .transaction .p-2 h2{
+    font-size: 30px;
+    margin: 0;
+  } 
+  .ticon{
+    width: 30%;
+  }
+  .ticon svg{
+    width: 20px;
+  }
+  .status{
+    font-size: 27px;
     font-weight: 500;
-  }
-  .status.failed {
-    padding: 4px 8px;
-    background: #f00;
-    color: var(--white);
+    color: black;
     border-radius: 4px;
-    font-size: 25px;
-    font-weight: 500;
   }
 
   .bank{

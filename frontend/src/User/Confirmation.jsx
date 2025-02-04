@@ -73,9 +73,11 @@ const handleImageChange = (e) => {
     
     if (file.size > 5242880) {
       setImageError("Image should not exceed 5MB.");
+      toast.error("Image should not exceed 5MB.");
       setImage(null);  // Clear image if it exceeds size limit
       return;
     } else {
+      toast("set")
       setImageError("");  // Reset error if image size is valid
     }
 

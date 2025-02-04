@@ -28,7 +28,37 @@ export default function Bank() {
 
   const baseUrl = import.meta.env.VITE_BASEURL;
   axios.defaults.withCredentials = true
+
+  const handleBankWithdrawal = async (e) => {
+       e.preventDefault();
     
+      try {
+        const response = await axios.post(`${baseUrl}/withdrawal/bank-Withdrawal`, {
+          amount,
+          bank,
+          acctnum,
+          acctname,
+        }, {
+          withCredentials: true
+        })
+
+        if (response.status === 200) {
+          toast.success("Withdrawal request successful");
+          setAmount("");
+          setBank("");
+          setAcctNum("");
+          setAcctName("");
+        } else {
+          toast.error("An error occurred. Please try again");
+        }
+        
+      } catch (error) {
+        if (error.status === 400) {
+          toast.error(error?.response?.data?.message || "An error occurred. Please try again");
+        }
+      }
+  }
+ 
 
   const handleLogout = async () => {
     try {
@@ -136,7 +166,7 @@ export default function Bank() {
                 <p>We may contact you for more information</p>
               </div>
 
-              <form>
+              <form onSubmit={handleBankWithdrawal}>
                 <label htmlFor="amount">Amount</label>
                 <input
                   type="number"
@@ -169,16 +199,17 @@ export default function Bank() {
                   required
                   onChange={(e) => setAcctName(e.target.value)}
                 />
-                <button type="button" className="go" >
+                <button type="submit" className="go" >
                   Submit
                 </button>
               </form>
             </div>
           </div>
         </div>
-      
+<ToastContainer/>
       </div>
       )}
+
     </>
   );
 }

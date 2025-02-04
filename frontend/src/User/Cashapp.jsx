@@ -5,6 +5,8 @@ import cus1 from "../assets/customer01.jpg";
 import "../style/dash.css";
 import { useState} from "react";
 import { useAuthContext } from "../context/auth.context";
+import axios from "axios"
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Cashapp() {
   const [isNavActive, setNavActive] = useState(false);
@@ -21,6 +23,59 @@ export default function Cashapp() {
   const [amount, setAmount] = useState("");
   const [cashtag, setCashTag] = useState("");
 
+  const baseUrl = import.meta.env.VITE_BASEURL;
+  axios.defaults.withCredentials = true
+
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(`${baseUrl}/auth/logout`, {
+        withCredentials: true,
+      })
+  
+      if (response.status === 200) {
+        toast.success("Logout successful");
+        window.location.assign("/") 
+      } else{
+        toast.error("An error occurred. Please try again");
+      }
+    } catch (error) {
+      if (error instanceof axios.AxiosError) {
+        console.log(
+           error?.response?.data
+         );
+       } else {
+         console.log("reg error => ", error);
+       }
+    }
+  }
+
+  const handleCashappWithdrawal = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(`${baseUrl}/withdrawal/cashApp_withdrawal`, {
+        amount,
+        cashtag,
+      }, {
+        withCredentials: true,
+      })
+      
+      if (response.status === 200) {
+        toast.success("Withdrawal request successful");
+        setAmount("");
+        setCashTag("");
+      } else {
+        toast.error("An error occurred. Please try again"); 
+      }
+    } catch (error) {
+      if (error.status === 400) {
+        toast.error(error?.response?.data?.message || "An error occurred. Please try again");
+      } else {
+        toast.error("An error occurred. Please try again");
+      } 
+    }
+  }
 
   return (
     <>
@@ -71,7 +126,7 @@ export default function Cashapp() {
               </Link>
             </li>
             <li>
-              <Link>
+              <Link onClick={handleLogout}>
                 <span className="icon">
                   <ion-icon name="log-out-outline"></ion-icon>
                 </span>
@@ -102,7 +157,7 @@ export default function Cashapp() {
                 <h2>Withdraw to CashApp</h2>
               </div>
 
-              <form action="">
+              <form onSubmit={handleCashappWithdrawal}>
                 <label htmlFor="amount">Amount</label>
                 <input
                   type="number"
@@ -119,13 +174,14 @@ export default function Cashapp() {
                   value={cashtag}
                   onChange={(e) => setCashTag(e.target.value)}
                 />
-                <button type="button" className="go" >
+                <button type="submit" className="go" >
                   Submit
                 </button>
               </form>
             </div>
           </div>
         </div>
+        <ToastContainer/> 
       </div>
       )}
     </>

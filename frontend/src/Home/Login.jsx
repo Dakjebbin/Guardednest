@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // eslint-disable-line
+import { Link } from "react-router-dom"; 
 import goog from "../assets/google.svg";
 import "../style/home.css";
 import eye from "../assets/eye.svg"; 
-import eyeOff from "../assets/eye-off.svg"
+import eyeOff from "../assets/eye-off.svg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
@@ -11,75 +11,75 @@ import axios from "axios";
 export default function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
- // const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+ 
 
   const baseUrl = import.meta.env.VITE_BASEURL;
   axios.defaults.withCredentials = true;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return; // Prevent multiple clicks
 
     const trimmedUsername = username.trim();
     const trimmedPassword = password.trim();
 
     if (!trimmedUsername || !trimmedPassword) {
-      toast.error('Please all fields are required');
+      toast.error('Please fill in all fields');
       return;
     }
 
+    setLoading(true); // Start loading
+
     try {
       const response = await axios.post(`${baseUrl}/auth/login`, 
-        {
-          username: trimmedUsername,
-          password: trimmedPassword,
-      },{
-        withCredentials: true,
-      });
+        { username: trimmedUsername, password: trimmedPassword },
+        { withCredentials: true }
+      );
 
-
-if (response.status === 200) {
-  toast.success("Login Successfull")
-  setUserName('');
+      if (response.status === 200) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+        toast.success("Login Successful");
+        setUserName('');
         setPassword('');
-        window.location.assign("/user")
-}
-
-    } catch (error) {
-      if (error.status === 400) { 
-        toast.error("Invalid Credentials")
-      } else if(error.status === 409) {
-        toast.error("Invalid Credentials");
-      } else {
-        toast.error("An error occurred");
+        window.location.assign("/user");
       }
+    } catch (error) {
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 400 || status === 401) {
+          toast.error(data?.message || "Invalid credentials");
+        } else {
+          toast.error(data?.message || "Something went wrong, try again!");
+        }
+      } else {
+        toast.error("Network error, please check your connection.");
+      }
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   return (
-    <div>
-    
+    <div className="container7">
       <div className="content">
         <div className="section">
           <div className="login">
             <div className="text2">
               <h2>Welcome back!</h2>
-              <p>
-                Hey there! Ready to log in? Just enter your username and
-                password below and you&#39;ll be back in action in no time.
-                Let&#39;s go!
-              </p>
+              <p>Enter your username and password to log in.</p>
             </div>
 
             <div className="google-sect">
-              <Link href="#">
+              <Link to="#">
                 <span>
-                  <img src={goog} alt="google icon" />
+                  <img src={goog} alt="Google icon" />
                 </span>
                 Continue with Google
               </Link>
-              <br />
             </div>
+
             <div className="divider">
               <span className="or">or</span>
             </div>
@@ -91,12 +91,11 @@ if (response.status === 200) {
                 id="username"
                 required
                 placeholder="Enter Your Username"
+                value={username}
                 onChange={(e) => setUserName(e.target.value)}
               />
 
-
-
-<div className="password-container">
+              <div className="password-container">
                 <label htmlFor="password">Password</label>
                 <div className="password-input">
                   <input
@@ -104,34 +103,33 @@ if (response.status === 200) {
                     id="password"
                     required
                     placeholder="Enter Your Password"
+                    value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <div className="eye-button" onClick={() => setShowPassword(!showPassword)}
                     aria-label={showPassword ? "Hide password" : "Show password"}>
-                  <img src={showPassword ? eye : eyeOff} alt={showPassword ? "Hide password" : "Show password"} />
+                    <img src={showPassword ? eye : eyeOff} alt="Toggle password visibility" />
                   </div>
                 </div>
               </div>
 
-
               <a className="forgot" href="forgot-pass.html">
                 Forgot Password?
               </a>
-              <button type="submit" id="submit">
-                Sign in
+              <button type="submit" id="submit" disabled={loading}>
+                {loading ? "Signing in..." : "Sign in"}
               </button>
             </form>
 
             <div className="signup">
               <p>
-                Don&#39;t have an account? <Link to="/signup">Sign up</Link>
+                Don&apos;t have an account? <Link to="/signup">Sign up</Link>
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      
       <ToastContainer />
     </div>
   );
