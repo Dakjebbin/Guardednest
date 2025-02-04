@@ -408,7 +408,10 @@ button {
 
 }
 
-
+.section {
+  width: 80%;
+  margin: auto;
+}
 .login {
   background: #f5f7fc;
   padding: 10px 10%;
