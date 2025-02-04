@@ -412,6 +412,14 @@ button {
   width: 80%;
   margin: auto;
 }
+
+@media (max-width: 480px) {
+  .section {
+    width: 100%;
+  }
+}
+
+
 .login {
   background: #f5f7fc;
   padding: 10px 10%;
