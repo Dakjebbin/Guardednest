@@ -8,7 +8,7 @@ function Home() {
   return (
     <>
    
-      <div className="container1">
+      <div className="container1 flex items-center justify-center h-auto">
         <div className="sect1">
           <div className="text">
             <h2>

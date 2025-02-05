@@ -175,7 +175,8 @@ video.responsive-video {
 
 .content {
   margin-top: 30px;
-  padding: 0 2%;
+ width: 90%;
+ margin: auto;
 }
 .text1 {
   padding: 20px 2%;
@@ -239,8 +240,7 @@ video.responsive-video {
 .team-details {
   position: absolute;
   bottom: 8px;
-  left: 25px; 
-  padding: 0 7pc;
+ width: 100%;
   background: #f1ededc7;
   border-radius: 24px;
 }
@@ -350,6 +350,7 @@ video.responsive-video {
 
 .conright form {
   width: 90%;
+  margin: auto;
   padding: 20px 5%;
 }
 .conright form input,
@@ -1041,11 +1042,12 @@ footer {
   .content {
     display: block;
     margin-top: 30px;
-    padding: 0;
+    width: 90%;
+    margin: auto;
   }
 
   .text1 {
-    margin-top: 10px;
+    margin-top: 100px;
     padding: 10px;
   }
   .text1 h1 {
@@ -1110,6 +1112,17 @@ footer {
     margin-bottom: 30px;
     text-align: center;
   }
+  .conleft p{
+    font-size: 24px;
+  }
+  .conleft p svg{
+    width: 20px;
+  }
+
+  .conright{
+    margin-left: 0;
+  }
+
   .row {
     display: block;
     margin-bottom: 40px;
@@ -1117,12 +1130,10 @@ footer {
   form input,
   form textarea {
     width: 92%;
-    border: 0;
     outline: none;
-
     padding: 15px;
     margin: 15px 0;
-    color: white;
+    color: black;
     font-size: 22px;
   }
   .btn2 {

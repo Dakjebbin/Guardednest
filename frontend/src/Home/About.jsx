@@ -8,7 +8,7 @@ function About() {
   return (
     <>
 
-      <div className="container">
+      <div>
         <div className="content">
           <div className="text1">
             <h1>About Us</h1>
@@ -62,7 +62,7 @@ function About() {
               success.
             </p>
           </div>
-          <div className="team">
+          {/* <div className="team">
             <div className="team-text">
               <h1>
                 Meet Our <span>Advisers</span>
@@ -97,7 +97,40 @@ function About() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
+
+            <div className="flex items-center justify-center flex-col">
+              <div className="team-text text-center">
+              <h1>
+                Meet Our <span>Advisers</span>
+              </h1>
+              <p>
+                Hey everyone, meet our amazing advisers! They&#39;re here to
+                help and guide us through anything.
+              </p>
+              </div>
+
+              <div className="flex gap-10 flex-wrap">
+                <div className="flex-grow relative basis-64">
+                  <div className="w-full"><img className="rounded-xl w-full" src={team} /></div>
+                  <div className="absolute -translate-y-28 rounded-lg py-3 w-full bg-[#808080ec] text-3xl"><h6 className="text-center ">Jayde Cross</h6>
+                  <p className="text-center">Special Adviser</p></div>
+                </div>
+
+                <div className="flex-grow relative basis-64">
+                  <div className="w-full"><img className="rounded-xl w-full" src={team} /></div>
+                  <div className="absolute -translate-y-28 rounded-lg py-3 w-full bg-[#808080ec] text-3xl"><h6 className="text-center ">Jayde Cross</h6>
+                  <p className="text-center">Special Adviser</p></div>
+                </div>
+
+                <div className="flex-grow relative basis-64">
+                  <div className="w-full"><img className="rounded-xl w-full" src={team} /></div>
+                  <div className="absolute -translate-y-28 rounded-lg py-3 w-full bg-[#808080ec] text-3xl"><h6 className="text-center ">Jayde Cross</h6>
+                  <p className="text-center">Special Adviser</p></div>
+                </div>
+                
+              </div>
+            </div>
 
           <div className="sub1">
             <h1>
