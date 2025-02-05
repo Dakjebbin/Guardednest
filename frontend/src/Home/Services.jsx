@@ -17,7 +17,7 @@ function Services() {
     <>
   
 
-      <div className="container">
+      <div>
         <div className="text4">
           <h1>
             <span>Services</span> We Offer
