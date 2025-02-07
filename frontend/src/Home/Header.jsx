@@ -13,7 +13,7 @@ const Header = () => {
   }
 
   return (
-    <div>
+    <div className='sticky top-0 z-[200]'>
       <nav>
         <div className="top">
           <Link to="/" className="mainlogo">
@@ -26,7 +26,7 @@ const Header = () => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/about" onClick={() => scrollTo(0,0)}>About</Link>
           </li>
           <li>
             <Link to="/services">Services</Link>

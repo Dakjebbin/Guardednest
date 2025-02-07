@@ -132,7 +132,7 @@ function About() {
               </div>
             </div>
 
-          <div className="sub1">
+          <div className="sub1 mt-10">
             <h1>
               Subscribe to <span>Our Newsletter</span>
             </h1>

@@ -71,13 +71,12 @@ export default function Login() {
               <p>Enter your username and password to log in.</p>
             </div>
 
-            <div className="google-sect">
-              <Link to="#">
-                <span>
+            {/* <div className="google-sect"> */}
+            <div className="flex justify-center ">
+              <div className="flex cursor-pointer items-center border border-black rounded-lg py-3 px-2">
                   <img src={goog} alt="Google icon" />
-                </span>
-                Continue with Google
-              </Link>
+                <p>Continue with Google</p>
+              </div>
             </div>
 
             <div className="divider">

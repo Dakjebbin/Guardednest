@@ -22,17 +22,17 @@ const Footer = () => {
             <ul>
               <p>Quick link</p>
               <li>
-                <Link to={"/"}>Home</Link>
+                <Link to={"/"} onClick={() => scrollTo(0,0)}>Home</Link>
               </li>
               <li>
-                <Link to={"/about"}>About</Link>
+                <Link to={"/about"} onClick={() => scrollTo(0,0)}>About</Link>
               </li>
               <li>
                
-                <Link to={"/services"}>Services</Link>
+                <Link to={"/services"} onClick={() => scrollTo(0,0)}>Services</Link>
               </li>
               <li>
-                <Link to={"/contact"}>Contact Us</Link>
+                <Link to={"/contact"}  onClick={() => scrollTo(0,0)}>Contact Us</Link>
               </li>
             </ul>
           </div>
@@ -40,16 +40,16 @@ const Footer = () => {
             <ul>
               <p>Account</p>
               <li>
-                <Link to={"/login"}>Login</Link>
+                <Link to={"/login"}  onClick={() => scrollTo(0,0)}>Login</Link>
               </li>
               <li>
-                <Link to={"/signup"}>Sign up</Link>
+                <Link to={"/signup"} onClick={() => scrollTo(0,0)}>Sign up</Link>
               </li>
               <li>
-                <Link to={"/humanrights"}>Human Rights Policy</Link>
+                <Link to={"/humanrights"} onClick={() => scrollTo(0,0)}>Human Rights Policy</Link>
               </li>
               <li>
-                <Link to={"/contact"}>Support Center</Link>
+                <Link to={"/contact"} onClick={() => scrollTo(0,0)}>Support Center</Link>
               </li>
             </ul>
           </div>
@@ -57,13 +57,13 @@ const Footer = () => {
             <ul>
               <p>Support</p>
               <li>
-                <Link to={"/policy"}>Privacy Policy</Link>
+                <Link to={"/policy"} onClick={() => scrollTo(0,0)}>Privacy Policy</Link>
               </li>
               <li>
-                <Link to={"/terms"}>Terms&Conditions</Link>
+                <Link to={"/terms"} onClick={() => scrollTo(0,0)}>Terms&Conditions</Link>
               </li>
               <li>
-                <Link to={"/faq"}>FAQs</Link>
+                <Link to={"/faq"} onClick={() => scrollTo(0,0)}>FAQs</Link>
               </li>
             </ul>
           </div>

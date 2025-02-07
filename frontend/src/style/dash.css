@@ -1003,9 +1003,9 @@ button{
     padding: 0 5%;
   }
 
-  .cardBox .card{
+  /* .cardBox .card{
     width: 340px;
-  }
+  } */
 
   .cardHeader h2 {
     font-size: 20px;
