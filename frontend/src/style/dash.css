@@ -319,7 +319,7 @@ text-align: center;
 .details .recentTransact {
   position: relative;
   display: grid;
-  min-height: 500px;
+  /* min-height: 500px; */
   padding: 20px;
   box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
   border-radius: 20px;
@@ -506,14 +506,15 @@ text-align: center;
 .wallet span{
   position: absolute;
   top: 21px;
+  margin-right: 5px;
   right: 0;
   cursor: pointer;
 }
 
 .wallet input{
   text-align: center;
-  width: 90%;
-  padding: 20px;
+  width: 100%;
+  padding: 20px 30px 20px 20px;
   font-size: 18px;
 }
 
@@ -536,7 +537,7 @@ text-align: center;
   margin-bottom: 20px;
   padding: 10px;
   border: 1px solid #cb8d39;
-  color: white;
+  color: black;
   cursor: pointer;
   border-radius: 4px;
 }
@@ -875,10 +876,10 @@ text-align: center;
   .details table thead tr{
     border: 1px solid black;
   }
-  .transaction{
+  /* .transaction{
     display: flex;
     justify-content: space-between;
-  }
+  } */
   .transaction .p-1 h3{
     font-size: 27px;
     margin-bottom: 10px;
@@ -1083,7 +1084,7 @@ button{
   .details .recentTransact {
     position: relative;
     display: grid;
-    min-height: 500px;
+    /* min-height: 500px; */
     padding: 10px;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     border-radius: 20px;

@@ -265,7 +265,7 @@ const handleTransaction = async (e) => {
               <div className="buttons">
                 <input type="file" onChange={handleImageChange} name="" className="btn3" id="" />
                  <br />
-                <button type="submit" className="btn4">Submit</button>
+                <button type="submit" className="btn4 ">Submit</button>
               </div>
               </form>
               <div className="timer">
