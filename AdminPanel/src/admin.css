@@ -34,6 +34,15 @@ body {
   transition: 0.5s;
   overflow: hidden;
 }
+
+/* @media (max-width: 400px) {
+  .navigation{
+    display: none;
+    background-color: green;
+  }
+} */
+
+
 .navigation.active {
   width: 250px;
 }

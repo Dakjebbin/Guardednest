@@ -30,9 +30,9 @@ axios.defaults.withCredentials = true
 
      const fetchUsers = async () => {
 
-      if (userData?.isAdmin === "No") {
+      if (userData?.isAdmin === "USER") {
        toast.error("Unauthorized Access");
-       window.location.assign("/login")
+       window.location.assign("/")
        return;
        }
        
@@ -63,7 +63,7 @@ axios.defaults.withCredentials = true
   
       if (response.status === 200) {
         toast.success("Logout successful");
-        window.location.assign("/login") 
+        window.location.assign("/") 
       } else{
         toast.error("An error occurred. Please try again");
       }
@@ -157,10 +157,10 @@ axios.defaults.withCredentials = true
 
         <div className="panel">
           <h2>Admin Dashboard</h2>
-          <div className="user-cards">
+          <div className="flex justify-between gap-10 flex-wrap mx-10 ">
             {users.map((user) => (
-              <div className="user-card" key={user.username}>
-                <div className="card-header">
+              <div className="border basis-24 flex-grow border-[#535353] p-5 rounded-lg shadow-lg shadow-black" key={user.username}>
+                <div className="">
                   <h3 className="username">{user.username}</h3>
                   <p className="email">{user.email}</p>
                 </div>
@@ -183,7 +183,7 @@ axios.defaults.withCredentials = true
                 
               </div>
             ))}
-          </div>
+          </div> 
         </div>
       </div>
     </div>

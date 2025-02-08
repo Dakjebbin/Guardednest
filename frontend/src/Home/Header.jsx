@@ -23,19 +23,19 @@ const Header = () => {
         </div>
         <ul className={`menu ${isNavActive ? 'active' : ''}`}>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" onClick={isNavActive}>Home</Link>
           </li>
-          <li>
+          <li onClick={isNavActive}>
             <Link to="/about" onClick={() => scrollTo(0,0)}>About</Link>
           </li>
-          <li>
+          <li onClick={isNavActive}>
             <Link to="/services">Services</Link>
           </li>
-          <li>
+          <li onClick={isNavActive}>
             <Link to="/contact">Contact</Link>
           </li>
           
-          <li>
+          <li onClick={isNavActive}>
             <Link to="/login" className="book">
               Sign-in
             </Link>
