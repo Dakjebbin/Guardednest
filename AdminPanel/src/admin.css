@@ -35,6 +35,12 @@ body {
   overflow: hidden;
 }
 
+@media (max-width: 400px) {
+  .navigation{
+    display: none;
+  }
+}
+
 /* @media (max-width: 400px) {
   .navigation{
     display: none;
@@ -138,10 +144,29 @@ nav {
   background: var(--white);
   transition: 0.5s;
 }
+
+
 .main.active {
   width: calc(100% - 300px);
   left: 300px;
 }
+
+@media (max-width: 400px) {
+.main{
+position: static;
+width: 100%;
+}
+
+.main.active{
+  width: 100%;
+  left: 0;
+}
+
+.navigation.active{
+  width: 100%;
+}
+}
+
 
 .topbar {
   width: 100%;
@@ -282,6 +307,14 @@ button {
   overflow: hidden;
 }
 
+@media (max-width:400px) {
+  .details{
+    width: 100%;
+    padding: 0;
+    margin-left: 0;
+  }
+}
+
 .details .recentTransact {
   position: relative;
   display: grid;
@@ -397,6 +430,14 @@ button {
 .uzer{
   text-align: center;
   padding: 0 38%;
+}
+
+@media(max-width:400px){
+ .uzer{
+  padding: 0;
+  margin: auto;
+  width: 90%;
+}
 }
 
 .uzer h2{

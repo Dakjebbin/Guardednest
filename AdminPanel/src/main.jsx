@@ -11,6 +11,7 @@ import UserDetails from './UserDetails.jsx'
 
 
 
+
 const router = createBrowserRouter([{
   path: "/",
   element: <App/>
@@ -23,7 +24,7 @@ const router = createBrowserRouter([{
 },{
   path: "/userCard/:id",
   element: <UserDetails/>
-}
+},
 ])
 
 createRoot(document.getElementById('root')).render(

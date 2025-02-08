@@ -183,6 +183,36 @@ export default function AdminTransaction() {
             </ul>
           </div>
 
+          {/* mobile view sidebar */}
+          <aside className={`bg-[#cb8d39] sm:hidden fixed bottom-0 top-0 w-full z-30 text-white ${isNavActive ? "block" : "hidden"}`}>
+        <div className="flex justify-end mr-10 mt-6">
+              <img
+                className="w-7 "
+                src={xmark}
+                alt="logo"
+                onClick={closeNavigation}
+              />
+        </div>
+        <ul className="mt-10 pl-10" >
+          <li className="mb-10 cursor-pointer " onClick={closeNavigation}>
+            <Link to={"/admin"} className="flex items-center">
+              <span className="text-3xl mr-4">
+                <ion-icon name="home-outline"></ion-icon>
+              </span>
+              <span className="text-3xl">Dashboard</span>
+            </Link>
+            </li>
+            <li className="cursor-pointer" onClick={closeNavigation}>
+            <Link onClick={handleLogout} className="flex items-center">
+              <span className="text-3xl mr-4">
+                <ion-icon name="log-out-outline"></ion-icon>
+              </span>
+              <span className="text-3xl">Sign Out</span>
+            </Link>
+          </li>
+        </ul>
+      </aside>
+
           <div className={`main ${isNavActive ? "active" : ""}`}>
             <div className="topbar">
               <div className="toggle" onClick={toggleNavigation}>
