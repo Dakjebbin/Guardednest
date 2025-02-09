@@ -25,7 +25,7 @@ export default function Dash() {
   useEffect(() => {
     if (!userData) {
       toast.error("Please login to view this page");
-      return null;
+      return ;
     }
 
     const fetchTransactions = async () => {
@@ -332,9 +332,11 @@ export default function Dash() {
                                   {statusLabels[
                                     transaction.status.toLowerCase()
                                   ] || transaction.status}
-                                  <hr className="my-2" />
+                                 
                                 </span>
+                                
                               </p>
+                              <hr className="my-2" />
                             </div>
                           </div>
                         ))}
