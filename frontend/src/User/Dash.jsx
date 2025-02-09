@@ -21,11 +21,11 @@ export default function Dash() {
   // const navigate = useNavigate();
 
   const baseUrl = import.meta.env.VITE_BASEURL;
+
   useEffect(() => {
     if (!userData) {
       toast.error("Please login to view this page");
-     
-      return;
+      return null;
     }
 
     const fetchTransactions = async () => {
@@ -131,16 +131,38 @@ export default function Dash() {
 
   const tIcons = {
     Deposit: (
-<svg xmlns="http://www.w3.org/2000/svg" width={"20px"} fill="green" viewBox="0 0 384 512"><path d="M169.4 502.6c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 402.7 224 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 370.7L86.6 329.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128z"/></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={"20px"}
+        fill="green"
+        viewBox="0 0 384 512"
+      >
+        <path d="M169.4 502.6c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 402.7 224 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 370.7L86.6 329.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128z" />
+      </svg>
     ),
     Withdrawal: (
-<svg xmlns="http://www.w3.org/2000/svg" width={"20px"} fill="red" viewBox="0 0 384 512"><path fill="#ff0000" d="M169.4 502.6c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 402.7 224 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 370.7L86.6 329.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128z"/></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={"20px"}
+        fill="red"
+        viewBox="0 0 384 512"
+      >
+        <path
+          fill="#ff0000"
+          d="M169.4 502.6c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 402.7 224 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 370.7L86.6 329.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128z"
+        />
+      </svg>
     ),
     Profit: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#005eff" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/></svg>
-    )
-  }
-  
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <path
+          fill="#005eff"
+          d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"
+        />
+      </svg>
+    ),
+  };
+
   if (!userData) return null;
   return (
     <>
@@ -204,7 +226,15 @@ export default function Dash() {
           <div className={`main ${isNavActive ? "active" : ""}`}>
             <div className="topbar">
               <div className="toggle" onClick={toggleNavigation}>
-              <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px" fill="black"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="34px"
+                  viewBox="0 -960 960 960"
+                  width="34px"
+                  fill="black"
+                >
+                  <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+                </svg>
               </div>
 
               <div className="user1">
@@ -274,37 +304,17 @@ export default function Dash() {
                       <p className="noTransact">No Transactions</p>
                     ) : (
                       <div className="tableWrapper">
-                  { /*     <table>
-                          <tbody>
-                            {transactions.map((transaction, index) => (
-                              <tr key={index}>
-                                <td> {transaction.type} </td>
-                                <td> ${transaction.amount} </td>
-
-                                <tr></tr>
-                                <td>
-                                  <span
-                                    className={`status ${transaction.status.toLowerCase()}`}
-                                  >
-                                    {statusLabels[
-                                      transaction.status.toLowerCase()
-                                    ] || transaction.status}
-                                  </span>
-                                </td>
-                                <td>{formatDate(transaction.createdAt)}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table> */}
-
                         {transactions.map((transaction, index) => (
                           <div key={index} className="transaction">
                             <div className="t-icon">
-                            {tIcons[transaction.type] || (
-                              
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={"20px"} >
-                                <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 272H112c-13.3 0-24-10.7-24-24s10.7-24 24-24h288c13.3 0 24 10.7 24 24s-10.7 24-24 24z"/>
-                              </svg>
+                              {tIcons[transaction.type] || (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 512 512"
+                                  width={"20px"}
+                                >
+                                  <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 272H112c-13.3 0-24-10.7-24-24s10.7-24 24-24h288c13.3 0 24 10.7 24 24s-10.7 24-24 24z" />
+                                </svg>
                               )}
                             </div>
 
@@ -322,7 +332,7 @@ export default function Dash() {
                                   {statusLabels[
                                     transaction.status.toLowerCase()
                                   ] || transaction.status}
-                                  <hr className="my-2"/>
+                                  <hr className="my-2" />
                                 </span>
                               </p>
                             </div>

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import goog from "../assets/google.svg";
 import eye from "../assets/eye.svg"; // Eye icon for showing password
 import eyeOff from "../assets/eye-off.svg"; // Eye icon for hiding password
 import "../style/home.css";
@@ -139,8 +138,6 @@ export default function Signup() {
           phone,
           email,
           password,
-          balance: "--",  // Assuming you need these fields in the signup
-          profit: "--",
         
       },{
         withCredentials: true,
